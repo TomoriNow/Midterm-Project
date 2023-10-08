@@ -1,7 +1,7 @@
 # Midterm-Project
 
 ________________________
-## List of Modeules to be implemented
+## List of Modules to be implemented
 
 
 ### Book Model Attributes List:
