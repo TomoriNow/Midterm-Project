@@ -1,10 +1,10 @@
 # Midterm-Project
 
 ________________________
-##List of Modeules to be implemented
+## List of Modeules to be implemented
 
 
-###Book Model Attributes List:
+### Book Model Attributes List:
     * Number/ID — Number is according to when it is added, i.e. ID number 1 is added before ID number 3
 
     * Book Name
