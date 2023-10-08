@@ -22,13 +22,13 @@ __Book Status__
 2. Finished, Ongoing, Hiatus, Cancelled
 
 __Description / Summary__
-Alphanumeric, by the user
+1. Alphanumeric, by the user
 
 __Tags — We keep a curated database of tags created by the admins (like in nhentia/mal) but users can submit new tags, which if approved by the admins, will be added to the website__
-Vanilla, romance, horror, etc. (kinda like nhentai tags or mal tags)
+1. Vanilla, romance, horror, etc. (kinda like nhentai tags or mal tags)
 
 *__Reading Status — for user__
-Not finished, reading, finished
+1. Not finished, reading, finished
 
 __Last Chapter Read — entered by the user__
 
@@ -36,7 +36,7 @@ __Last Date Read — once last chapter read is updated, it will automatically up
 
 __Text Review__
 
-*__Rating__
-Numeric, from 0 to 10, can be decimal
+__Rating__
+1. Numeric, from 0 to 10, can be decimal
         
-*__Publisher (Optional)__
+__Publisher (Optional)__
