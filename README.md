@@ -1,11 +1,11 @@
 # Midterm-Project
 
 ## Group Name and Members
-* Muhammad Sakhran Thayyib AKA Duden 
-* Galih Ibrahim Kurniawan
-* Gregorius Samuel Hutahean
-* Muhammad Sean Arsha Galant
-* Alvin Zhafif Afilla
+* Muhammad Sakhran Thayyib AKA Duden 2206046790 
+* Galih Ibrahim Kurniawan 2206046696
+* Gregorius Samuel Hutahean 2206046701
+* Muhammad Sean Arsha Galant 2206822963
+* Alvin Zhafif Afilla 2206046632
 
 
 ## The story of the application and its benefits
