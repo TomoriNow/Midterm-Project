@@ -1,5 +1,7 @@
 # Midterm-Project
 
+## The story of the application and its benefits
+
 ________________________
 ## List of Modules to be implemented
 
@@ -40,3 +42,9 @@ __Rating__
 1. Numeric, from 0 to 10, can be decimal
         
 __Publisher (Optional)__
+
+________________________
+## The source of the book catalog dataset
+
+________________________
+## User roles
