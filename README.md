@@ -53,6 +53,10 @@ __Publisher (Optional)__
 
 ________________________
 ## The source of the book catalog dataset
+crxxom. “Manhwa dataset.” Kaggle, July 2023, https://www.kaggle.com/datasets/crxxom/manhwa-dataset. Accessed 10 October 2023.
+
+AJ Pass. “TOP RANKED MANGAS MyAnimeList (MAL).” Kaggle, 9 March 2019, https://www.kaggle.com/datasets/ajpass/top-ranked-mangas-myanimelist-mal. Accessed 10 October 2023.
+
 Soeiro, Victor. “Manga, Manhwa and Manhua Dataset.” Manga, Manhwa and Manhua Dataset - Kaggle, 9 March 2019, https://www.kaggle.com/datasets/victorsoeiro/manga-manhwa-and-manhua-dataset/. Accessed 10 October 2023.
 
 ________________________
