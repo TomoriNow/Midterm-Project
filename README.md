@@ -60,4 +60,4 @@ Owner - Adds and removes admins. Are also able to perform tasks that admins and 
 
 Admin - Accepts/rejects tag (adding tags) or book (adding books to the catalog) requests, is able to see other users' list. Can not add more admins.
 
-User - Able to add books to their own list ( can be from the catalog or they can add all of the details themselves), share their lists to other users, add reviews and edit the last read attribute to books in their list. They can also submit possible book tags or books for the catalog that the admins can accept or deny
+User - Able to add books to their own list ( can be from the catalog or they can the book add all of the details themselves), share their lists to other users, add reviews and edit the last read attribute to books in their list. They can also submit possible book tags or books for the catalog that the admins can accept or deny
