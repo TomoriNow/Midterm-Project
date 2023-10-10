@@ -35,7 +35,7 @@ __Description / Summary__
 1. Alphanumeric, by the user
 
 __Tags — We keep a curated database of tags created by the admins (like in My Anime List) but users can submit new tags, which if approved by the admins, will be added to the website__
-1. Vanilla, romance, horror, etc. (kinda like nhentai tags or mal tags)
+1. Vanilla, romance, horror, etc. (kinda like mal tags)
 
 *__Reading Status — for user__
 1. Not finished, reading, finished
