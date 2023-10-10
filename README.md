@@ -56,8 +56,8 @@ ________________________
 
 ________________________
 ## User roles
-Owner - Adds and removes admins. Are also able to perform tasks that admins and user can do.
+Owner/Superuser - The Owner (or the Superuser) in our web application has the ability add and remove admins. The Owner/Superuser is also able to perform all the operations that admins and user can do.
 
-Admin - Accepts/rejects tag (adding tags) or book (adding books to the catalog) requests, is able to see other users' list. Can not add more admins.
+Admin - The Admin is capable of accepting or rejecting tag (such as adding tags) and book (such as adding books to the catalog) requests, and is able to see other users' list. However, the admin is not capable of adding more admins into the web application.
 
-User - Able to add books to their own list ( can be from the catalog or they can the book add all of the details themselves), share their lists to other users, add reviews and edit the last read attribute to books in their list. They can also submit possible book tags or books for the catalog that the admins can accept or deny
+User - The User is able to add books to their own list (which can be from the catalog or they can add all of the details of the book that they have read themselves), share their lists to other users, as well as add reviews and edit the last-read attribute to books in their list. They can also submit possible book tags or books for the catalog that the admins can accept or deny before adding them to the web application for other users to see publicly. 
