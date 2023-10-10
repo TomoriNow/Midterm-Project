@@ -53,6 +53,7 @@ __Publisher (Optional)__
 
 ________________________
 ## The source of the book catalog dataset
+Soeiro, Victor. “Manga, Manhwa and Manhua Dataset.” Manga, Manhwa and Manhua Dataset - Kaggle, 9 March 2019, https://www.kaggle.com/datasets/victorsoeiro/manga-manhwa-and-manhua-dataset/. Accessed 10 October 2023.
 
 ________________________
 ## User roles
