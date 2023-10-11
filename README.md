@@ -32,7 +32,7 @@ Made by you, and made for you.
 ________________________
 # List of modules (or, features) that will be implemented
 
-Note: this is awork in progress, certain functions or implementations are subject to change
+Note: this is a work in progress, certain functions or implementations are subject to change
 ## List of functions
 __Catalog page:__ 
  * **Description:** The list of all books from the catalog.
