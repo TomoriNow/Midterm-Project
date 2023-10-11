@@ -30,10 +30,38 @@ Apart from your usual manga-reading sites, our site provides you with your very 
 Made by you, and made for you. 
 
 ________________________
-## List of Modules to be implemented
+# List of modules (or, features) that will be implemented
 
+Note: this is awork in progress, certain functions or implementations are subject to change
+## List of functions
+__Catalog page:__ 
+ * **Description:** The list of all books from the catalog.
+ * **Features:** View, Add books to own list(requires login).
 
-### Book Model Attributes List:
+__Other user's list page:__ 
+ * **Description:** The list of other user's.
+ * **Features:** View, Add books to own list(requires login), Delete Entries(requires login, must be admin or higher).
+
+__User's list page:__ 
+ * **Description:** Your own book list.
+ * **Features:** View, Edit/Delete/Add entries(requires login, must be the user associated to the page), Change favourite book(requires login. must be user associated to the page)
+
+__Admin page:__ 
+ * **Description:** Page with all admin functions.
+ * **Features:** {Accessable only after login and if the user is an admin, the same is trye for all related features}, View list of all users and requests, Accept or reject requests, Delete Users, make User an admin(must be the super user
+
+## List of Models to be implemented
+
+### User Model
+__Username__
+
+__Password__
+
+__Admin and SuperUser flag - To identify whether they are admin or superuser. Implementation is subject to 
+
+__Favourite book (Foreign Key to Book Entry)__
+
+### Book Model (for the catalog) Attributes List:
 
 __Number/ID — Number is according to when it is added, i.e. ID number 1 is added before ID number 3__
 
@@ -55,6 +83,16 @@ __Description / Summary__
 
 __Tags — We keep a curated database of tags created by the admins (like in My Anime List) but users can submit new tags, which if approved by the admins, will be added to the website__
 1. Vanilla, romance, horror, etc. (kinda like mal tags)
+        
+__Publisher (Optional)__
+
+### Book Entry Model (in the User's list)
+
+__Book - (foreign key to books in catalog, false if the book isn't in the catalog)__
+
+__Custom Book(flag) - (True if the book isn't from the catalog, False otherwise)__
+
+__Custom Book Attributes - the attributes from the Book model that the user fills out themselves. Empty if the book is from the catalog__
 
 *__Reading Status — for user__
 1. Not finished, reading, finished
@@ -63,12 +101,12 @@ __Last Chapter Read — entered by the user__
 
 __Last Date Read — once last chapter read is updated, it will automatically update the last date read data__
 
+__Notes - (where users can note info about the story, or certain chapters)__ 
+
 __Text Review__
 
 __Rating__
 1. Numeric, from 0 to 10, can be decimal
-        
-__Publisher (Optional)__
 
 ________________________
 ## The source of the book catalog dataset
@@ -82,6 +120,6 @@ ________________________
 ## User roles
 Owner/Superuser - The Owner (or the Superuser) in our web application has the ability add and remove admins. The Owner/Superuser is also able to perform all the operations that admins and user can do.
 
-Admin - The Admin is capable of accepting or rejecting tag (such as adding tags) and book (such as adding books to the catalog) requests, and is able to see other users' list. However, the admin is not capable of adding more admins into the web application.
+Admin - The Admin is capable of accepting or rejecting tag (such as adding tags) and book (such as adding books to the catalog) requests. However, the admin is not capable of adding more admins into the web application.
 
 User - The User is able to add books to their own list (which can be from the catalog or they can add all of the details of the book that they have read themselves), share their lists to other users, as well as add reviews and edit the last-read attribute to books in their list. They can also submit possible book tags or books for the catalog that the admins can accept or deny before adding them to the web application for other users to see publicly. 
