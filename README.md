@@ -2,7 +2,7 @@
 
 ## Group Name and Members
 
-Group name: Midoru
+Group name: Midoku
 
 * Muhammad Sakhran Thayyib AKA Duden 2206046790 
 * Galih Ibrahim Kurniawan 2206046696
