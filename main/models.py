@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from taggit.managers import TaggableManager
 import datetime
 
 NOVEL = "Novel"
@@ -18,7 +19,7 @@ class Book(models.Model):
     type = models.CharField(max_length=15,choices=TYPE_CHOICES, default=MANGA)
     author = models.CharField(max_length = 30)
     description = models.TextField()
-
+    tags = TaggableManager()
     #TODO: Tags
 
 

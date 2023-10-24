@@ -54,3 +54,9 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return redirect('main:login')
+
+def tag_parser(tag_string):
+    translation = tag_string.maketrans('\'[,]','    ')
+    tag_string = tag_string.translate(translation)
+    print(tag_string)
+    return [t.strip().capitalize() for t in tag_string.split(' ') if t.strip()]
