@@ -15,10 +15,11 @@ TYPE_CHOICES = [
     (NOVEL, "Novel")
 ]
 class Book(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
+    imagelink = models.CharField(max_length=300, null=True, blank= True)
     type = models.CharField(max_length=15,choices=TYPE_CHOICES, default=MANGA)
     author = models.CharField(max_length = 30)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     tags = TaggableManager()
     #TODO: Tags
 
