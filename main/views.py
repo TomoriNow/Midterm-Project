@@ -101,12 +101,17 @@ def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+def show_book_entry(request):
+    data = Book_Entry.objects.filter(user = request.user)
+    context = {"book_entries": data}
+    return render(request, "book_entry.html", context)
+
+
 def show_book_entry_by_id(request, id):
     data = Book_Entry.objects.select_related("catalog_entry").select_related("custom_entry").get(pk = id)
     context = {"entry": data}
-    catalog = data.catalog_entry
-    if catalog:
-        book = catalog.book
+    if hasattr(data, "catalog_entry"):
+        book = data.catalog_entry.book
         context["book"] = book
     else:
         context["book"] = data.custom_entry

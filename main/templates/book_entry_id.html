@@ -1,2 +1,10 @@
-{{ entry.review }}
-{{ book.name }}
+{% extends 'base.html' %}
+
+{% block content %} 
+    <p>{{ entry.review }}</p>
+    <p>{{ book.name }}</p>
+    <br/>
+    {% for tag in book.tags.all %}
+        {{ tag }}
+    {% endfor %}
+{% endblock content %} 

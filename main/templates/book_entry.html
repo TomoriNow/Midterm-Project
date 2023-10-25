@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+{% for entry in book_entries %}
+    {% if entry.custom_entry %}
+        {{entry.custom_entry.name}}
+    {% else %}
+        {{ entry.catalog_entry.book.name }}
+    {% endif %}
+{% endfor %}
+{% endblock content %} 
