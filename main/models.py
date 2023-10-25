@@ -21,6 +21,12 @@ class Book(models.Model):
     author = models.CharField(max_length = 30)
     description = models.TextField(null=True, blank=True)
     tags = TaggableManager()
+
+    def natural_key(self):
+        return (self.name)
+    
+    def __str__(self):
+        return self.name
     #TODO: Tags
 
 
@@ -50,6 +56,8 @@ class Catalog_Entry(models.Model):
         Book_Entry, on_delete=models.CASCADE, primary_key=True
     )
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    def __str__(self):
+        return '%s' % (self.book)
 
 class Custom_Entry(models.Model):
     entry = models.OneToOneField(
@@ -59,4 +67,7 @@ class Custom_Entry(models.Model):
     type = models.CharField(max_length=15,choices=TYPE_CHOICES, default=MANGA)
     author = models.CharField(max_length = 30)
     description = models.TextField()
+
+    def __str__(self):
+        return '%s' % (self.name)
 

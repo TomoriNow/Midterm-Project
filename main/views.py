@@ -2,7 +2,8 @@ import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
-from main.models import Book_Entry, Book
+from main.models import Book_Entry, Book, Catalog_Entry
+from main.serializers import Book_EntrySerializer
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -24,7 +25,7 @@ def show_main(request):
         'book_entries': book_entries,
     }
 
-    return render(request, 'main.html', context)
+    return render(request, 'book_entry.html', context)
 
 def show_catalog(request):
     p = Paginator(Book.objects.all(), 30)
@@ -37,7 +38,7 @@ def show_catalog(request):
         'book_entries': book_entries,
     }
 
-    return render(request, 'main.html', context)
+    return render(request, 'catalogue.html', context)
 
 def register(request):
     form = UserCreationForm()
@@ -80,8 +81,22 @@ def tag_parser(tag_string):
 
 def show_json(request):
     data = Book_Entry.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    input = Book_EntrySerializer(data, many = True).data
+    return HttpResponse(input, content_type="application/json")
 
 def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_book_entry_by_id(request, id):
+    data = Book_Entry.objects.select_related("catalog_entry").select_related("custom_entry").get(pk = id)
+    context = {"entry": data}
+    catalog = data.catalog_entry
+    if catalog:
+        book = catalog.book
+        context["book"] = book
+    else:
+        context["book"] = data.custom_entry
+    
+    return render(request, "book_entry_id.html", context)
+        
