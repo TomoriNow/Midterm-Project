@@ -11,20 +11,23 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
+from taggit.models import Tag
 
 @login_required(login_url='/login')
 def show_main(request):
-    entries = Book_Entry.objects.filter(user = request.user)
-    p = Paginator(Book_Entry.objects.filter(user = request.user), 30)
+    entries = Book.objects.all()
+    p = Paginator(Book.objects.all(), 30)
     page = request.GET.get('page')
-    book_entries = p.get_page(page)
+    book = p.get_page(page)
+    tags = Tag.objects.all()
 
     context = {
         'name': request.user.username,
         'class': 'PBP KKI',
-        'book_entries': book_entries,
+        'book': book,
+        'tags': tags,
     }
-
+    nums = "a" * book.paginator.num_pages
     return render(request, 'catalogue.html', context)
 
 def search_by_title(request):

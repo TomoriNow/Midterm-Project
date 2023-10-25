@@ -12,7 +12,7 @@
     <table>
         <div class="books">
             <div class="row gy-3">
-                {% for book in entries %}
+                {% for book in book %}
                 <div class="card-header">
                     {{book.name}}
                     {{book.imagelink}}
@@ -22,11 +22,31 @@
                     <p class="card-text">{{book.type}}</p>
                     <p class="card-text">{{book.author}}</p>
                     <p class="card-text">{{book.description}}</p>
-                    <p class="card-text">{{book.tags}}</p>
+                    <small>
+                    {% for tag in book.tags.all %}
+                        {{ tag }} 
+                    {% endfor %}
+                    </small>
                 </div>
             </div>
         </div>
         {% endfor %}
     </table>
+
+    {% if book.has_previous %}
+	<li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+
+	<li class="page-item"><a class="page-link" href="?page={{ book.previous_page_number }}">Previous</a></li>
+	
+{% endif %}
+
+<li class="page-item disabled"><a href="#" class="page-link">Page {{ book.number }} of {{ book.paginator.num_pages }}</a></li>
+
+{% if book.has_next %}
+	<li class="page-item"><a class="page-link" href="?page={{ book.next_page_number }}">Next</a></li>
+
+	<li class="page-item"><a class="page-link" href="?page={{ book.paginator.num_pages }}">Last &raquo</a></li>
+
+{% endif %}
     
 {% endblock content %}
