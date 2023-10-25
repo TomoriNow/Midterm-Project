@@ -24,7 +24,17 @@ def show_main(request):
         'book_entries': book_entries,
     }
 
-    return render(request, 'main.html', context)
+    return render(request, 'catalogue.html', context)
+
+def search_by_title(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        books = Book.objects.filter(name__contains = searched)
+
+        return render(request, 'templates/catalogue.html',{'searched': searched, 'books': books})
+    else:
+        return render(request, 'templates/catalogue.html',{})
+
 
 def show_catalog(request):
     p = Paginator(Book.objects.all(), 30)
@@ -85,3 +95,4 @@ def show_json(request):
 def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+

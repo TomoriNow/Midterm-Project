@@ -1,5 +1,5 @@
 from django.urls import path
-from main.views import show_main, register, login_user, logout_user, show_json, show_json_by_id
+from main.views import show_main, register, login_user, logout_user, show_json, show_json_by_id, search_by_title
 
 app_name = 'main'
 
@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('json/', show_json, name='show_json'),
     path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
+    path('search_title', search_by_title, name='search-title')
 ]
