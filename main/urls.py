@@ -9,6 +9,5 @@ urlpatterns = [
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
     path('json/', show_json, name='show_json'),
-    path('json/<int:id>/', show_json, name='show_json_by_id'),
-    #path('json/', show_json, name = 'show_json'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
 ]
