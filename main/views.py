@@ -25,7 +25,17 @@ def show_main(request):
         'book_entries': book_entries,
     }
 
-    return render(request, 'book_entry.html', context)
+    return render(request, 'catalogue.html', context)
+
+def search_by_title(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        books = Book.objects.filter(name__contains = searched)
+
+        return render(request, 'templates/catalogue.html',{'searched': searched, 'books': books})
+    else:
+        return render(request, 'templates/catalogue.html',{})
+
 
 def show_catalog(request):
     p = Paginator(Book.objects.all(), 30)
@@ -100,3 +110,5 @@ def show_book_entry_by_id(request, id):
     
     return render(request, "book_entry_id.html", context)
         
+
+
