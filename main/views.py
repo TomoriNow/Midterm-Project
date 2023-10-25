@@ -2,22 +2,39 @@ import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
-from main.models import Book_Entry
+from main.models import Book_Entry, Book
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages  
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 @login_required(login_url='/login')
 def show_main(request):
     entries = Book_Entry.objects.filter(user = request.user)
+    p = Paginator(Book_Entry.objects.filter(user = request.user), 30)
+    page = request.GET.get('page')
+    book_entries = p.get_page(page)
 
     context = {
         'name': request.user.username,
         'class': 'PBP KKI',
-        'products': entries,
+        'book_entries': book_entries,
+    }
+
+    return render(request, 'main.html', context)
+
+def show_catalog(request):
+    p = Paginator(Book.objects.all(), 30)
+    page = request.GET.get('page')
+    book_entries = p.get_page(page)
+
+    context = {
+        'name': request.user.username,
+        'class': 'PBP KKI',
+        'book_entries': book_entries,
     }
 
     return render(request, 'main.html', context)
