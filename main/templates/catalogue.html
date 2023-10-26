@@ -7,30 +7,31 @@
             <div class="row row-cols-1 row-cols-md-5 gy-3">
                 {% for book in book %}
                     <div class="col mx-4">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card border border-dark shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">{{ book.name }}</h5>
                                 {% load static %}
                                 <div class="ratio ratio-1x1">
                                     <img src="{{ book.imagelink }}">
                                 </div>
-                                <div class="row align-items-start">
+                                <div class="row align-items-start py-3">
                                     <div class="col">
                                         <p class="card-text">{{ book.type }}</p>
                                     </div>
                                     <div class="col">
                                         <p class="card-text">{{ book.author }}</p>
                                     </div>
-                                    <div class="col">
-                                        <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Add to List</button>
+                                    <div class="col py-3">
+                                        <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-success px-3 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</button>
+                                        <button type="button" class="btn btn-success">Description</button>
                                     </div>
                                 </div>
-                                <p class="card-text">{{ book.description }}</p>
                                 <div class="card-footer">
                                     {% for tag in book.tags.all %}
                                         {{ tag }}
                                     {% endfor %}
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

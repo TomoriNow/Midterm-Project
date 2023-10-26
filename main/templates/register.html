@@ -7,7 +7,6 @@
 {% block content %}  
 
 <style>
-
     html, body {
         height: 100%;
     }
@@ -20,9 +19,41 @@
         position: static;
         overflow: visible;
     }
+
+    /* CSS for the custom tooltip */
+    .form-group {
+        position: relative;
+    }
+
+    .form-group .tooltip {
+        visibility: hidden;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        text-align: center;
+        border-radius: 4px;
+        padding: 5px; /* Padding may be adjusted according to your design */
+        font-size: 12px;
+        white-space: pre-wrap; /* Allow text to wrap to the next line */
+        word-wrap: break-word; /* Break words that are too long */
+        width: 300px;
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: calc(100% + 10px); /* Position to the right of the text field */
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    .form-group:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+    }
 </style>
 
-<div class = "login"> 
+
+
+<div class="login"> 
 
     <div class="container py-5">
         <div class="row d-flex justify-content-center">
@@ -31,24 +62,30 @@
                     <div class="card-body p-5 text-center">
                         <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
                         <p class="text-black-50 mb-5">Please fill out the registration form below:</p>
-    
+
                         <form method="POST">
                             {% csrf_token %}
                             <div class="mb-4">
-                                <input type="text" name="username" placeholder="Username" class="form-control">
+                                <div class="form-group">
+                                    <input type="text" name="username" placeholder="Username" class="form-control">
+                                    <div class="tooltip">Required: ≤ 150 characters, use only letters, digits, @/./+/-/_.</div>
+                                </div>
                             </div>
-    
+
                             <div class="mb-4">
-                                <input type="password" name="password1" placeholder="Password" class="form-control">
+                                <div class="form-group">
+                                    <input type="password" name="password1" placeholder="Password" class="form-control">
+                                    <div class="tooltip">Ensure your password is not too similar to your personal info, has at least 8 characters, avoids common choices, and isn't purely numeric.</div>
+                                </div>
                             </div>
-    
+
                             <div class="mb-4">
                                 <input type="password" name="password2" placeholder="Confirm Password" class="form-control">
                             </div>
-    
+
                             <button class="btn btn-outline-primary btn-lg px-5" type="submit">Register</button>
                         </form>
-    
+
                         <div class="mt-4">
                             <p class="mb-0">Already have an account? <a href="{% url 'main:login' %}" class="text-primary fw-bold">Login</a></p>
                         </div>
