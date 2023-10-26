@@ -102,12 +102,14 @@ def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+@login_required(login_url='/login')
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)
     context = {"book_entries": data}
     return render(request, "book_entry.html", context)
 
 
+@login_required(login_url='/login')
 def show_book_entry_by_id(request, id):
     data = Book_Entry.objects.select_related("catalog_entry").select_related("custom_entry").get(pk = id)
     context = {"entry": data}
@@ -119,6 +121,7 @@ def show_book_entry_by_id(request, id):
     
     return render(request, "book_entry_id.html", context)
 
+@login_required(login_url='/login')
 def create_custom_entry(request):
     form = Custom_EntryForm(request.POST or None)
     form_2 = Book_EntryForm(request.POST or None)
@@ -138,6 +141,7 @@ def create_custom_entry(request):
         'form_2': form_2}
     return render(request, "create_custom_entry.html", context)
 
+@login_required(login_url='/login')
 def create_catalog_entry(request):
     if request.method == 'POST':
         print("success")
