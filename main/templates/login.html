@@ -30,6 +30,52 @@
     }
 </style>
 
+<script>
+    var konamiCode = [
+        'ArrowUp', 'ArrowUp',
+        'ArrowDown', 'ArrowDown',
+        'ArrowLeft', 'ArrowRight',
+        'ArrowLeft', 'ArrowRight',
+        'b', 'a', 'Enter'
+    ];
+    var konamiCodePosition = 0;
+    
+    var secretCode = 'midokulove';
+    var curryCode = 'stephencurrylove'
+    var inputCode = '';
+    
+    document.addEventListener('keydown', function (e) {
+        if (e.key === konamiCode[konamiCodePosition]) {
+            konamiCodePosition++;
+            if (konamiCodePosition === konamiCode.length) {
+                // Konami code entered correctly, play the soundbite
+                var audio = new Audio("{% static 'himitsu.mp3' %}");
+                audio.play();
+                konamiCodePosition = 0; // Reset the code position
+            }
+        } else {
+            konamiCodePosition = 0; // Reset if the key doesn't match
+        }
+        
+        // Check for the "midoku" easter egg
+        inputCode += e.key.toLowerCase();
+        if (inputCode.endsWith(secretCode)) {
+            // Redirect to the specified URL
+            window.location.href = "https://jisho.org/word/%E5%91%B3%E8%AA%AD";
+            inputCode = ''; // Reset the input code
+        }
+
+        else if (inputCode.endsWith(curryCode)) {
+            window.location.href = "https://en.wikipedia.org/wiki/Stephen_Curry"
+            inputCode = '';
+        }
+    });
+</script>
+
+
+
+
+
 <div class="login">
     <div class="square square-lg"></div>
     <div class="wrapper">
@@ -52,13 +98,17 @@
             <button class="btn mt-3" type="submit">Login</button>
         </form>
         
-        <!-- Display error message if it exists -->
-        {% if messages %}
-        <div class="text-center mt-3">
-            <p class="text-danger">Invalid Username/Password</p>
+        <div class="text-center fs-6" id="error-message">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-        {% endif %}
         
+
         <div class="text-center fs-6">
             Don't have an account? <a href="{% url 'main:register' %}">Sign up</a>
         </div>
