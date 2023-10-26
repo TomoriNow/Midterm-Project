@@ -15,7 +15,7 @@ TYPE_CHOICES = [
     (NOVEL, "Novel")
 ]
 class Book(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     imagelink = models.CharField(max_length=300, null=True, blank= True)
     type = models.CharField(max_length=15,choices=TYPE_CHOICES, default=MANGA)
     author = models.CharField(max_length = 30, null=True, blank= True)
