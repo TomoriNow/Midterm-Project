@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
-{% block content %} 
+{% block content %}
+{%include 'navbar.html'%}
 <table class="table table-striped table-hover" style = "width: 100%">
     <th> Name </th> 
     <th> Type </th>
@@ -9,14 +10,14 @@
     <tr>
         {% if entry.custom_entry %}
         <td>
-            {{entry.custom_entry.name}}
+            <a class="btn btn-link" href="/entry/{{entry.pk}}" role="button">{{entry.custom_entry.name}}</a>
         </td>
         <td>
             {{entry.custom_entry.type}}
         </td>
         {% else %}
         <td>
-            {{ entry.catalog_entry.book.name }}
+            <a class="btn btn-link" href="/entry/{{entry.pk}}" role="button">{{ entry.catalog_entry.book.name }}</a>
         </td>
         <td>
             {{ entry.catalog_entry.book.type }}
