@@ -19,17 +19,17 @@
         <div class="text-center mt-4 name">
             Midoku
         </div>
-        <form class="p-3 mt-3" method="POST" action="{% url 'main:show_main'%}">
+        <form method="POST" action="{% url 'main:login'%}" class="p-3 mt-3">
             {% csrf_token %}
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
-                <input type="text" name="userName" id="userName" placeholder="Username" class="far fa-user">
+                <input type="text" name="username" id="userName" placeholder="Username" class="far fa-user">
             </div>
             <div class="form-field d-flex align-items-center">
                 <span class="fas fa-key"></span>
                 <input type="password" name="password" id="pwd" placeholder="Password" class="fas fa-key">
             </div>
-            <button class="btn mt-3">Login</button>
+            <button class="btn mt-3" type="submit">Login</button>
         </form>
         <div class="text-center fs-6">
             Don't have an account? <a href="#">Sign up</a>
