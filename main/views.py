@@ -36,7 +36,7 @@ def search_by_title(request):
         searched = request.POST['searched']
         books = Book.objects.filter(name__contains = searched)
 
-        return render(request, 'catalogue.html',{'searched': searched, 'books': books})
+        return render(request, 'search_title.html',{'searched': searched, 'books': books})
     else:
         return render(request, 'catalogue.html',{})
 
