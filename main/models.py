@@ -47,7 +47,7 @@ class Book_Entry(models.Model):
     ]
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PLAN_TO_READ)
     last_chapter_read = models.IntegerField()
-    last_read_date = models.DateField(null=True, blank= True)
+    last_read_date = models.DateField()
     review = models.TextField()
     rating = models.IntegerField(default=0, validators=[MaxValueValidator(10), MinValueValidator(0)])
 

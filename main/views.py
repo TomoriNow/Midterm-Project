@@ -36,9 +36,9 @@ def search_by_title(request):
         searched = request.POST['searched']
         books = Book.objects.filter(name__contains = searched)
 
-        return render(request, 'templates/catalogue.html',{'searched': searched, 'books': books})
+        return render(request, 'catalogue.html',{'searched': searched, 'books': books})
     else:
-        return render(request, 'templates/catalogue.html',{})
+        return render(request, 'catalogue.html',{})
 
 
 def show_catalog(request):
@@ -137,5 +137,26 @@ def create_custom_entry(request):
         'form': form,
         'form_2': form_2}
     return render(request, "create_custom_entry.html", context)
+
+def create_catalog_entry(request):
+    if request.method == 'POST':
+        print("success")
+        name = request.POST.get("name")
+        status = request.POST.get("status")
+        last_chapter_read = request.POST.get("last_chapter_read")
+        review = request.POST.get("review")
+        rating = request.POST.get("rating")
+        last_read_date = datetime.datetime.now()
+        user = request.user
+        book = Book.objects.get(name = name)
+
+        new_entry = Book_Entry(status=status, last_chapter_read=last_chapter_read, review=review, rating=rating, last_read_date=last_read_date,user=user)
+        new_entry.save()
+        new_catalog_entry = Catalog_Entry(entry = new_entry, book = book)
+        new_catalog_entry.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
 
 
