@@ -30,6 +30,34 @@
     }
 </style>
 
+<script>
+    var konamiCode = [
+        'ArrowUp', 'ArrowUp',
+        'ArrowDown', 'ArrowDown',
+        'ArrowLeft', 'ArrowRight',
+        'ArrowLeft', 'ArrowRight',
+        'b', 'a', 'Enter'
+    ];
+    var konamiCodePosition = 0;
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === konamiCode[konamiCodePosition]) {
+            konamiCodePosition++;
+            if (konamiCodePosition === konamiCode.length) {
+                // Konami code entered correctly, play the soundbite
+                var audio = new Audio("{% static 'himitsu.mp3' %}");
+                audio.play();
+                konamiCodePosition = 0; // Reset the code position
+            }
+        } else {
+            konamiCodePosition = 0; // Reset if the key doesn't match
+        }
+    });
+</script>
+
+
+
+
 <div class="login">
     <div class="square square-lg"></div>
     <div class="wrapper">
