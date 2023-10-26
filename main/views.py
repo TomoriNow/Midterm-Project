@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
 from main.models import Book_Entry, Book, Catalog_Entry
+from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
@@ -117,6 +118,24 @@ def show_book_entry_by_id(request, id):
         context["book"] = data.custom_entry
     
     return render(request, "book_entry_id.html", context)
-        
+
+def create_custom_entry(request):
+    form = Custom_EntryForm(request.POST or None)
+    form_2 = Book_EntryForm(request.POST or None)
+    if form.is_valid() and form_2.is_valid() and request.method == "POST":
+        book_entry = form_2.save(commit=False)
+        book_entry.user = request.user
+        book_entry.last_read_date = datetime.datetime.now()
+        custom_entry = form.save(commit=False)
+        custom_entry.entry = book_entry
+        book_entry.save()
+        custom_entry.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {
+        'name' : request.user.username,
+        'form': form,
+        'form_2': form_2}
+    return render(request, "create_custom_entry.html", context)
 
 

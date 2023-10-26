@@ -18,7 +18,7 @@ class Book(models.Model):
     name = models.CharField(max_length=255, unique=True)
     imagelink = models.CharField(max_length=300, null=True, blank= True)
     type = models.CharField(max_length=15,choices=TYPE_CHOICES, default=MANGA)
-    author = models.CharField(max_length = 30)
+    author = models.CharField(max_length = 30, null=True, blank= True)
     description = models.TextField(null=True, blank=True)
     tags = TaggableManager()
 
@@ -47,7 +47,7 @@ class Book_Entry(models.Model):
     ]
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PLAN_TO_READ)
     last_chapter_read = models.IntegerField()
-    last_read_date = models.DateField()
+    last_read_date = models.DateField(null=True, blank= True)
     review = models.TextField()
     rating = models.IntegerField(default=0, validators=[MaxValueValidator(10), MinValueValidator(0)])
 
@@ -65,8 +65,9 @@ class Custom_Entry(models.Model):
     )
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=15,choices=TYPE_CHOICES, default=MANGA)
-    author = models.CharField(max_length = 30)
-    description = models.TextField()
+    author = models.CharField(max_length = 30, null=True, blank= True)
+    imagelink = models.CharField(max_length=300, null=True, blank= True)
+    description = models.TextField(null=True, blank= True)
 
     def __str__(self):
         return '%s' % (self.name)
