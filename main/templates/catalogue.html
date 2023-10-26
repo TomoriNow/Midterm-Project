@@ -2,35 +2,31 @@
 {% block content %}
 {%include 'navbar.html'%}
 <div class="px-4">
-    <h1>Midoku</h1>
-
-    <h5>Name:</h5>
-    <p>{{name}}</p>
-
-    <h5>Class:</h5>
-    <p>{{class}}</p>
-    
-    <table>
-        <div class="books">
-            <div class="row gy-3">
+    <h1 class="pb-5">Welcome, {{name}}</h1>
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-5 gy-3">
                 {% for book in book %}
-                <div class="card my-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ book.name }}</h5>
-                        {% load static %}
-                        <img src="{{ book.imagelink }}">
-                        <p class="card-text">{{ book.type }}</p>
-                        <p class="card-text">{{ book.author }}</p>
-                        <p class="card-text">{{ book.description }}</p>
-                        <small>
-                            {% for tag in book.tags.all %}
-                                {{ tag }}
-                            {% endfor %}
-                        </small>
+                    <div class="col mx-4">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.name }}</h5>
+                                {% load static %}
+                                <div class="ratio ratio-1x1">
+                                    <img src="{{ book.imagelink }}">
+                                </div>
+                                <p class="card-text">{{ book.type }}</p>
+                                <p class="card-text">{{ book.author }}</p>
+                                <p class="card-text">{{ book.description }}</p>
+                                <div class="card-footer">
+                                    {% for tag in book.tags.all %}
+                                        {{ tag }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                         <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add to List</button>
                     </div>
-                </div>
-                
+                {% endfor %}
                 </div>
             </div>
         </div>
