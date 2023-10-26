@@ -27,6 +27,7 @@
                                 {{ tag }}
                             {% endfor %}
                         </small>
+                        <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add to List</button>
                     </div>
                 </div>
                 
@@ -35,6 +36,53 @@
         </div>
         {% endfor %}
     </table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" readonly></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="col-form-label">Status:</label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="P">Plan to Read</option>
+                                <option value="O">On Hold</option>
+                                <option value="D">Dropped</option>
+                                <option value="F">Finished</option>
+                                <option value="R">Reading</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                            <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review" class="col-form-label">Review:</label>
+                            <textarea class="form-control" id="review" name="review"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="col-form-label">Rating:</label>
+                            <input type="number" class="form-control" id="rating" name="rating"></input>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" >Add Entry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     {% if book.has_previous %}
 	<li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
@@ -53,5 +101,19 @@
 {% endif %}
 
 </div>
-    
+<script>
+    function changeBook(title){
+        document.getElementById("name").value = title
+    }
+    function addEntry() {
+        fetch("{% url 'main:create_catalog_entry' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        })
+
+        document.getElementById("form").reset()
+        return false
+    }
+    document.getElementById("button_add").onclick = addEntry
+</script>
 {% endblock content %}

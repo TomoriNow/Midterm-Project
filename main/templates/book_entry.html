@@ -3,7 +3,7 @@
 {% block content %} 
 
 {% for entry in book_entries %}
-    {% if entry.custom_entry %}
+    {% if 'custom_entry' in entry.field.widget.attrs.class %}
         {{entry.custom_entry.name}}
     {% else %}
         {{ entry.catalog_entry.book.name }}
