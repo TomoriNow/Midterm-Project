@@ -22,20 +22,42 @@
     }
 </style>
 
-<div class = "login">
-    
-    <h1>Register</h1>  
+<div class = "login"> 
 
-        <form method="POST" >  
-            {% csrf_token %}  
-            <table>  
-                {{ form.as_table }}  
-                <tr>  
-                    <td></td>
-                    <td><input type="submit" name="submit" value="Daftar"/></td>  
-                </tr>  
-            </table>  
-        </form>
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-light text-black" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
+                        <p class="text-black-50 mb-5">Please fill out the registration form below:</p>
+    
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <input type="text" name="username" placeholder="Username" class="form-control">
+                            </div>
+    
+                            <div class="mb-4">
+                                <input type="password" name="password1" placeholder="Password" class="form-control">
+                            </div>
+    
+                            <div class="mb-4">
+                                <input type="password" name="password2" placeholder="Confirm Password" class="form-control">
+                            </div>
+    
+                            <button class="btn btn-outline-primary btn-lg px-5" type="submit">Register</button>
+                        </form>
+    
+                        <div class="mt-4">
+                            <p class="mb-0">Already have an account? <a href="{% url 'main:login' %}" class="text-primary fw-bold">Login</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
     {% if messages %}  
         <ul>   
