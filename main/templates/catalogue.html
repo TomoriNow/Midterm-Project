@@ -3,32 +3,33 @@
 {%include 'navbar.html'%}
 <div class="px-4">
     <h1 class="pb-5">Welcome, {{name}}</h1>
-    
-    <table>
-        <div class="books">
-            <div class="row gy-3">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-5 gy-3">
                 {% for book in book %}
-                <div class="card my-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ book.name }}</h5>
-                        {% load static %}
-                        <img src="{{ book.imagelink }}">
-                        <p class="card-text">{{ book.type }}</p>
-                        <p class="card-text">{{ book.author }}</p>
-                        <p class="card-text">{{ book.description }}</p>
-                        <small>
-                            {% for tag in book.tags.all %}
-                                {{ tag }}
-                            {% endfor %}
-                        </small>
+                    <div class="col mx-4">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.name }}</h5>
+                                {% load static %}
+                                <div class="ratio ratio-1x1">
+                                    <img src="{{ book.imagelink }}">
+                                </div>
+                                <p class="card-text">{{ book.type }}</p>
+                                <p class="card-text">{{ book.author }}</p>
+                                <p class="card-text">{{ book.description }}</p>
+                                <div class="card-footer">
+                                    {% for tag in book.tags.all %}
+                                        {{ tag }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
+                {% endfor %}
                 </div>
             </div>
         </div>
-        {% endfor %}
-    </table>
+        
 
     {% if book.has_previous %}
 	<li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
