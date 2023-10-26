@@ -77,7 +77,7 @@ def login_user(request):
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
         else:
-            messages.info(request, 'Sorry, incorrect username or password. Please try again.')
+            messages.error(request, 'Invalid Username/Password')
     context = {}
     return render(request, 'login.html', context)
 
