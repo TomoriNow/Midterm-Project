@@ -1,0 +1,1202 @@
+[
+  {
+    "pk": 1,
+    "model": "main.Book",
+    "fields": {
+      "name": "Berserk",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Demons', 'Drama', 'Fantasy', 'Horror', 'Supernatural', 'Military', 'Psychological', 'Seinen']",
+      "author": "Miura",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/157897.jpg"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "main.Book",
+    "fields": {
+      "name": "Fullmetal Alchemist",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Comedy', 'Drama', 'Shounen', 'Military']",
+      "author": "Arakawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/243675.jpg"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "main.Book",
+    "fields": {
+      "name": "One Piece",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Comedy', 'Fantasy', 'Shounen', 'Super', 'Super']",
+      "author": "Oda",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/253146.jpg"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "main.Book",
+    "fields": {
+      "name": "Monster",
+      "type": "Manga",
+      "tags": "['Mystery', 'Drama', 'Psychological', 'Seinen']",
+      "author": "Urasawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/258224.jpg"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "main.Book",
+    "fields": {
+      "name": "Vagabond",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Drama', 'Historical', 'Samurai', 'Seinen']",
+      "author": "Inoue",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/259070.jpg"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "main.Book",
+    "fields": {
+      "name": "Goodnight Punpun",
+      "type": "Manga",
+      "tags": "['Drama', 'Slice', 'Slice', 'Psychological', 'Seinen']",
+      "author": "Asano",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/266834.jpg"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "main.Book",
+    "fields": {
+      "name": "Grand Blue Dreaming",
+      "type": "Manga",
+      "tags": "['Comedy', 'Slice', 'Slice', 'Seinen']",
+      "author": "Inoue",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/166124.jpg"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "main.Book",
+    "fields": {
+      "name": "Slam Dunk",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'School', 'Shounen', 'Sports']",
+      "author": "Inoue",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/258749.jpg"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "main.Book",
+    "fields": {
+      "name": "20th Century Boys",
+      "type": "Manga",
+      "tags": "['Mystery', 'Drama', 'Historical', 'Sci', 'Sci', 'Psychological', 'Seinen']",
+      "author": "Urasawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/5/260006.jpg"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "main.Book",
+    "fields": {
+      "name": "Kaguya-sama: Love is War",
+      "type": "Manga",
+      "tags": "['Comedy', 'Romance', 'School', 'Seinen']",
+      "author": "Akasaka",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/188896.jpg"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "main.Book",
+    "fields": {
+      "name": "My Youth Romantic Comedy Is Wrong, As I Expected",
+      "type": "Novel",
+      "tags": "['Comedy', 'Romance', 'School']",
+      "author": "Watari",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/122461.jpg"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "main.Book",
+    "fields": {
+      "name": "Made in Abyss",
+      "type": "Manga",
+      "tags": "['Adventure', 'Drama', 'Fantasy', 'Sci', 'Sci']",
+      "author": "Tsukushi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/161645.jpg"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "main.Book",
+    "fields": {
+      "name": "GTO: Great Teacher Onizuka",
+      "type": "Manga",
+      "tags": "['Action', 'Comedy', 'Drama', 'Ecchi', 'School', 'Shounen']",
+      "author": "Fujisawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/172982.jpg"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "main.Book",
+    "fields": {
+      "name": "Spice & Wolf",
+      "type": "Novel",
+      "tags": "['Adventure', 'Drama', 'Fantasy', 'Historical', 'Romance', 'Supernatural']",
+      "author": "Hasekura",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/153860.jpg"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "main.Book",
+    "fields": {
+      "name": "Yotsuba&!",
+      "type": "Manga",
+      "tags": "['Comedy', 'Slice', 'Slice']",
+      "author": "Azuma",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/5/259524.jpg"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "main.Book",
+    "fields": {
+      "name": "Vinland Saga",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Drama', 'Historical', 'Seinen']",
+      "author": "Yukimura",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/188925.jpg"
+    }
+  },
+  {
+    "pk": 17,
+    "model": "main.Book",
+    "fields": {
+      "name": "Nausicaä of the Valley of the Wind",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Fantasy', 'Supernatural']",
+      "author": "Miyazaki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/259856.jpg"
+    }
+  },
+  {
+    "pk": 18,
+    "model": "main.Book",
+    "fields": {
+      "name": "A Silent Voice",
+      "type": "Manga",
+      "tags": "['Drama', 'School', 'Shounen']",
+      "author": "Ooima",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/120529.jpg"
+    }
+  },
+  {
+    "pk": 19,
+    "model": "main.Book",
+    "fields": {
+      "name": "Yona of the Dawn",
+      "type": "Manga",
+      "tags": "['Action', 'Comedy', 'Fantasy', 'Romance', 'Shoujo']",
+      "author": "Kusanagi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/269202.jpg"
+    }
+  },
+  {
+    "pk": 20,
+    "model": "main.Book",
+    "fields": {
+      "name": "The Empty Box and Zeroth Maria",
+      "type": "Novel",
+      "tags": "['Action', 'Mystery', 'Drama', 'Horror', 'Romance', 'School', 'Supernatural', 'Psychological', 'Thriller']",
+      "author": "Mikage",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/175662.jpg"
+    }
+  },
+  {
+    "pk": 21,
+    "model": "main.Book",
+    "fields": {
+      "name": "Haikyu!!",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'School', 'Shounen', 'Sports']",
+      "author": "Furudate",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/258225.jpg"
+    }
+  },
+  {
+    "pk": 22,
+    "model": "main.Book",
+    "fields": {
+      "name": "Space Brothers",
+      "type": "Manga",
+      "tags": "['Drama', 'Sci', 'Sci', 'Space', 'Seinen']",
+      "author": "Koyama",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/166256.jpg"
+    }
+  },
+  {
+    "pk": 23,
+    "model": "main.Book",
+    "fields": {
+      "name": "One-Punch Man",
+      "type": "Manga",
+      "tags": "['Action', 'Comedy', 'Parody', 'Sci', 'Sci', 'Super', 'Super', 'Supernatural']",
+      "author": "Murata",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/80661.jpg"
+    }
+  },
+  {
+    "pk": 24,
+    "model": "main.Book",
+    "fields": {
+      "name": "Land of the Lustrous",
+      "type": "Manga",
+      "tags": "['Action', 'Fantasy', 'Seinen']",
+      "author": "Ichikawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/115443.jpg"
+    }
+  },
+  {
+    "pk": 25,
+    "model": "main.Book",
+    "fields": {
+      "name": "Mushishi",
+      "type": "Manga",
+      "tags": "['Mystery', 'Fantasy', 'Historical', 'Supernatural', 'Seinen']",
+      "author": "Urushibara",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/159514.jpg"
+    }
+  },
+  {
+    "pk": 26,
+    "model": "main.Book",
+    "fields": {
+      "name": "Tower of God",
+      "type": "Manhwa",
+      "tags": "['Action', 'Adventure', 'Mystery', 'Drama', 'Fantasy']",
+      "author": "SIU (Story & Art)']",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/223694.jpg"
+    }
+  },
+  {
+    "pk": 27,
+    "model": "main.Book",
+    "fields": {
+      "name": "Death Note",
+      "type": "Manga",
+      "tags": "['Mystery', 'Drama', 'Shounen', 'Supernatural', 'Psychological']",
+      "author": "Obata",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/258245.jpg"
+    }
+  },
+  {
+    "pk": 28,
+    "model": "main.Book",
+    "fields": {
+      "name": "Real",
+      "type": "Manga",
+      "tags": "['Drama', 'Sports', 'Psychological', 'Seinen']",
+      "author": "Inoue",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/115969.jpg"
+    }
+  },
+  {
+    "pk": 29,
+    "model": "main.Book",
+    "fields": {
+      "name": "Natsume's Book of Friends",
+      "type": "Manga",
+      "tags": "['Drama', 'Shoujo', 'Supernatural']",
+      "author": "Midorikawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/260099.jpg"
+    }
+  },
+  {
+    "pk": 30,
+    "model": "main.Book",
+    "fields": {
+      "name": "Overlord",
+      "type": "Novel",
+      "tags": "['Action', 'Fantasy', 'Game', 'Magic', 'Supernatural']",
+      "author": "Maruyama",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/160558.jpg"
+    }
+  },
+  {
+    "pk": 31,
+    "model": "main.Book",
+    "fields": {
+      "name": "I sold my life for ten thousand yen per year.",
+      "type": "Manga",
+      "tags": "['Drama', 'Shounen']",
+      "author": "Taguchi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/5/260043.jpg"
+    }
+  },
+  {
+    "pk": 32,
+    "model": "main.Book",
+    "fields": {
+      "name": "Akira",
+      "type": "Manga",
+      "tags": "['Action', 'Sci', 'Sci', 'Seinen']",
+      "author": "Otomo",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/271629.jpg"
+    }
+  },
+  {
+    "pk": 33,
+    "model": "main.Book",
+    "fields": {
+      "name": "Nana",
+      "type": "Manga",
+      "tags": "['Drama', 'Music', 'Romance', 'Shoujo', 'Slice', 'Slice']",
+      "author": "Yazawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/262324.jpg"
+    }
+  },
+  {
+    "pk": 34,
+    "model": "main.Book",
+    "fields": {
+      "name": "Hunter x Hunter",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Fantasy', 'Shounen', 'Super', 'Super']",
+      "author": "Togashi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/253119.jpg"
+    }
+  },
+  {
+    "pk": 35,
+    "model": "main.Book",
+    "fields": {
+      "name": "Classroom of the Elite",
+      "type": "Novel",
+      "tags": "['Drama', 'School', 'Psychological']",
+      "author": "Tomose",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/177958.jpg"
+    }
+  },
+  {
+    "pk": 36,
+    "model": "main.Book",
+    "fields": {
+      "name": "ReLIFE",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'Romance', 'School', 'Slice', 'Slice']",
+      "author": "Yayoi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/171573.jpg"
+    }
+  },
+  {
+    "pk": 37,
+    "model": "main.Book",
+    "fields": {
+      "name": "BECK: Mongolian Chop Squad",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'Music', 'Romance', 'Shounen', 'Slice', 'Slice']",
+      "author": "Sakuishi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/253274.jpg"
+    }
+  },
+  {
+    "pk": 38,
+    "model": "main.Book",
+    "fields": {
+      "name": "Lone Wolf & Cub",
+      "type": "Manga",
+      "tags": "['Action', 'Historical', 'Samurai', 'Seinen']",
+      "author": "Koike",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/159264.jpg"
+    }
+  },
+  {
+    "pk": 39,
+    "model": "main.Book",
+    "fields": {
+      "name": "Konosuba: God's Blessing on This Wonderful World!",
+      "type": "Novel",
+      "tags": "['Adventure', 'Comedy', 'Fantasy', 'Supernatural']",
+      "author": "Mishima",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/174932.jpg"
+    }
+  },
+  {
+    "pk": 40,
+    "model": "main.Book",
+    "fields": {
+      "name": "Bloom Into You",
+      "type": "Manga",
+      "tags": "['Drama', 'School', 'Shoujo', 'Shoujo']",
+      "author": "Nakatani",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/232311.jpg"
+    }
+  },
+  {
+    "pk": 41,
+    "model": "main.Book",
+    "fields": {
+      "name": "Spy x Family",
+      "type": "Manga",
+      "tags": "['Action', 'Comedy', 'Shounen']",
+      "author": "Endou",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/219741.jpg"
+    }
+  },
+  {
+    "pk": 42,
+    "model": "main.Book",
+    "fields": {
+      "name": "Toilet-Bound Hanako-kun",
+      "type": "Manga",
+      "tags": "['School', 'Supernatural']",
+      "author": "Aida",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/192551.jpg"
+    }
+  },
+  {
+    "pk": 43,
+    "model": "main.Book",
+    "fields": {
+      "name": "Your Lie in April",
+      "type": "Manga",
+      "tags": "['Drama', 'Music', 'Romance', 'School', 'Shounen']",
+      "author": "Arakawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/102691.jpg"
+    }
+  },
+  {
+    "pk": 44,
+    "model": "main.Book",
+    "fields": {
+      "name": "Umineko When They Cry Episode 8: Twilight of the Golden Witch",
+      "type": "Manga",
+      "tags": "['Mystery', 'Drama', 'Fantasy', 'Magic', 'Shounen', 'Supernatural']",
+      "author": "Natsumi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/206205.jpg"
+    }
+  },
+  {
+    "pk": 45,
+    "model": "main.Book",
+    "fields": {
+      "name": "WorldEnd: What do you do at the end of the world? Are you busy? Will you save us?",
+      "type": "Novel",
+      "tags": "['Drama', 'Fantasy', 'Romance', 'Sci', 'Sci']",
+      "author": "Kareno",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/174609.jpg"
+    }
+  },
+  {
+    "pk": 46,
+    "model": "main.Book",
+    "fields": {
+      "name": "Aria",
+      "type": "Manga",
+      "tags": "['Adventure', 'Comedy', 'Drama', 'Sci', 'Sci', 'Shounen', 'Slice', 'Slice']",
+      "author": "Amano",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/202644.jpg"
+    }
+  },
+  {
+    "pk": 47,
+    "model": "main.Book",
+    "fields": {
+      "name": "Girls' Last Tour",
+      "type": "Manga",
+      "tags": "['Adventure', 'Slice', 'Slice']",
+      "author": "Tsukumizu (Story & Art)']",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/185918.jpg"
+    }
+  },
+  {
+    "pk": 48,
+    "model": "main.Book",
+    "fields": {
+      "name": "Kino no Tabi: The Beautiful World",
+      "type": "Novel",
+      "tags": "['Adventure', 'Mystery', 'Drama', 'Fantasy', 'Sci', 'Sci', 'Psychological']",
+      "author": "Sigsawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/4/1146.jpg"
+    }
+  },
+  {
+    "pk": 49,
+    "model": "main.Book",
+    "fields": {
+      "name": "Skip Beat!",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'Romance', 'Shoujo']",
+      "author": "Nakamura",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/255389.jpg"
+    }
+  },
+  {
+    "pk": 50,
+    "model": "main.Book",
+    "fields": {
+      "name": "Rurouni Kenshin: Meiji Swordsman Romantic Story",
+      "type": "Manga",
+      "tags": "['Action', 'Drama', 'Historical', 'Samurai', 'Shounen']",
+      "author": "Watsuki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/127583.jpg"
+    }
+  },
+  {
+    "pk": 51,
+    "model": "main.Book",
+    "fields": {
+      "name": "Pluto: Urusawa x Tezuka",
+      "type": "Manga",
+      "tags": "['Action', 'Mystery', 'Mecha', 'Sci', 'Sci', 'Psychological', 'Seinen']",
+      "author": "Urasawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/264496.jpg"
+    }
+  },
+  {
+    "pk": 52,
+    "model": "main.Book",
+    "fields": {
+      "name": "JoJo's Bizarre Adventure Part 4: Diamond Is Unbreakable",
+      "type": "Manga",
+      "tags": "['Action', 'Shounen', 'Supernatural']",
+      "author": "Araki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/269910.jpg"
+    }
+  },
+  {
+    "pk": 53,
+    "model": "main.Book",
+    "fields": {
+      "name": "Pandora Hearts",
+      "type": "Manga",
+      "tags": "['Adventure', 'Mystery', 'Fantasy', 'Shounen', 'Supernatural']",
+      "author": "Mochizuki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/169004.jpg"
+    }
+  },
+  {
+    "pk": 54,
+    "model": "main.Book",
+    "fields": {
+      "name": "Blank Canvas: My So-Called Artist's Journey",
+      "type": "Manga",
+      "tags": "['Slice', 'Slice', 'Josei']",
+      "author": "Higashimura",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/154270.jpg"
+    }
+  },
+  {
+    "pk": 55,
+    "model": "main.Book",
+    "fields": {
+      "name": "One Hundred Mob Psycho",
+      "type": "Manga",
+      "tags": "['Action', 'Comedy', 'Supernatural']",
+      "author": "ONE (Story & Art)']",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/204842.jpg"
+    }
+  },
+  {
+    "pk": 56,
+    "model": "main.Book",
+    "fields": {
+      "name": "Re:ZERO -Starting Life in Another World-",
+      "type": "Novel",
+      "tags": "['Action', 'Drama', 'Fantasy']",
+      "author": "Nagatsuki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/129447.jpg"
+    }
+  },
+  {
+    "pk": 57,
+    "model": "main.Book",
+    "fields": {
+      "name": "Dorohedoro",
+      "type": "Manga",
+      "tags": "['Action', 'Comedy', 'Fantasy', 'Horror', 'Seinen']",
+      "author": "Hayashida",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/258246.jpg"
+    }
+  },
+  {
+    "pk": 58,
+    "model": "main.Book",
+    "fields": {
+      "name": "Attack on Titan",
+      "type": "Manga",
+      "tags": "['Action', 'Mystery', 'Drama', 'Fantasy', 'Horror', 'Shounen', 'Super', 'Super', 'Supernatural']",
+      "author": "Isayama",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/37846.jpg"
+    }
+  },
+  {
+    "pk": 59,
+    "model": "main.Book",
+    "fields": {
+      "name": "No Game No Life",
+      "type": "Novel",
+      "tags": "['Comedy', 'Ecchi', 'Fantasy', 'Game', 'Supernatural']",
+      "author": "Kamiya",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/188186.jpg"
+    }
+  },
+  {
+    "pk": 60,
+    "model": "main.Book",
+    "fields": {
+      "name": "Baccano!",
+      "type": "Novel",
+      "tags": "['Action', 'Mystery', 'Fantasy']",
+      "author": "Narita",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/172736.jpg"
+    }
+  },
+  {
+    "pk": 61,
+    "model": "main.Book",
+    "fields": {
+      "name": "Mobile Suit Gundam: The Origin",
+      "type": "Manga",
+      "tags": "['Action', 'Drama', 'Mecha', 'Sci', 'Sci', 'Shounen', 'Space', 'Military']",
+      "author": "Yasuhiko",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/151300.jpg"
+    }
+  },
+  {
+    "pk": 62,
+    "model": "main.Book",
+    "fields": {
+      "name": "Banana Fish",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Drama', 'Shoujo']",
+      "author": "Yoshida",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/5/265185.jpg"
+    }
+  },
+  {
+    "pk": 63,
+    "model": "main.Book",
+    "fields": {
+      "name": "A Bride's Story",
+      "type": "Manga",
+      "tags": "['Drama', 'Historical', 'Romance', 'Seinen']",
+      "author": "Mori",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/188950.jpg"
+    }
+  },
+  {
+    "pk": 64,
+    "model": "main.Book",
+    "fields": {
+      "name": "Monthly Girls' Nozaki-kun",
+      "type": "Manga",
+      "tags": "['Comedy', 'Romance', 'School']",
+      "author": "Tsubaki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/208752.jpg"
+    }
+  },
+  {
+    "pk": 65,
+    "model": "main.Book",
+    "fields": {
+      "name": "Spirit Circle",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Comedy', 'Drama', 'Romance', 'Supernatural', 'Seinen']",
+      "author": "Mizukami",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/161198.jpg"
+    }
+  },
+  {
+    "pk": 66,
+    "model": "main.Book",
+    "fields": {
+      "name": "Ouran High School Host Club",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'Romance', 'School', 'Shoujo', 'Harem', 'Gender', 'Gender']",
+      "author": "Hatori",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/267782.jpg"
+    }
+  },
+  {
+    "pk": 67,
+    "model": "main.Book",
+    "fields": {
+      "name": "Wake Up, Sleeping Beauty",
+      "type": "Manga",
+      "tags": "['Romance', 'Shoujo']",
+      "author": "Morino",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/164641.jpg"
+    }
+  },
+  {
+    "pk": 68,
+    "model": "main.Book",
+    "fields": {
+      "name": "Tokyo Ghoul",
+      "type": "Manga",
+      "tags": "['Action', 'Mystery', 'Drama', 'Horror', 'Supernatural', 'Psychological', 'Seinen']",
+      "author": "Ishida",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/114037.jpg"
+    }
+  },
+  {
+    "pk": 69,
+    "model": "main.Book",
+    "fields": {
+      "name": "Neon Genesis Evangelion",
+      "type": "Manga",
+      "tags": "['Action', 'Mystery', 'Drama', 'Mecha', 'Sci', 'Sci', 'Shounen', 'Psychological']",
+      "author": "Sadamoto",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/145061.jpg"
+    }
+  },
+  {
+    "pk": 70,
+    "model": "main.Book",
+    "fields": {
+      "name": "Legend of the Galactic Heroes",
+      "type": "Novel",
+      "tags": "['Action', 'Adventure', 'Drama', 'Sci', 'Sci', 'Space', 'Military']",
+      "author": "Tanaka",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/5/155231.jpg"
+    }
+  },
+  {
+    "pk": 71,
+    "model": "main.Book",
+    "fields": {
+      "name": "Gin Tama",
+      "type": "Manga",
+      "tags": "['Action', 'Comedy', 'Historical', 'Parody', 'Samurai', 'Sci', 'Sci', 'Shounen']",
+      "author": "Sorachi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/267795.jpg"
+    }
+  },
+  {
+    "pk": 72,
+    "model": "main.Book",
+    "fields": {
+      "name": "Phoenix",
+      "type": "Manga",
+      "tags": "['Drama', 'Fantasy', 'Historical', 'Romance', 'Sci', 'Sci', 'Shounen', 'Space', 'Supernatural', 'Psychological']",
+      "author": "Tezuka",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/159419.jpg"
+    }
+  },
+  {
+    "pk": 73,
+    "model": "main.Book",
+    "fields": {
+      "name": "Kamisama Kiss",
+      "type": "Manga",
+      "tags": "['Comedy', 'Demons', 'Fantasy', 'Romance', 'Shoujo', 'Supernatural']",
+      "author": "Suzuki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/269698.jpg"
+    }
+  },
+  {
+    "pk": 74,
+    "model": "main.Book",
+    "fields": {
+      "name": "Eyeshield 21",
+      "type": "Manga",
+      "tags": "['Action', 'Comedy', 'Shounen', 'Sports']",
+      "author": "Inagaki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/165586.jpg"
+    }
+  },
+  {
+    "pk": 75,
+    "model": "main.Book",
+    "fields": {
+      "name": "The Twelve Kingdoms",
+      "type": "Novel",
+      "tags": "['Fantasy']",
+      "author": "Ono",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/157938.jpg"
+    }
+  },
+  {
+    "pk": 76,
+    "model": "main.Book",
+    "fields": {
+      "name": "Cross Game",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'Romance', 'School', 'Shounen', 'Sports']",
+      "author": "Adachi",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/260530.jpg"
+    }
+  },
+  {
+    "pk": 77,
+    "model": "main.Book",
+    "fields": {
+      "name": "Hinamatsuri",
+      "type": "Manga",
+      "tags": "['Comedy', 'Sci', 'Sci', 'Slice', 'Slice', 'Seinen']",
+      "author": "Ohtake",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/285804.jpg"
+    }
+  },
+  {
+    "pk": 78,
+    "model": "main.Book",
+    "fields": {
+      "name": "Noragami: Stray God",
+      "type": "Manga",
+      "tags": "['Action', 'Fantasy', 'Romance', 'Shounen', 'Supernatural']",
+      "author": "Adachitoka (Story & Art)']",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/161911.jpg"
+    }
+  },
+  {
+    "pk": 79,
+    "model": "main.Book",
+    "fields": {
+      "name": "Horimiya",
+      "type": "Manga",
+      "tags": "['Comedy', 'Romance', 'School', 'Shounen', 'Slice', 'Slice']",
+      "author": "Hagiwara",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/245008.jpg"
+    }
+  },
+  {
+    "pk": 80,
+    "model": "main.Book",
+    "fields": {
+      "name": "Your name.",
+      "type": "Manga",
+      "tags": "['Drama', 'Romance', 'School', 'Supernatural', 'Seinen']",
+      "author": "Shinkai",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/182270.jpg"
+    }
+  },
+  {
+    "pk": 81,
+    "model": "main.Book",
+    "fields": {
+      "name": "Fruits Basket",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'Romance', 'School', 'Shoujo', 'Supernatural']",
+      "author": "Takaya",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/269697.jpg"
+    }
+  },
+  {
+    "pk": 82,
+    "model": "main.Book",
+    "fields": {
+      "name": "Black Butler",
+      "type": "Manga",
+      "tags": "['Action', 'Demons', 'Mystery', 'Fantasy', 'Historical', 'Shounen', 'Supernatural']",
+      "author": "Toboso",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/248448.jpg"
+    }
+  },
+  {
+    "pk": 83,
+    "model": "main.Book",
+    "fields": {
+      "name": "The Climber",
+      "type": "Manga",
+      "tags": "['Drama', 'Sports', 'Psychological', 'Seinen']",
+      "author": "Sakamoto",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/5/96223.jpg"
+    }
+  },
+  {
+    "pk": 84,
+    "model": "main.Book",
+    "fields": {
+      "name": "Golden Kamuy",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Historical', 'Seinen']",
+      "author": "Noda",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/149257.jpg"
+    }
+  },
+  {
+    "pk": 85,
+    "model": "main.Book",
+    "fields": {
+      "name": "I Want to Eat Your Pancreas",
+      "type": "Manga",
+      "tags": "['Drama']",
+      "author": "Kirihara",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/191611.jpg"
+    }
+  },
+  {
+    "pk": 86,
+    "model": "main.Book",
+    "fields": {
+      "name": "21st Century Boys",
+      "type": "Manga",
+      "tags": "['Mystery', 'Drama', 'Sci', 'Sci', 'Psychological', 'Seinen']",
+      "author": "Urasawa",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/263856.jpg"
+    }
+  },
+  {
+    "pk": 87,
+    "model": "main.Book",
+    "fields": {
+      "name": "Bakuman。",
+      "type": "Manga",
+      "tags": "['Comedy', 'Drama', 'Romance', 'Shounen']",
+      "author": "Obata",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/208974.jpg"
+    }
+  },
+  {
+    "pk": 88,
+    "model": "main.Book",
+    "fields": {
+      "name": "Lucifer and the Biscuit Hammer",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Comedy', 'Drama', 'Psychological', 'Seinen']",
+      "author": "Mizukami",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/56421.jpg"
+    }
+  },
+  {
+    "pk": 89,
+    "model": "main.Book",
+    "fields": {
+      "name": "Nodame Cantabile",
+      "type": "Manga",
+      "tags": "['Comedy', 'Romance', 'Slice', 'Slice', 'Josei']",
+      "author": "Ninomiya",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/153962.jpg"
+    }
+  },
+  {
+    "pk": 90,
+    "model": "main.Book",
+    "fields": {
+      "name": "Blade of the Immortal",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Drama', 'Historical', 'Martial', 'Martial', 'Samurai', 'Supernatural', 'Seinen']",
+      "author": "Samura",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/279869.jpg"
+    }
+  },
+  {
+    "pk": 91,
+    "model": "main.Book",
+    "fields": {
+      "name": "Barakamon",
+      "type": "Manga",
+      "tags": "['Comedy', 'Shounen', 'Slice', 'Slice']",
+      "author": "Yoshino",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/216099.jpg"
+    }
+  },
+  {
+    "pk": 92,
+    "model": "main.Book",
+    "fields": {
+      "name": "Umineko WHEN THEY CRY Episode 5: End of the Golden Witch",
+      "type": "Manga",
+      "tags": "['Mystery', 'Drama', 'Fantasy', 'Horror', 'Magic', 'Shounen', 'Supernatural', 'Psychological', 'Thriller']",
+      "author": "Ryukishi07 (Story)",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/273941.jpg"
+    }
+  },
+  {
+    "pk": 93,
+    "model": "main.Book",
+    "fields": {
+      "name": "Annarasumanara",
+      "type": "Manhwa",
+      "tags": "['Mystery', 'Drama', 'Romance', 'School', 'Psychological', 'Seinen']",
+      "author": "Ha",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/71143.jpg"
+    }
+  },
+  {
+    "pk": 94,
+    "model": "main.Book",
+    "fields": {
+      "name": "ERASED",
+      "type": "Manga",
+      "tags": "['Mystery', 'Supernatural', 'Psychological', 'Seinen']",
+      "author": "Sanbe",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/172082.jpg"
+    }
+  },
+  {
+    "pk": 95,
+    "model": "main.Book",
+    "fields": {
+      "name": "Dragon Ball",
+      "type": "Manga",
+      "tags": "['Action', 'Adventure', 'Comedy', 'Martial', 'Martial', 'Sci', 'Sci', 'Shounen', 'Super', 'Super']",
+      "author": "Toriyama",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/1/267793.jpg"
+    }
+  },
+  {
+    "pk": 96,
+    "model": "main.Book",
+    "fields": {
+      "name": "Battle Angel Alita",
+      "type": "Manga",
+      "tags": "['Action', 'Sci', 'Sci', 'Seinen']",
+      "author": "Kishiro",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/274715.jpg"
+    }
+  },
+  {
+    "pk": 97,
+    "model": "main.Book",
+    "fields": {
+      "name": "The Ancient Magus' Bride",
+      "type": "Manga",
+      "tags": "['Fantasy', 'Magic', 'Shounen', 'Slice', 'Slice']",
+      "author": "Yamazaki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/121263.jpg"
+    }
+  },
+  {
+    "pk": 98,
+    "model": "main.Book",
+    "fields": {
+      "name": "Wolf Children: Ame & Yuki",
+      "type": "Manga",
+      "tags": "['Drama', 'Fantasy', 'Romance', 'Slice', 'Slice', 'Seinen']",
+      "author": "Hosoda",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/165496.jpg"
+    }
+  },
+  {
+    "pk": 99,
+    "model": "main.Book",
+    "fields": {
+      "name": "The Saga of Tanya the Evil",
+      "type": "Novel",
+      "tags": "['Magic', 'Military']",
+      "author": "Shinotsuki",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/2/155214.jpg"
+    }
+  },
+  {
+    "pk": 100,
+    "model": "main.Book",
+    "fields": {
+      "name": "The Promised Neverland",
+      "type": "Manga",
+      "tags": "['Mystery', 'Horror', 'Sci', 'Sci', 'Shounen']",
+      "author": "Demizu",
+      "description": "Empty Description",
+      "imagelink": "https://cdn.myanimelist.net/images/manga/3/186922.jpg"
+    }
+  }
+]
