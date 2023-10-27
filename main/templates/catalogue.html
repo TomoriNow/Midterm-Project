@@ -27,7 +27,7 @@
                                         <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">Add</button>
                                     </div>
                                     <div class="col me-2">
-                                        <button onclick = "description('{{book.description}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
+                                        <button onclick = "getDescription('{{book.description}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -143,13 +143,15 @@
     }
     document.getElementById("button_add").onclick = addEntry
     
-    async function getProducts() {
+    async function getBooks(bookID) {
         return fetch("{% url 'main:get_book_json' %}").then((res) => res.json())
     }
     
-    function description(bookDescription) {
-        bookDescription = bookDescription.replace(/(\r\n|\n|\r)/gm,'')
-        document.getElementById("descriptionForm").textContent = bookDescription
+    async function getDescription(bookDescription) {
+        document.getElementById("descriptionForm").innerHTML = ""
+        let htmlString = bookDescription
+        htmlString = htmlString.replace(/(\r\n|\n|\r)/gm,'')
+        document.getElementById("descriptionForm").innerHTML = htmlString
     }
     
     
