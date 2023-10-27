@@ -6,6 +6,7 @@ from main.models import Book_Entry, Book, Catalog_Entry
 from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer, BookSerializer
 from rest_framework.generics import ListAPIView
+from rest_framework.renderers import JSONRenderer
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -33,15 +34,16 @@ def show_main(request):
     nums = "a" * book.paginator.num_pages
     return render(request, 'catalogue.html', context)
 
+@login_required(login_url='/login')
 def search_by_title(request):
     if request.method == 'POST':
         searched = request.POST['searched']
         books = Book.objects.filter(name__contains = searched)
         book = Book.objects.filter(name__contains = searched).exists()
 
-        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book})
+        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username})
     else:
-        return render(request, 'catalogue.html',{})
+        return render(request, 'catalogue.html', {'name': request.user.username})
 
 def adding_tag():
     for book in Book.objects.all():
@@ -117,6 +119,18 @@ def get_books(request):
     input = BookSerializer(data, many=True)
     return HttpResponse(input, content_type="application/json")
 
+def get_entry_by_id(request, id):
+    data = Book_Entry.objects.get(pk = id)
+    input = Book_EntrySerializer(data).data
+    entry_content = JSONRenderer().render(input)
+    if hasattr(data, "custom_entry"):
+        book = data.custom_entry
+    else:
+        book = data.catalog_entry.book
+    book_content = serializers.serialize("json", book)
+    content = {key: value for (key, value) in (entry_content.items() + book_content.items())}
+    return HttpResponse(content, content_type="application/json")
+
 def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
@@ -124,7 +138,9 @@ def show_json_by_id(request, id):
 @login_required(login_url='/login')
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)
-    context = {"book_entries": data}
+    context = {"book_entries": data,
+               'name':request.user.username
+               }
     return render(request, "book_entry.html", context)
 
 
