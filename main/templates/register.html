@@ -1,23 +1,32 @@
 {% extends 'base.html' %}
-
 {% block meta %}
+{% load static %}
+<head>
     <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
 {% endblock meta %}
 
-{% block content %}  
-
+{% block content %}
 <style>
     html, body {
         height: 100%;
+        margin: 0; /* Remove default margin */
     }
-    
+
+    body {
+        background: linear-gradient(rgba(0, 186, 140, 1), rgba(139, 233, 255, 1));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .login {
         width: 100%;
-        height: 100%;
-        background: linear-gradient(rgba(0,186,140,1), rgba(139,233,255,1));
-        opacity: 1;
-        position: static;
-        overflow: visible;
+        max-width: 500px; /* Adjust the maximum width as needed */
+        padding: 20px;
+        text-align: center;
     }
 
     /* CSS for the custom tooltip */
@@ -52,42 +61,68 @@
 </style>
 
 
+<div class="login">
+    <div class="square square-lg"></div>
+    <div class="wrapper">
+        <div class="logo">
+            <img src="{% static 'logos.png' %}" alt="logo">
+        </div>
+        <div class="text-center mt-4 name">
+            M  I  D  O  K  U
+        </div>
+        <form method="POST" action="{% url 'main:register'%}" class="p-3 mt-3">
+            {% csrf_token %}
 
-<div class="login"> 
-
-    <div class="container py-5">
-        <div class="square square-lg"></div>
-            <div class="wrapper">
-                {% load static %}
-                <div class="logo">
-                    <img src="{% static 'logos.png' %}" alt="logo">
-                </div>
-                <div class="text-center mt-4 name">
-                    Register
-                </div>
-                <form method="POST" action="{% url 'main:login'%}" class="p-3 mt-3">
-                    {% csrf_token %}
-                    <div class="form-field d-flex align-items-center">
-                        <span class="far fa-user"></span>
-                        <input type="text" name="username" placeholder="Username" class="form-control">
-                        <div class="tooltip">Required: ≤ 150 characters, use only letters, digits, @/./+/-/_.</div>
-                        <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
-                    </div>
-                    <div class="form-field d-flex align-items-center">
-                        <span class="fas fa-key"></span>
-                        <input type="password" name="password1" placeholder="Password" class="form-control">
-                        <div class="tooltip">Ensure your password is not too similar to your personal info, has at least 8 characters, avoids common choices, and isn't purely numeric.</div>
-                    </div>
-                    <div class="form-field d-flex align-items-center">
-                        <span class="fas fa-key"></span>
-                        <input type="password" name="password2" placeholder="Confirm Password" class="form-control">
-                        <div class="tooltip">Ensure your password is not too similar to your personal info, has at least 8 characters, avoids common choices, and isn't purely numeric.</div>
-                    </div>
-                    <button class="btn btn-outline-primary btn-lg px-5" type="submit">Register</button>
-                </form>
+            <div class="form-field d-flex align-items-center">
+                <span class="far fa-user">
+                    <span class="tt" data-bs-placement="left" title="Required: ≤ 150 characters, use only letters, digits, @/./+/-/_.">
+                    <i class="bi bi-question-diamond-fill"></i>
+                    </span>
+                </span>
+                <input type="text" name="username" id="userName" placeholder="Username" class="far fa-user">
             </div>
+            
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key">
+                    <span class="tt" data-bs-placement="left" title="Ensure your password is not too similar to your personal info, has at least 8 characters, avoids common choices, and isn't purely numeric.">
+                    <i class="bi bi-question-diamond-fill"></i>
+                    </span>
+                </span>
+                <input type="password" name="password1" id="pwd1" placeholder="Password" class="fas fa-key">
+                
+
+            </div>
+            
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <input type="password" name="password2" id="pwd2" placeholder="Confirm Password" class="fas fa-key">
+            </div>
+            <button class="btn mt-3" type="submit">Register</button>
+        </form>
+        
+        <div class="text-center fs-6" id="error-message">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+
+        <div class="text-center fs-6">
+            Already have an account? <a href="{% url 'main:login' %}">Log in</a>
         </div>
     </div>
+</div>
 
+<script>
+    const tooltips = document.querySelectorAll('.tt')
+    tooltips.forEach( t => {
+        new bootstrap.Tooltip(t)
+    })
+
+</script>
 
 {% endblock content %}
