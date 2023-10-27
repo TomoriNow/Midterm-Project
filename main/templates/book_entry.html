@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load entrytags %}
 {% block content %}
 {%include 'navbar.html'%}
 <table class="table table-striped table-hover" style = "width: 100%">
@@ -8,24 +8,33 @@
     <th> Last Chapter Read </th>
     {% for entry in book_entries %}
     <tr>
-        {% if entry.custom_entry %}
+        {% get_book entry as book %}
         <td>
-            <a class="btn btn-link" href="/entry/{{entry.pk}}" role="button">{{entry.custom_entry.name}}</a>
+            <a class="btn btn-link" onclick ="show({{entry.pk}})" role="button">{{book.name}}</a>
         </td>
         <td>
-            {{entry.custom_entry.type}}
+            {{book.type}}
         </td>
-        {% else %}
-        <td>
-            <a class="btn btn-link" href="/entry/{{entry.pk}}" role="button">{{ entry.catalog_entry.book.name }}</a>
-        </td>
-        <td>
-            {{ entry.catalog_entry.book.type }}
-        </td>
-        {% endif %}
         <td>
             {{ entry.last_chapter_read }}
         </td>
     {% endfor %}
 </table>
+<div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="form" onsubmit="return false;">
+                {% csrf_token %}
+                <div id="bookView">
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" >Add Entry</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock content %} 

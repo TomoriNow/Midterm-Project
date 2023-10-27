@@ -6,6 +6,7 @@ from main.models import Book_Entry, Book, Catalog_Entry
 from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer, BookSerializer
 from rest_framework.generics import ListAPIView
+from rest_framework.renderers import JSONRenderer
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -112,6 +113,18 @@ def get_books(request):
     data = Book.objects.all()
     input = BookSerializer(data, many=True)
     return HttpResponse(input, content_type="application/json")
+
+def get_entry_by_id(request, id):
+    data = Book_Entry.objects.get(pk = id)
+    input = Book_EntrySerializer(data).data
+    entry_content = JSONRenderer().render(input)
+    if hasattr(data, "custom_entry"):
+        book = data.custom_entry
+    else:
+        book = data.catalog_entry.book
+    book_content = serializers.serialize("json", book)
+    content = {key: value for (key, value) in (entry_content.items() + book_content.items())}
+    return HttpResponse(content, content_type="application/json")
 
 def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)
