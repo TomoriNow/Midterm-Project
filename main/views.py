@@ -34,15 +34,16 @@ def show_main(request):
     nums = "a" * book.paginator.num_pages
     return render(request, 'catalogue.html', context)
 
+@login_required(login_url='/login')
 def search_by_title(request):
     if request.method == 'POST':
         searched = request.POST['searched']
         books = Book.objects.filter(name__contains = searched)
         book = Book.objects.filter(name__contains = searched).exists()
 
-        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book})
+        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username})
     else:
-        return render(request, 'catalogue.html',{})
+        return render(request, 'catalogue.html', {'name': request.user.username})
 
 def adding_tag():
     for book in Book.objects.all():
@@ -137,7 +138,9 @@ def show_json_by_id(request, id):
 @login_required(login_url='/login')
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)
-    context = {"book_entries": data}
+    context = {"book_entries": data,
+               'name':request.user.username
+               }
     return render(request, "book_entry.html", context)
 
 
