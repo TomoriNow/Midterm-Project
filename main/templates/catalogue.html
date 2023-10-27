@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {%include 'navbar.html'%}
-<div class="px-4">
-    <h1 class="pb-5">Welcome, {{name}}</h1>
+<div class="px-4 py-5">
         <div class="container">
             <div class="row row-cols-1 row-cols-md-5 gy-3">
                 {% for book in book %}
@@ -14,16 +13,21 @@
                                 <div class="ratio ratio-1x1">
                                     <img src="{{ book.imagelink }}">
                                 </div>
-                                <div class="row align-items-start py-3">
-                                    <div class="col">
+                                <div class="row py-3">
+                                    <div class="col ms-4">
                                         <p class="card-text">{{ book.type }}</p>
                                     </div>
-                                    <div class="col">
+                                    <div class="col me-1">
                                         <p class="card-text">{{ book.author }}</p>
                                     </div>
-                                    <div class="col py-3">
-                                        <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-success px-3 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</button>
-                                        <button type="button" class="btn btn-success">Description</button>
+                                    
+                                </div>
+                                <div class="row pb-3">
+                                    <div class="col ms-4">
+                                        <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">Add</button>
+                                    </div>
+                                    <div class="col me-2">
+                                        <button onclick = "description('{{book.description}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -39,12 +43,13 @@
                 </div>
             </div>
         </div>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+    <!--Add Product Modal-->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                    <h1 class="modal-title fs-5" id="addProductModalLabel">Add New Item</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -85,6 +90,24 @@
             </div>
         </div>
     </div>
+    
+    <!--Description Modal-->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="descriptionModalLabel">Description</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="descriptionForm"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -119,5 +142,16 @@
         return false
     }
     document.getElementById("button_add").onclick = addEntry
+    
+    async function getProducts() {
+        return fetch("{% url 'main:get_book_json' %}").then((res) => res.json())
+    }
+    
+    function description(bookDescription) {
+        bookDescription = bookDescription.replace(/(\r\n|\n|\r)/gm,'')
+        document.getElementById("descriptionForm").textContent = bookDescription
+    }
+    
+    
 </script>
 {% endblock content %}
