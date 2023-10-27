@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 {%include 'navbar.html'%}
+{% if not book %}
+    <h1>Sorry the title {{searched}} does not exist</h1>
+{% else %}
 <div class="container">
     <div class="row row-cols-1 row-cols-md-5 gy-3">
         {% for book in books %}
@@ -117,6 +120,7 @@ function addEntry() {
 }
 document.getElementById("button_add").onclick = addEntry
 </script>
+{% endif %}
 {% endblock content %}
 
 

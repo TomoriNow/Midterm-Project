@@ -17,7 +17,7 @@ from taggit.models import Tag
 
 @login_required(login_url='/login')
 def show_main(request):
-    p = Paginator(Book.objects.all().order_by('pk'), 15)
+    p = Paginator(Book.objects.all().order_by('pk'), 16)
     page = request.GET.get('page')
     book = p.get_page(page)
     if len(book[0].taggits.all()) == 0:
@@ -37,8 +37,9 @@ def search_by_title(request):
     if request.method == 'POST':
         searched = request.POST['searched']
         books = Book.objects.filter(name__contains = searched)
+        book = Book.objects.filter(name__contains = searched).exists()
 
-        return render(request, 'search_title.html',{'searched': searched, 'books': books})
+        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book})
     else:
         return render(request, 'catalogue.html',{})
 
