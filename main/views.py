@@ -1,10 +1,10 @@
-import datetime
+import datetime, json
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound, JsonResponse
 from django.urls import reverse
 from main.models import Book_Entry, Book, Catalog_Entry
 from main.forms import Book_EntryForm, Custom_EntryForm
-from main.serializers import Book_EntrySerializer, BookSerializer
+from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from django.core import serializers
@@ -119,16 +119,23 @@ def get_books(request):
     return HttpResponse(input, content_type="application/json")
 
 def get_entry_by_id(request, id):
+    print("success")
     data = Book_Entry.objects.get(pk = id)
     input = Book_EntrySerializer(data).data
-    entry_content = JSONRenderer().render(input)
+    entry_content = JSONRenderer().render(input).decode('utf-8')
     if hasattr(data, "custom_entry"):
         book = data.custom_entry
     else:
         book = data.catalog_entry.book
-    book_content = serializers.serialize("json", book)
-    content = {key: value for (key, value) in (entry_content.items() + book_content.items())}
-    return HttpResponse(content, content_type="application/json")
+    book_content = JSONRenderer().render(CustomSerializer(book).data).decode('utf-8')
+    entry_dict = json.loads(entry_content)
+    book_dict = json.loads(book_content)
+    content = {**entry_dict, **book_dict}
+    content_json = json.dumps(content)
+    response_data = {
+    "result": "Success",
+    "data": content_json}
+    return JsonResponse(response_data)
 
 def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)

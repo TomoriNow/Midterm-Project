@@ -10,7 +10,7 @@
     <tr>
         {% get_book entry as book %}
         <td>
-            <a class="btn btn-link" onclick ="show({{entry.pk}})" role="button">{{book.name}}</a>
+            <button class="btn btn-link" onclick ="showEntry({{entry.pk}})" data-bs-toggle="modal" data-bs-target="#entryModal"  role="button">{{book.name}}</button>
         </td>
         <td>
             {{book.type}}
@@ -35,6 +35,44 @@
         </div>
     </div>
 </div>
-
-
+<script>
+    async function getEntry(pk) {
+        const link = "get-entry-by-id/"+pk
+        return fetch(link).then((response) => {return response.json();})
+    }
+    async function showEntry(pk) {
+        document.getElementById("bookView").innerHTML = ""
+        const entry = await getEntry(pk)
+        const data = JSON.parse(entry.data)
+        let htmlString = `<div class="modal-header">
+            <h1 class="modal-title fs-5" id="entryModalLabel">${data.name}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="status" class="col-form-label">Status:</label>
+                        <select class="form-control" id="status" name="status" value = "${data.status}">
+                            <option value="P">Plan to Read</option>
+                            <option value="O">On Hold</option>
+                            <option value="D">Dropped</option>
+                            <option value="F">Finished</option>
+                            <option value="R">Reading</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                        <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read" value = "${data.last_chapter_read}"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="review" class="col-form-label">Review:</label>
+                        <textarea class="form-control" id="review" name="review" >${data.review}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rating" class="col-form-label">Rating:</label>
+                        <input type="number" class="form-control" id="rating" name="rating" value = "${data.rating}"></input>
+                    </div>
+                </div>`
+        document.getElementById("bookView").innerHTML = htmlString
+            }
+</script>
 {% endblock content %} 

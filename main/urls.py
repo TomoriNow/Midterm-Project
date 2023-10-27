@@ -17,5 +17,5 @@ urlpatterns = [
     path('create-catalog-entry/', create_catalog_entry, name = "create_catalog_entry"),
     path('BookAPIView/', BookListAPIView.as_view(), name = "BookAPIView"),
     path('get-book/', get_book_json, name='get_book_json'),
-    path('get-entry-by-id/<int:id>', get_entry_by_id, name = "get_entry_by_id"),
+    path('entry/get-entry-by-id/<int:id>', get_entry_by_id, name = "get_entry_by_id"),
 ]
