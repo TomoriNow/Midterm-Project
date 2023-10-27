@@ -9,61 +9,9 @@
 {% endblock meta %}
 
 {% block content %}
-<style>
-    html, body {
-        height: 100%;
-        margin: 0; /* Remove default margin */
-    }
-
-    body {
-        background: linear-gradient(rgba(0, 186, 140, 1), rgba(139, 233, 255, 1));
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .login {
-        width: 100%;
-        max-width: 500px; /* Adjust the maximum width as needed */
-        padding: 20px;
-        text-align: center;
-    }
-
-    /* CSS for the custom tooltip */
-    .form-group {
-        position: relative;
-    }
-
-    .form-group .tooltip {
-        visibility: hidden;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: #fff;
-        text-align: center;
-        border-radius: 4px;
-        padding: 5px; /* Padding may be adjusted according to your design */
-        font-size: 12px;
-        white-space: pre-wrap; /* Allow text to wrap to the next line */
-        word-wrap: break-word; /* Break words that are too long */
-        width: 300px;
-        position: absolute;
-        z-index: 1;
-        top: 50%;
-        left: calc(100% + 10px); /* Position to the right of the text field */
-        transform: translateY(-50%);
-        opacity: 0;
-        transition: opacity 0.2s;
-    }
-
-    .form-group:hover .tooltip {
-        visibility: visible;
-        opacity: 1;
-    }
-</style>
-
-
 <div class="login">
     <div class="square square-lg"></div>
-    <div class="wrapper">
+    <div class="wrapper my-5">
         <div class="logo">
             <img src="{% static 'logos.png' %}" alt="logo">
         </div>
@@ -72,7 +20,6 @@
         </div>
         <form method="POST" action="{% url 'main:register'%}" class="p-3 mt-3">
             {% csrf_token %}
-
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user">
                     <span class="tt" data-bs-placement="left" title="Required: ≤ 150 characters, use only letters, digits, @/./+/-/_.">

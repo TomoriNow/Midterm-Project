@@ -5,30 +5,47 @@
     <title>Login</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-    
 {% endblock meta %}
 
 {% block content %}
-<style>
-    html, body {
-        height: 100%;
-        margin: 0; /* Remove default margin */
-    }
+<div class="login">
+    <div class="square square-lg"></div>
+    <div class="wrapper my-5">
+        <div class="logo">
+            <img src="{% static 'logos.png' %}" alt="logo">
+        </div>
+        <div class="text-center mt-4 name">
+            Midoku
+        </div>
+        <form method="POST" action="{% url 'main:login'%}" class="p-3 mt-3">
+            {% csrf_token %}
+            <div class="form-field d-flex align-items-center">
+                <span class="far fa-user"></span>
+                <input type="text" name="username" id="userName" placeholder="Username" class="far fa-user">
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <input type="password" name="password" id="pwd" placeholder="Password" class="fas fa-key">
+            </div>
+            <button class="btn mt-3" type="submit">Login</button>
+        </form>
+        
+        <div class="text-center fs-6" id="error-message">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
 
-    body {
-        background: linear-gradient(rgba(0, 186, 140, 1), rgba(139, 233, 255, 1));
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .login {
-        width: 100%;
-        max-width: 500px; /* Adjust the maximum width as needed */
-        padding: 20px;
-        text-align: center;
-    }
-</style>
+        <div class="text-center fs-6">
+            Don't have an account? <a href="{% url 'main:register' %}">Sign up</a>
+        </div>
+    </div>
+</div>
 
 <script>
     var konamiCode = [
@@ -71,48 +88,5 @@
         }
     });
 </script>
-
-
-
-
-
-<div class="login">
-    <div class="square square-lg"></div>
-    <div class="wrapper">
-        <div class="logo">
-            <img src="{% static 'logos.png' %}" alt="logo">
-        </div>
-        <div class="text-center mt-4 name">
-            Midoku
-        </div>
-        <form method="POST" action="{% url 'main:login'%}" class="p-3 mt-3">
-            {% csrf_token %}
-            <div class="form-field d-flex align-items-center">
-                <span class="far fa-user"></span>
-                <input type="text" name="username" id="userName" placeholder="Username" class="far fa-user">
-            </div>
-            <div class="form-field d-flex align-items-center">
-                <span class="fas fa-key"></span>
-                <input type="password" name="password" id="pwd" placeholder="Password" class="fas fa-key">
-            </div>
-            <button class="btn mt-3" type="submit">Login</button>
-        </form>
-        
-        <div class="text-center fs-6" id="error-message">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-danger">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-        
-
-        <div class="text-center fs-6">
-            Don't have an account? <a href="{% url 'main:register' %}">Sign up</a>
-        </div>
-    </div>
-</div>
 
 {% endblock content %}

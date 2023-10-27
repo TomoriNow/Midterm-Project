@@ -1,6 +1,6 @@
 from django.urls import path
 from main.views import show_main, register, login_user, logout_user, show_json, show_json_by_id, show_book_entry_by_id, search_by_title, show_book_entry, create_custom_entry, create_catalog_entry, BookListAPIView, get_entry_by_id
-
+from main.views import get_book_json
 app_name = 'main'
 
 urlpatterns = [
@@ -16,5 +16,6 @@ urlpatterns = [
     path('create-custom-entry/', create_custom_entry, name = 'create_custom_entry' ),
     path('create-catalog-entry/', create_catalog_entry, name = "create_catalog_entry"),
     path('BookAPIView/', BookListAPIView.as_view(), name = "BookAPIView"),
+    path('get-book/', get_book_json, name='get_book_json'),
     path('get-entry-by-id/<int:id>', get_entry_by_id, name = "get_entry_by_id"),
 ]
