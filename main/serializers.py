@@ -9,7 +9,7 @@ class BookSerializer(TaggitSerializer, serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ('name', 'imagelink', 'type', 'author', 'description', 'tags', 'taggits')
+        fields = "__all__"
 
 class Book_EntrySerializer(serializers.ModelSerializer):
     catalog_entry = serializers.StringRelatedField()
