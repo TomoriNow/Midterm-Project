@@ -5,6 +5,7 @@ from django.urls import reverse
 from main.models import Book_Entry, Book, Catalog_Entry
 from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer, BookSerializer
+from rest_framework.generics import ListAPIView
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -16,10 +17,11 @@ from taggit.models import Tag
 
 @login_required(login_url='/login')
 def show_main(request):
-    entries = Book.objects.all()
     p = Paginator(Book.objects.all().order_by('pk'), 15)
     page = request.GET.get('page')
     book = p.get_page(page)
+    if len(book[0].taggits.all()) == 0:
+        adding_tag()
     tags = Tag.objects.all()
 
     context = {
@@ -40,6 +42,11 @@ def search_by_title(request):
     else:
         return render(request, 'catalogue.html',{})
 
+def adding_tag():
+    for book in Book.objects.all():
+        list = tag_parser(book.tags)
+        book.taggits.set(list, clear=True)
+        print(book.name)
 
 def show_catalog(request):
     p = Paginator(Book.objects.all(), 30)
@@ -90,16 +97,20 @@ def logout_user(request):
 def tag_parser(tag_string):
     translation = tag_string.maketrans('\'[,]','    ')
     tag_string = tag_string.translate(translation)
-    print(tag_string)
     return [t.strip().capitalize() for t in tag_string.split(' ') if t.strip()]
 
 def show_json(request):
     data = Book.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+class BookListAPIView(ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
 def get_books(request):
     data = Book.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    input = BookSerializer(data, many=True)
+    return HttpResponse(input, content_type="application/json")
 
 def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)

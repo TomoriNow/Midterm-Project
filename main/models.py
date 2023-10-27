@@ -21,6 +21,7 @@ class Book(models.Model):
     author = models.CharField(max_length = 30, null=True, blank= True)
     description = models.TextField(null=True, blank=True)
     tags = models.TextField(null=True, blank=True)
+    taggits = TaggableManager(blank=True)
     
     def __str__(self):
         return self.name
