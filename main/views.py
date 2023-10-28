@@ -141,9 +141,10 @@ def get_entry_by_id(request, id):
     entry_content = JSONRenderer().render(input).decode('utf-8')
     if hasattr(data, "custom_entry"):
         book = data.custom_entry
+        book_content = JSONRenderer().render(CustomSerializer(book).data).decode('utf-8')
     else:
         book = data.catalog_entry.book
-    book_content = JSONRenderer().render(CustomSerializer(book).data).decode('utf-8')
+        book_content = JSONRenderer().render(BookSerializer(book).data).decode('utf-8')
     entry_dict = json.loads(entry_content)
     book_dict = json.loads(book_content)
     content = {**entry_dict, **book_dict}
@@ -179,7 +180,8 @@ def show_book_entry(request):
                'owner': request.user.username,
                'not_owner': "false",
                'is_owner':True,
-               'tags': tags
+               'tags': tags,
+               'user': request.user
                }
     return render(request, "book_entry.html", context)
 
@@ -262,11 +264,12 @@ def create_catalog_entry(request):
         last_chapter_read = request.POST.get("last_chapter_read")
         review = request.POST.get("review")
         rating = request.POST.get("rating")
+        notes = request.POST.get("notes")
         last_read_date = datetime.datetime.now()
         user = request.user
         book = Book.objects.get(name = name)
 
-        new_entry = Book_Entry(status=status, last_chapter_read=last_chapter_read, review=review, rating=rating, last_read_date=last_read_date,user=user)
+        new_entry = Book_Entry(status=status, last_chapter_read=last_chapter_read, review=review, rating=rating, last_read_date=last_read_date,user=user, notes = notes)
         new_entry.save()
         new_catalog_entry = Catalog_Entry(entry = new_entry, book = book)
         new_catalog_entry.save()
@@ -274,6 +277,7 @@ def create_catalog_entry(request):
         return HttpResponse(b"CREATED", status=201)
 
     return HttpResponseNotFound()
+
 
 
 @csrf_exempt

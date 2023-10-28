@@ -76,7 +76,7 @@
                         </form>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            {% if is_owner %}
+                            {% if is_owner or  user.is_staff %}
                                 <div id="DeleteSpace"></div>
                                 <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit Entry</button>
                             {% endif %}
