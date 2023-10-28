@@ -116,7 +116,7 @@ class BookListAPIView(ListAPIView):
 
 def get_books(request):
     data = Book.objects.all()
-    input = BookSerializer(data, many=True)
+    input = JSONRenderer().render(BookSerializer(data, many=True).data)
     return HttpResponse(input, content_type="application/json")
 
 def get_entry_by_id(request, id):
