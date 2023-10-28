@@ -94,9 +94,16 @@
                     </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        {% if is_owner or  user.is_staff %}
+                            {% if user.is_staff and is_owner is False %}
+                                <div id="DeleteSpace"></div>
+                            {% endif %}
+                        {% if is_owner  %}
                             <div id="DeleteSpace"></div>
                             <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit Entry</button>
+                        {% else %}
+                        <td>
+                            <button class="btn btn-primary"  data-bs-dismiss="modal" onclick = "copyEntry()">Open second modal</button>
+                        </td>
                         {% endif %}
                     </div>
                 </div>
@@ -220,14 +227,14 @@
                             </div>
                         <div class="col-lg">
                             <div class="mb-3">
-                                <label for="author" class="col-label">Author:</label>
-                                <p id ="author" name = "author">${data.author}</p>
-                                <label for="type" class="col-label">Type:</label>
-                                <p id ="type" name = "type">${data.type}</p>
-                                <label for="last_read" class="col-label">Last Read:</label>
-                                <p id ="last_read" name = "last_read">${data.last_read_date}</p>
-                                <label for="status" class="col-form-label">Status:</label>
-                                <select class="form-control" id="status" name="status" value = "${data.status}"`
+                                <label for="show_author" class="col-label">Author:</label>
+                                <p id ="show_author" name = "show_author">${data.author}</p>
+                                <label for="show_type" class="col-label">Type:</label>
+                                <p id ="show_type" name = "show_type">${data.type}</p>
+                                <label for="show_last_read" class="col-label">Last Read:</label>
+                                <p id ="show_last_read" name = "show_last_read">${data.last_read_date}</p>
+                                <label for="show_status" class="col-form-label">Status:</label>
+                                <select class="form-control" id="show_status" name="status" value = "${data.status}"`
                                 if ({{not_owner}}) {
                                     htmlString += ` disabled`
                                 }
@@ -240,8 +247,8 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
-                                <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read" value = "${data.last_chapter_read}"`
+                                <label for="show_last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                                <input type="number" class="form-control" id="show_last_chapter_read" name="last_chapter_read" value = "${data.last_chapter_read}"`
                                 if ({{not_owner}}) {
                                     htmlString += ` readonly`
                                 }
@@ -264,16 +271,16 @@
                                 htmlString +=`>${data.review}</textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="rating" class="col-form-label">Rating:</label>
-                                <input type="number" class="form-control" id="rating" name="rating" value = "${data.rating}"`
+                                <label for="show_rating" class="col-form-label">Rating:</label>
+                                <input type="number" class="form-control" id="show_rating" name="rating" value = "${data.rating}"`
                                 if ({{not_owner}}) {
                                     htmlString += ` readonly`
                                 }
                                 htmlString +=`></input>
                             </div>
                     <div class="mb-3">
-                        <label for="tags" class="col-form-label">Tags:</label>
-                        <div id = "tags">`
+                        <label for="show_tags" class="col-form-label">Tags:</label>
+                        <div id = "show_tags">`
                         data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
                         htmlString +=`
                     </div>
@@ -285,7 +292,7 @@
         }
     
         async function editTable(pk) {
-            const status_val = document.getElementById("last_chapter_read").value;
+            const status_val = document.getElementById("status").value;
             const status = "status_" + pk;
             document.getElementById(status).innerHTML = status_val;
         }
@@ -357,5 +364,35 @@
             document.getElementById("tag_group").lastElementChild.remove();
         }
         document.getElementById("remove_tag").onclick = removeTag;
-    </script>
-    {% endblock content %}
+    var count = 1
+    function addTag(){
+        const element = document.createElement("select");
+        const stuff = `{% for tag in tags %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
+        element.setAttribute("class", "form-control")
+        element.setAttribute("name", "tag")
+        element.innerHTML = stuff
+        document.getElementById("tag_group").appendChild(element);
+        count +=1;
+    }
+    document.getElementById("add_tag").onclick = addTag
+
+    function removeTag(){
+        document.getElementById("tag_group").lastElementChild.remove();
+    }
+    document.getElementById("remove_tag").onclick = removeTag
+    function copyEntry() {
+        fetch("{% url 'main:copy_entry' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        })
+
+        document.getElementById("form").reset()
+        return false
+    }
+    document.getElementById("button_copy").onclick = copyEntry
+
+
+        </script>   
+
+    {% endblock content %} 
+

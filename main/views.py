@@ -282,7 +282,7 @@ def create_catalog_entry(request):
 @login_required(login_url='/login')
 def copy_entry(request):
     if request.method == 'POST':
-        id = request.POST.get("id")
+        id = request.POST.get("pk")
         status = request.POST.get("status")
         last_chapter_read = request.POST.get("last_chapter_read")
         review = request.POST.get("review")
