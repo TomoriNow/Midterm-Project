@@ -226,6 +226,14 @@
                                 htmlString +=`></input>
                             </div>
                             <div class="mb-3">
+                                <label for="notes" class="col-form-label">Notes:</label>
+                                <textarea class="form-control" id="notes" name="notes" `
+                                if ({{not_owner}}) {
+                                    htmlString += ` readonly`
+                                }
+                                htmlString +=`>${data.notes}</textarea>
+                            </div>
+                            <div class="mb-3">
                                 <label for="review" class="col-form-label">Review:</label>
                                 <textarea class="form-control" id="review" name="review" `
                                 if ({{not_owner}}) {
