@@ -2,7 +2,7 @@ import datetime, json
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound, JsonResponse
 from django.urls import reverse
-from main.models import Book_Entry, Book, Catalog_Entry
+from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry
 from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer
 from rest_framework.generics import ListAPIView
@@ -279,7 +279,37 @@ def create_catalog_entry(request):
 
     return HttpResponseNotFound()
 
+@login_required(login_url='/login')
+def copy_entry(request):
+    if request.method == 'POST':
+        id = request.POST.get("id")
+        status = request.POST.get("status")
+        last_chapter_read = request.POST.get("last_chapter_read")
+        review = request.POST.get("review")
+        rating = request.POST.get("rating")
+        notes = request.POST.get("notes")
+        last_read_date = datetime.datetime.now()
+        user = request.user
+        og_book_entry = Book_Entry.objects.get(pk = id)
+        new_entry = Book_Entry(status=status, last_chapter_read=last_chapter_read, review=review, rating=rating, last_read_date=last_read_date,user=user, notes = notes)
+        new_entry.save()
+        print(og_book_entry)
+        print(new_entry)
+        if hasattr(og_book_entry, "custom_entry"):
+            book = og_book_entry.custom_entry
+            book.pk = None
+            book.entry = new_entry
+            book.save()
+            print(book)
+        else:
+            book = og_book_entry.catalog_entry.book
+            catalog_entry = Catalog_Entry(entry = new_entry, book = book)
+            catalog_entry.save()
+            print(catalog_entry)
 
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
 
 @csrf_exempt
 def delete_entry(request, id):
