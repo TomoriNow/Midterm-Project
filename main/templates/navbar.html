@@ -4,16 +4,9 @@
 
 <head>
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-    @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet');    
-    #welcomeText {
-      font-family: 'Poppins', sans-serif;
-    }
-  </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 {% endblock meta %}
 {% block content %}
@@ -40,14 +33,14 @@
           </li>
         </ul>
         <ul class="navbar-nav mr-auto">
-        <div class="dropdown">
+        <div class="dropdown my-2">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Dropdown
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for tag in tags %}
               <a class="dropdown-item" href="#"> {{ tag }}</a>
-              {% endfor %}
+            {% endfor %}
           </div>
       </div>
         <a href="{% url 'main:show_entry' %}">
@@ -56,11 +49,10 @@
         <a href="{% url 'main:show_other_users' %}">
           <button class="btn btn-outline-info px-3 mx-2 my-2" aria-current="page" type="submit">Other Users</button>
         </a>
-        <form class="d-flex" method="POST" action="{% url 'main:search-title' %}">
+        <form class="d-flex my-2" method="POST" action="{% url 'main:search-title' %}">
           {% csrf_token %}
-          <h5><strong>{{ last_login }}</strong></h5>
           <input class="form-control" type="search" placeholder="Search Titles" aria-label="Search" name="searched" value="{{ searched }}"/>
-          <button class="btn btn-outline-dark mx-2 py-1" type="submit">Search</button>
+          <button class="btn btn-outline-dark mx-2" type="submit">Search</button>
         </form>
           <a href="{% url 'main:logout' %}">
             <button type="button" class="btn btn-outline-danger my-2">
