@@ -122,6 +122,9 @@ def get_books(request):
     return HttpResponse(input, content_type="application/json")
 
 def get_books_by_tag(request, tag):
+    context ={
+        'tags': tag
+    }
     book = Book.objects.filter(taggits__name = tag).order_by('pk')
     input = JSONRenderer().render(BookSerializer(book, many=True).data)
     return HttpResponse(input, content_type="application/json")

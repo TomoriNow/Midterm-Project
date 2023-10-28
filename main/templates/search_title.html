@@ -7,8 +7,8 @@
         <h1 class="text-center">Please return to home page by clicking the logo</h1>
     </body>
 {% else %}
-<div class="pt-5" style=" background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
-    <div class="container">
+<body style=" background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
+    <div class="container pt-5">
         <div class="row row-cols-1 row-cols-md-5 gy-3">
             {% for book in books %}
                 <div class="col mx-4">
@@ -60,88 +60,88 @@
         </div>
     </div>
 
-<!--Add Product Modal-->
-<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addProductModalLabel">Add New Item</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="form" onsubmit="return false;">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" readonly></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="col-form-label">Status:</label>
-                        <select class="form-control" id="status" name="status">
-                            <option value="P">Plan to Read</option>
-                            <option value="O">On Hold</option>
-                            <option value="D">Dropped</option>
-                            <option value="F">Finished</option>
-                            <option value="R">Reading</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
-                        <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="review" class="col-form-label">Review:</label>
-                        <textarea class="form-control" id="review" name="review"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="rating" class="col-form-label">Rating:</label>
-                        <input type="number" class="form-control" id="rating" name="rating"></input>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" >Add Entry</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Description Modal-->
-<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="descriptionModalLabel">Description</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="descriptionForm" class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <!--Add Product Modal-->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addProductModalLabel">Add New Item</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" readonly></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="col-form-label">Status:</label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="P">Plan to Read</option>
+                                <option value="O">On Hold</option>
+                                <option value="D">Dropped</option>
+                                <option value="F">Finished</option>
+                                <option value="R">Reading</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                            <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review" class="col-form-label">Review:</label>
+                            <textarea class="form-control" id="review" name="review"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="col-form-label">Rating:</label>
+                            <input type="number" class="form-control" id="rating" name="rating"></input>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" >Add Entry</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container-fluid" style="background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
-    <div class="row justify-content-center">
-        <ul class="pagination justify-content-center">
-            {% if book.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
-
-            <li class="page-item"><a class="page-link" href="?page={{ book.previous_page_number }}">Previous</a></li>
-            {% endif %}
-            <li class="page-item disabled" style="list-style: none; text-align: center;"><a href="#" class="page-link">Page {{ book.number }} of {{ book.paginator.num_pages }}</a></li>
-            {% if book.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ book.next_page_number }}">Next</a></li>
-
-            <li class="page-item"><a class="page-link" href="?page={{ book.paginator.num_pages }}">Last &raquo</a></li>
-            {% endif %}
-        </ul>
+    <!--Description Modal-->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="descriptionModalLabel">Description</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="descriptionForm" class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-</div>
+
+    <div class="container-fluid" style="background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
+        <div class="row justify-content-center">
+            <ul class="pagination justify-content-center">
+                {% if book.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+
+                <li class="page-item"><a class="page-link" href="?page={{ book.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item disabled" style="list-style: none; text-align: center;"><a href="#" class="page-link">Page {{ book.number }} of {{ book.paginator.num_pages }}</a></li>
+                {% if book.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ book.next_page_number }}">Next</a></li>
+
+                <li class="page-item"><a class="page-link" href="?page={{ book.paginator.num_pages }}">Last &raquo</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</body>
 <script>
 function changeBook(title){
     document.getElementById("name").value = title

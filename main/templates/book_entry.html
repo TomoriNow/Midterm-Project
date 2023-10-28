@@ -35,29 +35,37 @@
                     {% endfor %}
                 </tbody>
             </table>
-
-            <a href="{% url 'main:show_main' %}">
-                <div class="d-flex justify-content-center my-2">
-                    {% if is_owner %}
-                        <button type="button" class="btn btn-success px-5 mx-2">Add From Catalog</button>
-                    {% else %}
-                        <button type="button" class="btn btn-success px-5 mx-2">Catalog</button>
-                    {% endif %}
-                </div>
-            </a>
-
-            {% if is_owner %}
-                <div class="d-flex justify-content-center my-4">
-                    <button type="button" class="btn btn-success px-5 mx-2" data-bs-toggle="modal" data-bs-target="#addEntryModal">Add Custom Entry</button>
-                </div>
-            {% endif %}
-
-            {% if is_owner %}
-            {% else %}
-                <a href="{% url 'main:show_entry' %}">
-                    <button class="btn btn-outline-primary px-5 mx-2" aria-current="page" type="submit">Your Collection</button>
+            <div class="container d-flex justify-content-center">
+                <a href="{% url 'main:show_main' %}">
+                        {% if is_owner %}
+                        <div class="col">
+                            <button type="button" class="btn btn-success px-5 mx-2">Add From Catalog</button>
+                        </div>
+                        {% else %}
+                        <div class="col">
+                            <button type="button" class="btn btn-success px-5 mx-2">Catalog</button>
+                        </div>
+                        {% endif %}
                 </a>
-            {% endif %}
+    
+                {% if is_owner %}
+                <a>
+                    <div class="col">
+                        <button type="button" class="btn btn-success px-5 mx-2" data-bs-toggle="modal" data-bs-target="#addEntryModal">Add Custom Entry</button>
+                    </div>
+                </a>
+                {% endif %}
+    
+                {% if is_owner %}
+                {% else %}
+                    <a href="{% url 'main:show_entry' %}">
+                        <div class="col">
+                            <button class="btn btn-success px-5 mx-2" aria-current="page" type="submit">Your Collection</button>
+                        </div>
+                    </a>
+                {% endif %}
+            </div>
+            
             
             <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">

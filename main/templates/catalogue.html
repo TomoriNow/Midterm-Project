@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 {%include 'navbar.html'%}
-<div class="pt-5" style=" background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
-        <div class="container">
+<body style=" background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
+        <div class="container pt-5">
             <div class="row row-cols-1 row-cols-md-5 gy-3">
                 {% for book in book %}
                     <div class="col mx-4">
@@ -135,7 +135,7 @@
             </ul>
         </div>
     </div>
-</div>
+</body>
 <script>
     function changeBook(title){
         document.getElementById("name").value = title
