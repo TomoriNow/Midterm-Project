@@ -229,11 +229,21 @@ def create_custom_entry(request):
         custom_entry.save()
         custom_entry.taggits.set(list, clear=True)
         print(custom_entry.taggits)
+        if book_entry.status == "P":
+            status = "Plan to Read"
+        elif book_entry.status == "O":
+            status = "On hold"
+        elif book_entry.status == "D":
+            status = "Dropped"
+        elif book_entry.status == "F":
+            status = "Finished"
+        else:
+            status = "Reading"
         book = {
             "id" : book_entry.pk,
             "name": custom_entry.name,
             "type": custom_entry.type,
-            "LCR" : book_entry.last_chapter_read
+            "status" : status
             }
         return JsonResponse(book)
 
