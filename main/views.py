@@ -279,6 +279,11 @@ def create_catalog_entry(request):
 
     return HttpResponseNotFound()
 
+@login_required(login_url='/login')
+def delete_user(request, username):
+    username = User.objects.filter(username=username)
+    username.delete()
+    return redirect('user_display.html')
 
 
 @csrf_exempt
