@@ -33,22 +33,26 @@
           </li>
         </ul>
         <ul class="navbar-nav mr-auto">
-        <div class="dropdown my-2">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+        <div class="dropdown my-2 mx-2">
+          <button class="btn btn-info dropdown-toggle" type="button" id="dropdownTagList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Tag List
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownTagList">
             {% for tag in tags %}
               <a class="dropdown-item" href="#"> {{ tag }}</a>
             {% endfor %}
           </div>
-      </div>
-        <a href="{% url 'main:show_entry' %}">
-          <button class="btn btn-outline-info px-3 mx-2 my-2" aria-current="page" type="submit">Your Collection</button>
-        </a>
-        <a href="{% url 'main:show_other_users' %}">
-          <button class="btn btn-outline-info px-3 mx-2 my-2" aria-current="page" type="submit">Other Users</button>
-        </a>
+        </div>
+        <div class="dropdown my-2 mx-2">
+          <button class="btn btn-info dropdown-toggle" type="button" id="dropdownCollection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Collection
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'main:show_entry' %}">Your Collection</a></li>
+            <li><a class="dropdown-item" href="{% url 'main:show_other_users' %}">Other Users</a></li>
+            <li><a class="dropdown-item" onclick="addTag()" role="button" data-bs-toggle="modal" data-bs-target="#tagModal">Add New Tag</a></li>
+          </ul>
+        </div>
         <form class="d-flex my-2" method="POST" action="{% url 'main:search-title' %}">
           {% csrf_token %}
           <input class="form-control" type="search" placeholder="Search Titles" aria-label="Search" name="searched" value="{{ searched }}"/>
@@ -63,5 +67,44 @@
       </div>
     </div>
   </nav>
+  
+  
+  <!--Add Tag Modal-->
+  <div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="tagModalLabel">Add New Tag</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="tagForm" onsubmit="return false;">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="tag" class="col-form-label">Tag Name:</label>
+                  <textarea class="form-control" id="tag" name="tag"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_addTag" data-bs-dismiss="modal" >Add Tag</button>
+            </div>
+        </div>
+    </div>
+  </div>
 
+<script>
+    function addTag() {
+      fetch("{% url 'main:create_tag' %}", {
+        method:"POST",
+        body: new FormData(document.querySelector('#form'))
+      })
+      document.getElementById("tagForm").reset()
+      return false
+    }
+    document.getElementById("button_addTag").onclick = addTag
+    
+</script>
+  
 {% endblock content %}
