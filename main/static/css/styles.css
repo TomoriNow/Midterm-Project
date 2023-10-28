@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
     
+    #welcomeText {
+    font-family: 'Poppins', sans-serif;
+  }
+
     html, body {
         height: 100%;
     }
@@ -142,15 +146,16 @@
         visibility: visible;
         opacity: 1;
     }
+    
     /* Dropdown Button */
-  .dropbtn {
-    background-color: #f1f1f1;
-    color: #333;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    }
+    .dropbtn {
+        background-color: #f1f1f1;
+        color: #333;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        }
 
     /* Dropdown Content (Hidden by Default) */
     .dropdown-content {
@@ -169,7 +174,7 @@
         display: block;
         text-decoration: none;
     }
-
+    
     /* Change color of dropdown links on hover */
     .dropdown-content a:hover {
         background-color: #f1f1f1;
