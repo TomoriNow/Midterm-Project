@@ -41,10 +41,12 @@ def search_by_title(request):
         searched = request.POST['searched']
         books = Book.objects.filter(name__contains = searched)
         book = Book.objects.filter(name__contains = searched).exists()
+        tags = Tag.objects.all()
 
-        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username})
+
+        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags})
     else:
-        return render(request, 'catalogue.html', {'name': request.user.username})
+        return render(request, 'catalogue.html', {'name': request.user.username, 'tags':tags})
 
 def adding_tag():
     for book in Book.objects.all():
@@ -55,18 +57,19 @@ def show_catalog(request):
     p = Paginator(Book.objects.all(), 30)
     page = request.GET.get('page')
     book_entries = p.get_page(page)
+    tags = Tag.objects.all()
 
     context = {
         'name': request.user.username,
         'class': 'PBP KKI',
         'book_entries': book_entries,
+        'tags':tags
     }
 
     return render(request, 'catalogue.html', context)
 
 def register(request):
     form = UserCreationForm()
-
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -122,12 +125,14 @@ def get_books(request):
     return HttpResponse(input, content_type="application/json")
 
 def get_books_by_tag(request, tag):
-    context ={
-        'tags': tag
+    books = Book.objects.filter(taggits__name=tag).order_by('pk')
+    tags = Tag.objects.all()
+    context = {
+        'tags': tags,
+        'books': books
     }
-    book = Book.objects.filter(taggits__name = tag).order_by('pk')
-    input = JSONRenderer().render(BookSerializer(book, many=True).data)
-    return HttpResponse(input, content_type="application/json")
+
+    return render(request, 'catalogue.html', context)
 
 
 def get_entry_by_id(request, id):
@@ -195,7 +200,7 @@ def show_book_entry_other(request, username):
 @login_required(login_url='/login')
 def show_users(request):
     display_user = User.objects.all()
-    context = {'displayuser': display_user}
+    context = {'displayuser': display_user, 'name': request.user.username}
     return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
