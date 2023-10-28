@@ -106,9 +106,11 @@ def show_json(request):
     data = Book.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-def get_book_json(request, id):
-    book_item = Book.objects.filter(pk=id)
-    return HttpResponse(serializers.serialize('json', book_item))
+def get_books_by_id(request, id):
+    book_item = Book.objects.get(pk=id)
+    input = BookSerializer(book_item).data
+    serialized_data = JSONRenderer().render(input).decode('utf-8')
+    return JsonResponse({"result": "Success", "data": serialized_data})
 
 class BookListAPIView(ListAPIView):
     queryset = Book.objects.all()
