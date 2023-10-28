@@ -200,7 +200,8 @@ def show_book_entry_other(request, username):
 @login_required(login_url='/login')
 def show_users(request):
     display_user = User.objects.all()
-    context = {'displayuser': display_user, 'name': request.user.username}
+    tags = Tag.objects.all()
+    context = {'displayuser': display_user, 'name': request.user.username, 'tags':tags}
     return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
