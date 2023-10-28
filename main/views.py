@@ -309,7 +309,12 @@ def copy_entry(request):
 
         return HttpResponse(b"CREATED", status=201)
 
-    return HttpResponseNotFound()
+    return HttpResponseNotFound()@login_required(login_url='/login')
+def delete_user(request, username):
+    username = User.objects.filter(username=username)
+    username.delete()
+    return redirect('user_display.html')
+
 
 @csrf_exempt
 def delete_entry(request, id):
