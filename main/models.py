@@ -71,3 +71,6 @@ class Custom_Entry(models.Model):
     def __str__(self):
         return '%s' % (self.name)
 
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tag = models.CharField(max_length=50)
