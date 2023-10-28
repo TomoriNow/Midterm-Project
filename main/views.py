@@ -2,7 +2,7 @@ import datetime, json
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound, JsonResponse
 from django.urls import reverse
-from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry
+from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post
 from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer
 from rest_framework.generics import ListAPIView
@@ -326,3 +326,14 @@ def delete_entry(request, id):
         return HttpResponse(b"DELETED", status = 201)
     return HttpResponseNotFound()
 
+@login_required(login_url='/login')
+def create_tag(request):
+    if request.method == "POST":
+        tag = request.POST.get("tag")
+        user = request.user
+        new_tag = Post(user=user, tag=tag)
+        new_tag.save()
+        
+        return HttpResponse(b"CREATED", status=201)
+    
+    return HttpResponseNotFound()
