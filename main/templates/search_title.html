@@ -5,48 +5,55 @@
     <h1 class="text-center my-5">Sorry the title {{searched}} does not exist</h1>
     <h1 class="text-center">Please return to home page by clicking the logo</h1>
 {% else %}
-<div class="container py-5">
-    <div class="row row-cols-1 row-cols-md-5 gy-3">
-        {% for book in books %}
-            <div class="col mx-4">
-                <div class="card border border-dark shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ book.name }}</h5>
-                        {% load static %}
-                        <div class="ratio ratio-1x1">
-                            <img src="{{ book.imagelink }}">
-                        </div>
-                        <div class="row align-items-start py-3">
-                            <div class="col">
-                                <p class="card-text">{{ book.type }}</p>
+<div class="px-4 py-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-5 gy-3">
+            {% for book in books %}
+                <div class="col mx-4">
+                    <div class="card border border-dark shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.name }}</h5>
+                            {% load static %}
+                            <div class="ratio ratio-1x1">
+                                <img src="{{ book.imagelink }}">
                             </div>
-                            <div class="col">
-                                <p class="card-text">{{ book.author }}</p>
+                            <div class="row py-3">
+                                <div class="col ms-4">
+                                    <p class="card-text">{{ book.type }}</p>
+                                </div>
+                                <div class="col me-1">
+                                    <p class="card-text">{{ book.author }}</p>
+                                </div>
+                                
                             </div>
-                            <div class="col py-3">
-                                <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-success px-3 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</button>
-                                <button type="button" class="btn btn-success">Description</button>
+                            <div class="row pb-3">
+                                <div class="col ms-4">
+                                    <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">Add</button>
+                                </div>
+                                <div class="col me-2">
+                                    <button onclick = "getDescription('{{book.description|linebreaks}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
+                                </div>
                             </div>
+                            <div class="card-footer">
+                                {% for tag in book.taggits.all %}
+                                    {{ tag }}
+                                {% endfor %}
+                            </div>
+                            
                         </div>
-                        <div class="card-footer">
-                            {% for tag in book.tags.all %}
-                                {{ tag }}
-                            {% endfor %}
-                        </div>
-                        
                     </div>
                 </div>
+            {% endfor %}
             </div>
-        {% endfor %}
         </div>
     </div>
-</div>
-</table>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!--Add Product Modal-->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                <h1 class="modal-title fs-5" id="addProductModalLabel">Add New Item</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -88,22 +95,41 @@
     </div>
 </div>
 
+<!--Description Modal-->
+<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="descriptionModalLabel">Description</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="descriptionForm"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-{% if book.has_previous %}
-<li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+<div class="container">
+<div class="row justify-content-center">
+    <ul class="pagination justify-content-center">
+        {% if book.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
 
-<li class="page-item"><a class="page-link" href="?page={{ book.previous_page_number }}">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ book.previous_page_number }}">Previous</a></li>
+        {% endif %}
+        <li class="page-item disabled" style="list-style: none; text-align: center;"><a href="#" class="page-link">Page {{ book.number }} of {{ book.paginator.num_pages }}</a></li>
+        {% if book.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ book.next_page_number }}">Next</a></li>
 
-{% endif %}
-
-<li class="page-item disabled"><a href="#" class="page-link">Page {{ book.number }} of {{ book.paginator.num_pages }}</a></li>
-
-{% if book.has_next %}
-<li class="page-item"><a class="page-link" href="?page={{ book.next_page_number }}">Next</a></li>
-
-<li class="page-item"><a class="page-link" href="?page={{ book.paginator.num_pages }}">Last &raquo</a></li>
-
-{% endif %}
+        <li class="page-item"><a class="page-link" href="?page={{ book.paginator.num_pages }}">Last &raquo</a></li>
+        {% endif %}
+    </ul>
+</div>
+</div>
 
 </div>
 <script>
@@ -120,6 +146,18 @@ function addEntry() {
     return false
 }
 document.getElementById("button_add").onclick = addEntry
+
+async function getBooks(bookID) {
+    return fetch("{% url 'main:get_book_json' %}").then((res) => res.json())
+}
+
+async function getDescription(bookDescription) {
+    document.getElementById("descriptionForm").innerHTML = ""
+    let htmlString = bookDescription.replace(/(\r\n|\n|\r)/gm,'')
+    document.getElementById("descriptionForm").innerHTML = htmlString
+}
+
+
 </script>
 {% endif %}
 {% endblock content %}
