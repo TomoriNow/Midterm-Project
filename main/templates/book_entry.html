@@ -1,330 +1,352 @@
-    {% extends 'base.html' %}
-    {% load entrytags %}
-    {% block content %}
-        {% include 'navbar.html' %}
-        <body style="background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1)); height:100%;">
-            <h1 class="text-white mx-3">{{ owner }}'s List</h1>       
-            <table class="table table-striped table-bordered table-hover" style="width: 100%">
-                <tbody id="entryTable">
-                    <th> Name </th>
-                    <th> Type </th>
-                    <th> Last Chapter Read </th>
-                    {% for entry in book_entries %}
-                        <tr id="row_{{ entry.id }}">
-                            {% get_book entry as book %}
-                            <td>
-                                <button class="btn btn-link" onclick="showEntry({{ entry.pk }})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">{{ book.name }}</button>
-                            </td>
-                            <td>
-                                {{ book.type }}
-                            </td>
-                            <td id="status_{{ entry.id }}">
-                            {% if entry.status == "P" %}
-                                Plan to Read
-                            {% elif entry.status == "O" %}
-                                On Hold
-                            {% elif entry.status == "D" %}
-                                Dropped
-                            {% elif entry.status == "F" %}
-                                Finished
-                            {% elif entry.status == "R" %}
-                                Reading
-                            {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <div class="container d-flex justify-content-center">
-                <a href="{% url 'main:show_main' %}">
-                        {% if is_owner %}
-                        <div class="col">
-                            <button type="button" class="btn btn-success px-5 mx-2">Add From Catalog</button>
-                        </div>
-                        {% else %}
-                        <div class="col">
-                            <button type="button" class="btn btn-success px-5 mx-2">Catalog</button>
-                        </div>
-                        {% endif %}
-                </a>
-    
-                {% if is_owner %}
-                <a>
-                    <div class="col">
-                        <button type="button" class="btn btn-success px-5 mx-2" data-bs-toggle="modal" data-bs-target="#addEntryModal">Add Custom Entry</button>
-                    </div>
-                </a>
-                {% endif %}
-    
-                {% if is_owner %}
-                {% else %}
-                    <a href="{% url 'main:show_entry' %}">
-                        <div class="col">
-                            <button class="btn btn-success px-5 mx-2" aria-current="page" type="submit">Your Collection</button>
-                        </div>
-                    </a>
-                {% endif %}
-            </div>
-            
-            
-            <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <form id="form" onsubmit="return false;">
-                            {% csrf_token %}
-                            <div id="bookView"></div>
-                        </form>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            {% if is_owner or  user.is_staff %}
-                                <div id="DeleteSpace"></div>
-                                <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit Entry</button>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
+{% extends 'base.html' %}
+{% load entrytags %}
+{% block content %}
+    {% include 'navbar.html' %}
+    <body style="background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1)); height:100%;">
+        <br>
+        <h1 class="text-white mx-3" style="text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.25)">{{ owner }}'s Collection</h1>
+        <br>    
+        <table class="table table-striped table-bordered table-hover" style="width: 100%; border:transparent;">
+            <tbody id="entryTable">
+                {% for entry in book_entries %}
+                    <tr id="row_{{ entry.id }}">
+                        {% get_book entry as book %}
+                        <td style="background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1));">
+                            <img src="{{book.imagelink}}" style="max-width: 100px; vertical-align: center; margin-right: 10px; text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.25)">
 
-            <!-- Add Entry Modal -->
-            <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addEntryModalLabel">Add New Item</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="form-2" onsubmit="return false;">
-                                {% csrf_token %}
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg">
-                                            <h3>Book Details:</h3>
-                                            <hr>
-                                            <div class="mb-3">
-                                                <label for="name" class="col-form-label">Name<span style = 'color:red'>(required*)</span>:</label>
-                                                <input type="text" class="form-control" id="name" name="name"></input>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="author" class="col-form-label">Author:</label>
-                                                <input type="text" class="form-control" id="author" name="author"></input>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="type" class="col-form-label">Type:</label>
-                                                <select class="form-control" id="type" name="type">
-                                                    <option value="Manga">Manga</option>
-                                                    <option value="Manhwa">Manhwa</option>
-                                                    <option value="Novel">Novel</option>
-                                                    <option value="Light Novel">Light Novel</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="imagelink" class="col-form-label">Link for Image:</label>
-                                                <input type="text" class="form-control" id="imagelink" name="imagelink"></input>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="description" class="col-form-label">Description:</label>
-                                                <textarea class="form-control" id="description" name="description"></textarea>
-                                            </div>
-                                <div class="mb-3">
-                                    <label for="tag" class="col-form-label">Tags:</label>
-                                    <div id = "tag_group"> 
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <button type="button" class="btn btn-light" id = "add_tag">Add Tag</button>
-                                    <button type="button" class="btn btn-danger" id = "remove_tag">Remove Tag</button>
-                                </div>
-                                            <small>*Note that Book details cannot be changed</small>
-                            </div>
-                            <div class="col-lg">
-                                            <h3>Entry Details:</h3>
-                                            <hr>
-                                            <div class="mb-3">
-                                                <label for="status" class="col-form-label">Status:</label>
-                                                <select class="form-control" id="status" name="status">
-                                                    <option value="P">Plan to Read</option>
-                                                    <option value="O">On Hold</option>
-                                                    <option value="D">Dropped</option>
-                                                    <option value="F">Finished</option>
-                                                    <option value="R">Reading</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
-                                                <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="review" class="col-form-label">Review:</label>
-                                                <textarea class="form-control" id="review" name="review"></textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="rating" class="col-form-label">Rating:</label>
-                                                <input type="number" class="form-control" id="rating" name="rating"></input>
-                                </div>
-                            </div>
-                        </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Entry</button>
-                        </div>
+                            <span style="font-size: 32px; width: 140px; height: 40px; text-shadow: 7px 7px 6px rgba(0,0,0,0.6);; top: 339px; left: 178px; color: white; max-width:75px;
+                            ">
+                                {{ book.name }}
+                            </span>
+                            
+                            by {{book.author}}
+                        </td>
+        
+                        <td style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                        {% if entry.status == "P" %}
+                            Plan to Read
+                        {% elif entry.status == "O" %}
+                            On Hold
+                        {% elif entry.status == "D" %}
+                            Dropped
+                        {% elif entry.status == "F" %}
+                            Finished
+                        {% elif entry.status == "R" %}
+                            Reading Chapter {{entry.last_chapter_read}}
+                        {% endif %}
+                        </td>           
+        
+                        <td style="text-align: center;max-width: 10px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                        {{entry.rating}}
+                        </td>
+        
+                        <td style="text-align: center; max-width: 40px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                            <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="showEntry({{ entry.pk }})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">EDIT</button>
+                        </td> 
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="container d-flex justify-content-center">
+            <a href="{% url 'main:show_main' %}">
+                    {% if is_owner %}
+                    <div class="col">
+                        <button type="button" class="btn btn-success px-5 mx-2">Add From Catalog</button>
+                    </div>
+                    {% else %}
+                    <div class="col">
+                        <button type="button" class="btn btn-success px-5 mx-2">Catalog</button>
+                    </div>
+                    {% endif %}
+            </a>
+
+            {% if is_owner %}
+            <a>
+                <div class="col">
+                    <button type="button" class="btn btn-success px-5 mx-2" data-bs-toggle="modal" data-bs-target="#addEntryModal">Add Custom Entry</button>
+                </div>
+            </a>
+            {% endif %}
+
+            {% if is_owner %}
+            {% else %}
+                <a href="{% url 'main:show_entry' %}">
+                    <div class="col">
+                        <button class="btn btn-success px-5 mx-2" aria-current="page" type="submit">Your Collection</button>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+        
+        
+        <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div id="bookView"></div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {% if is_owner or  user.is_staff %}
+                            <div id="DeleteSpace"></div>
+                            <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit Entry</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </body>
-        <script>
-            async function getEntry(pk) {
-                const link = "/get-entry-by-id/"+pk
-                return fetch(link).then((response) => {return response.json();})
-            }
-            async function showEntry(pk) {
-                document.getElementById("bookView").innerHTML = ""
-                const entry = await getEntry(pk)
-                const data = JSON.parse(entry.data)
-                
-                let htmlString = `<div class="modal-header">
+        </div>
+
+        <!-- Add Entry Modal -->
+        <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addEntryModalLabel">Add New Item</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-2" onsubmit="return false;">
+                            {% csrf_token %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg">
+                                        <h3>Book Details:</h3>
+                                        <hr>
+                                        <div class="mb-3">
+                                            <label for="name" class="col-form-label">Name<span style = 'color:red'>(required*)</span>:</label>
+                                            <input type="text" class="form-control" id="name" name="name"></input>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="author" class="col-form-label">Author:</label>
+                                            <input type="text" class="form-control" id="author" name="author"></input>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="type" class="col-form-label">Type:</label>
+                                            <select class="form-control" id="type" name="type">
+                                                <option value="Manga">Manga</option>
+                                                <option value="Manhwa">Manhwa</option>
+                                                <option value="Novel">Novel</option>
+                                                <option value="Light Novel">Light Novel</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="imagelink" class="col-form-label">Link for Image:</label>
+                                            <input type="text" class="form-control" id="imagelink" name="imagelink"></input>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="description" class="col-form-label">Description:</label>
+                                            <textarea class="form-control" id="description" name="description"></textarea>
+                                        </div>
+                            <div class="mb-3">
+                                <label for="tag" class="col-form-label">Tags:</label>
+                                <div id = "tag_group"> 
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button type="button" class="btn btn-light" id = "add_tag">Add Tag</button>
+                                <button type="button" class="btn btn-danger" id = "remove_tag">Remove Tag</button>
+                            </div>
+                                        <small>*Note that Book details cannot be changed</small>
+                        </div>
+                        <div class="col-lg">
+                                        <h3>Entry Details:</h3>
+                                        <hr>
+                                        <div class="mb-3">
+                                            <label for="status" class="col-form-label">Status:</label>
+                                            <select class="form-control" id="status" name="status">
+                                                <option value="P">Plan to Read</option>
+                                                <option value="O">On Hold</option>
+                                                <option value="D">Dropped</option>
+                                                <option value="F">Finished</option>
+                                                <option value="R">Reading</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                                            <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="review" class="col-form-label">Review:</label>
+                                            <textarea class="form-control" id="review" name="review"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="rating" class="col-form-label">Rating:</label>
+                                            <input type="number" class="form-control" id="rating" name="rating"></input>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Entry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        async function getEntry(pk) {
+            const link = "/get-entry-by-id/" + pk;
+            return fetch(link).then((response) => {
+                return response.json();
+            });
+        }
+    
+        async function showEntry(pk) {
+            document.getElementById("bookView").innerHTML = "";
+            const entry = await getEntry(pk);
+            const data = JSON.parse(entry.data);
+    
+            let htmlString = `
+                <div class="modal-header">
                     <h1 class="modal-title fs-5" id="entryModalLabel">${data.name}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id = "modal_body" value = "${data.pk}">
+                <div class="modal-body" id="modal_body" value="${data.pk}">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg">
                                 <img src="${data.imagelink}">
                                 <p>${data.description}</p>
                             </div>
-                        <div class="col-lg">
-                            <div class="mb-3">
-                                <label for="author" class="col-label">Author:</label>
-                                <p id ="author" name = "author">${data.author}</p>
-                                <label for="type" class="col-label">Type:</label>
-                                <p id ="type" name = "type">${data.type}</p>
-                                <label for="last_read" class="col-label">Last Read:</label>
-                                <p id ="last_read" name = "last_read">${data.last_read_date}</p>
-                                <label for="status" class="col-form-label">Status:</label>
-                                <select class="form-control" id="status" name="status" value = "${data.status}"`
-                                if ({{not_owner}}) {
-                                    htmlString += ` disabled`
-                                }
-                                htmlString +=`>
-                                    <option value="P">Plan to Read</option>
-                                    <option value="O">On Hold</option>
-                                    <option value="D">Dropped</option>
-                                    <option value="F">Finished</option>
-                                    <option value="R">Reading</option>
-                                </select>
+                            <div class="col-lg">
+                                <div class="mb-3">
+                                    <label for="author" class="col-label">Author:</label>
+                                    <p id="author" name="author">${data.author}</p>
+                                    <label for="type" class="col-label">Type:</label>
+                                    <p id="type" name="type">${data.type}</p>
+                                    <label for="last_read" class="col-label">Last Read:</label>
+                                    <p id="last_read" name="last_read">${data.last_read_date}</p>
+                                    <label for="status" class="col-form-label">Status:</label>
+                                    <select class="form-control" id="status" name="status" value="${data.status}"`;
+            if ({{not_owner}}) {
+                htmlString += ` disabled`;
+            }
+            htmlString += `>
+                                        <option value="P">Plan to Read</option>
+                                        <option value="O">On Hold</option>
+                                        <option value="D">Dropped</option>
+                                        <option value="F">Finished</option>
+                                        <option value="R">Reading</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                                    <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read" value="${data.last_chapter_read}"`;
+            if ({{not_owner}}) {
+                htmlString += ` readonly`;
+            }
+            htmlString += `></input>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="review" class="col-form-label">Review:</label>
+                                    <textarea class="form-control" id="review" name="review" `;
+            if ({{not_owner}}) {
+                htmlString += ` readonly`;
+            }
+            htmlString += `>${data.review}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for "rating" class="col-form-label">Rating:</label>
+                                    <input type="number" class="form-control" id="rating" name="rating" value="${data.rating}"`;
+            if ({{not_owner}}) {
+                htmlString += ` readonly`;
+            }
+            htmlString += `></input>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tags" class="col-form-label">Tags:</label>
+                                    <div id="tags">`;
+            data.taggits.forEach((tag) => {
+                htmlString += `<span>${tag} </span>`;
+            });
+            htmlString += `
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
-                                <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read" value = "${data.last_chapter_read}"`
-                                if ({{not_owner}}) {
-                                    htmlString += ` readonly`
-                                }
-                                htmlString +=`></input>
-                            </div>
-                            <div class="mb-3">
-                                <label for="review" class="col-form-label">Review:</label>
-                                <textarea class="form-control" id="review" name="review" `
-                                if ({{not_owner}}) {
-                                    htmlString += ` readonly`
-                                }
-                                htmlString +=`>${data.review}</textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="rating" class="col-form-label">Rating:</label>
-                                <input type="number" class="form-control" id="rating" name="rating" value = "${data.rating}"`
-                                if ({{not_owner}}) {
-                                    htmlString += ` readonly`
-                                }
-                                htmlString +=`></input>
-                            </div>
-                    <div class="mb-3">
-                        <label for="tags" class="col-form-label">Tags:</label>
-                        <div id = "tags">`
-                        data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
-                        htmlString +=`
-                    </div>
                         </div>
                     </div>
-                </div>
-            </div>`
-            document.getElementById("bookView").innerHTML = htmlString
-            document.getElementById("DeleteSpace").innerHTML = `<button type="button" class="btn btn-danger" id="button_delete" data-bs-dismiss="modal" onclick = "deleteEntry(${data.pk})">Delete Entry</button>`
+                </div>`;
+            document.getElementById("bookView").innerHTML = htmlString;
+            document.getElementById("DeleteSpace").innerHTML = `<button type="button" class="btn btn-danger" id="button_delete" data-bs-dismiss="modal" onclick="deleteEntry(${data.pk})">Delete Entry</button>`;
         }
-            async function editTable(pk){
-                const status_val = document.getElementById("last_chapter_read").value
-                const status = "status_"+pk
-                document.getElementById(status).innerHTML = status_val
-            }
-        
-            function editEntry() {
-                const pk = document.getElementById("modal_body").getAttribute("value")
-                const link = "/edit-entry/" + pk
-                fetch(link, {
-                    method: "POST",
-                    body: new FormData(document.querySelector('#form'))
-                }).then(editTable(pk))
-            
-                document.getElementById("form").reset()
-                return false
+    
+        async function editTable(pk) {
+            const status_val = document.getElementById("last_chapter_read").value;
+            const status = "status_" + pk;
+            document.getElementById(status).innerHTML = status_val;
         }
-        document.getElementById("button_edit").onclick = editEntry
-        
-        function saveEntry(){
+    
+        function editEntry() {
+            const pk = document.getElementById("modal_body").getAttribute("value");
+            const link = "/edit-entry/" + pk;
+            fetch(link, {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(editTable(pk));
+    
+            document.getElementById("form").reset();
+            return false;
+        }
+        document.getElementById("button_edit").onclick = editEntry;
+    
+        function saveEntry() {
             fetch("{% url 'main:create_custom_entry' %}", {
                 method: "POST",
                 body: new FormData(document.querySelector('#form-2'))
-            }).then((response) => {return response.json();}).then(entry => {
+            }).then((response) => {
+                return response.json();
+            }).then(entry => {
                 htmlString = `
-                <tr id = "row_${entry.id}">
+                <tr id="row_${entry.id}">
                 <td>
-                    <button class="btn btn-link" onclick ="showEntry(${entry.id})" data-bs-toggle="modal" data-bs-target="#entryModal"  role="button">${entry.name}</button>
+                    <button class="btn btn-link" onclick="showEntry(${entry.id})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">${entry.name}</button>
                 </td>
                 <td>
                     ${entry.type}
                 </td>
-                <td id = "status_${entry.id}">
+                <td id="status_${entry.id}">
                     ${entry.status}
                 </td>
                 </tr>
-                `
-                document.getElementById("entryTable").innerHTML += htmlString
-                document.getElementById("form-2").reset()
-            })
+                `;
+                document.getElementById("entryTable").innerHTML += htmlString;
+                document.getElementById("form-2").reset();
+            });
         }
-        document.getElementById("button_add").onclick = saveEntry
-        
-        function deleteEntry(id){
-            fetch("/delete-entry/"+ id, {
-                method: "POST",
-            })
-        
-            const row = "row_"+id
-            document.getElementById(row).remove()
-            document.getElementById("form").reset()
-            return false
+        document.getElementById("button_add").onclick = saveEntry;
+    
+        function deleteEntry(id) {
+            fetch("/delete-entry/" + id, {
+                method: "POST"
+            });
+    
+            const row = "row_" + id;
+            document.getElementById(row).remove();
+            document.getElementById("form").reset();
+            return false;
         }
     
-    var count = 1
-    function addTag(){
-        const element = document.createElement("select");
-        const stuff = `{% for tag in tags %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
-        element.setAttribute("class", "form-control")
-        element.setAttribute("name", "tag")
-        element.innerHTML = stuff
-        document.getElementById("tag_group").appendChild(element);
-        count +=1;
-    }
-    document.getElementById("add_tag").onclick = addTag
-
-    function removeTag(){
-        document.getElementById("tag_group").lastElementChild.remove();
-    }
-    document.getElementById("remove_tag").onclick = removeTag
-
-
-        </script>    {% endblock content %}
-
+        var count = 1;
+    
+        function addTag() {
+            const element = document.createElement("select");
+            const stuff = `{% for tag in tags %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
+            element.setAttribute("class", "form-control");
+            element.setAttribute("name", "tag");
+            element.innerHTML = stuff;
+            document.getElementById("tag_group").appendChild(element);
+            count += 1;
+        }
+        document.getElementById("add_tag").onclick = addTag;
+    
+        function removeTag() {
+            document.getElementById("tag_group").lastElementChild.remove();
+        }
+        document.getElementById("remove_tag").onclick = removeTag;
+    </script>
+    {% endblock content %}
