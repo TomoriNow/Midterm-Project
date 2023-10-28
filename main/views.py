@@ -187,6 +187,11 @@ def show_book_entry_other(request, username):
                }
     return render(request, "book_entry.html", context)
 
+@login_required(login_url='/login')
+def show_users(request):
+    display_user = User.objects.all()
+    context = {'displayuser': display_user}
+    return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
 def show_book_entry_by_id(request, id):
