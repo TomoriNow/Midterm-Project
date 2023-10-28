@@ -2,134 +2,136 @@
 {% load entrytags %}
 {% block content %}
 {%include 'navbar.html'%}
-<h1>{{owner}}'s List</h1>
-{% if is_owner%}
-<button type="button" class="btn btn-success px-5 mx-2" data-bs-toggle="modal" data-bs-target="#addEntryModal">Add Custom Entry</button>
-{% endif %}
-<table class="table table-striped table-hover" style = "width: 100%">
-    <tbody id = "entryTable">
-    <th> Name </th> 
-    <th> Type </th>
-    <th> Last Chapter Read </th>
-    {% for entry in book_entries %}
-    <tr id ="row_{{entry.id}}">
-        {% get_book entry as book %}
-        <td>
-            <button class="btn btn-link" onclick ="showEntry({{entry.pk}})" data-bs-toggle="modal" data-bs-target="#entryModal"  role="button">{{book.name}}</button>
-        </td>
-        <td>
-            {{book.type}}
-        </td>
-        <td id = "lcr_{{entry.id}}">
-            {{ entry.last_chapter_read }}
-        </td>
-    {% endfor %}
-    </tbody>
-</table>
-<a href ="{% url 'main:show_main' %}"
-{% if is_owner %}
-<button type="button" class="btn btn-success px-5 mx-2">Add From Catalog</button>
-{% else %}
-<button type="button" class="btn btn-success px-5 mx-2">Catalog</button>
-{% endif %}
-</a>
-{% if is_owner %}
-{% else %}
-<a href="{% url 'main:show_entry' %}">
-    <button class="btn btn-outline-primary px-5 mx-2" aria-current="page" type="submit">Your Collection</button>
-</a>
-{% endif %}
+<body style="background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1)); height:100%;">
+    <h1 class="text-white mx-3">{{owner}}'s List</h1>
+    {% if is_owner%}
+    <button type="button" class="btn btn-success px-5 mx-2 my-4" data-bs-toggle="modal" data-bs-target="#addEntryModal">Add Custom Entry</button>
+    {% endif %}
+    <table class="table table-striped table-hover" style = "width: 100%">
+        <tbody id = "entryTable">
+        <th> Name </th> 
+        <th> Type </th>
+        <th> Last Chapter Read </th>
+        {% for entry in book_entries %}
+        <tr id ="row_{{entry.id}}">
+            {% get_book entry as book %}
+            <td>
+                <button class="btn btn-link" onclick ="showEntry({{entry.pk}})" data-bs-toggle="modal" data-bs-target="#entryModal"  role="button">{{book.name}}</button>
+            </td>
+            <td>
+                {{book.type}}
+            </td>
+            <td id = "lcr_{{entry.id}}">
+                {{ entry.last_chapter_read }}
+            </td>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href ="{% url 'main:show_main' %}"
+    {% if is_owner %}
+    <button type="button" class="btn btn-success px-5 mx-2 my-2">Add From Catalog</button>
+    {% else %}
+    <button type="button" class="btn btn-success px-5 mx-2">Catalog</button>
+    {% endif %}
+    </a>
+    {% if is_owner %}
+    {% else %}
+    <a href="{% url 'main:show_entry' %}">
+        <button class="btn btn-outline-primary px-5 mx-2" aria-current="page" type="submit">Your Collection</button>
+    </a>
+    {% endif %}
 
-<div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form id="form" onsubmit="return false;">
-                {% csrf_token %}
-                <div id="bookView">
-                </div>
-            </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                {% if is_owner%}
-                    <div id = "DeleteSpace"></div>
-                    <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal" >Edit Entry</button>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
-<!--Add Entry Modal-->
-<div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addEntryModalLabel">Add New Item</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="form-2" onsubmit="return false;">
+    <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="form" onsubmit="return false;">
                     {% csrf_token %}
-                    <h3>Book Details:</h3>
-                    <hr>
-                    <div class="mb-3">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="author" class="col-form-label">Author:</label>
-                        <input type="text" class="form-control" id="author" name="author"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="type" class="col-form-label">Type:</label>
-                        <select class="form-control" id="type" name="type">
-                            <option value="Manga">Manga</option>
-                            <option value="Manhwa">Manhwa</option>
-                            <option value="Novel">Novel</option>
-                            <option value="Light Novel">Light Novel</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="imagelink" class="col-form-label">Link for Image:</label>
-                        <input type="text" class="form-control" id="imagelink" name="imagelink"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
-                    </div>
-                    <small>*Note that Book details can not be changed</small>
-                    <h3>Entry Details:</h3>
-                    <hr>
-                    <div class="mb-3">
-                        <label for="status" class="col-form-label">Status:</label>
-                        <select class="form-control" id="status" name="status">
-                            <option value="P">Plan to Read</option>
-                            <option value="O">On Hold</option>
-                            <option value="D">Dropped</option>
-                            <option value="F">Finished</option>
-                            <option value="R">Reading</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
-                        <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="review" class="col-form-label">Review:</label>
-                        <textarea class="form-control" id="review" name="review"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="rating" class="col-form-label">Rating:</label>
-                        <input type="number" class="form-control" id="rating" name="rating"></input>
+                    <div id="bookView">
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Entry</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    {% if is_owner%}
+                        <div id = "DeleteSpace"></div>
+                        <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal" >Edit Entry</button>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <!--Add Entry Modal-->
+    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addEntryModalLabel">Add New Item</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-2" onsubmit="return false;">
+                        {% csrf_token %}
+                        <h3>Book Details:</h3>
+                        <hr>
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="author" class="col-form-label">Author:</label>
+                            <input type="text" class="form-control" id="author" name="author"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="col-form-label">Type:</label>
+                            <select class="form-control" id="type" name="type">
+                                <option value="Manga">Manga</option>
+                                <option value="Manhwa">Manhwa</option>
+                                <option value="Novel">Novel</option>
+                                <option value="Light Novel">Light Novel</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imagelink" class="col-form-label">Link for Image:</label>
+                            <input type="text" class="form-control" id="imagelink" name="imagelink"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                        <small>*Note that Book details can not be changed</small>
+                        <h3>Entry Details:</h3>
+                        <hr>
+                        <div class="mb-3">
+                            <label for="status" class="col-form-label">Status:</label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="P">Plan to Read</option>
+                                <option value="O">On Hold</option>
+                                <option value="D">Dropped</option>
+                                <option value="F">Finished</option>
+                                <option value="R">Reading</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                            <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review" class="col-form-label">Review:</label>
+                            <textarea class="form-control" id="review" name="review"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="col-form-label">Rating:</label>
+                            <input type="number" class="form-control" id="rating" name="rating"></input>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Entry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 <script>
     async function getEntry(pk) {
         const link = "get-entry-by-id/"+pk
