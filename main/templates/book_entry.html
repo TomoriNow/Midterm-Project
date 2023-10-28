@@ -100,6 +100,10 @@
                         {% if is_owner  %}
                             <div id="DeleteSpace"></div>
                             <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal">Edit Entry</button>
+                        {% else %}
+                        <td>
+                            <button class="btn btn-primary"  data-bs-dismiss="modal" onclick = "copyEntry()">Open second modal</button>
+                        </td>
                         {% endif %}
                     </div>
                 </div>
@@ -195,56 +199,6 @@
                 </div>
             </div>
         </div>
-            <div class="modal fade" id="copyEntryModal" tabindex="-1" aria-labelledby="copyEntryModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="copyEntryModalLabel">Add New Item</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="form-4" onsubmit="return false;">
-                                {% csrf_token %}
-                                <input type = "hidden" class = "form-control" id = "copyid" name = "pk">
-                                <div class="mb-3">
-                                    <label for="copyname" class="col-form-label">Name:</label>
-                                    <input type="text" class="form-control" id="copyname" name="name" readonly></input>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="copystatus" class="col-form-label">Status:</label>
-                                    <select class="form-control" id="copystatus" name="status">
-                                        <option value="P">Plan to Read</option>
-                                        <option value="O">On Hold</option>
-                                        <option value="D">Dropped</option>
-                                        <option value="F">Finished</option>
-                                        <option value="R">Reading</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="copylast_chapter_read" class="col-form-label">Last Chapter Read:</label>
-                                    <input type="number" class="form-control" id="copylast_chapter_read" name="last_chapter_read"></input>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="copynotes" class="col-form-label">Notes:</label>
-                                    <textarea class="form-control" id="copynotes" name="notes"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="copyreview" class="col-form-label">Review:</label>
-                                    <textarea class="form-control" id="copyreview" name="review"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="copyrating" class="col-form-label">Rating:</label>
-                                    <input type="number" class="form-control" id="copyrating" name="rating"></input>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="button_copy" data-bs-dismiss="modal" >Add Entry</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
     </body>
     <script>
         async function getEntry(pk) {
@@ -410,8 +364,6 @@
             document.getElementById("tag_group").lastElementChild.remove();
         }
         document.getElementById("remove_tag").onclick = removeTag;
-    </script>
-    {% endblock content %}
     var count = 1
     function addTag(){
         const element = document.createElement("select");
@@ -428,23 +380,19 @@
         document.getElementById("tag_group").lastElementChild.remove();
     }
     document.getElementById("remove_tag").onclick = removeTag
-    function showcopyEntry() {
-        const pk = document.getElementById("modal_body").getAttribute("value")
-        document.getElementById("copyid").value = pk
-        const name = document.getElementById("entryModalLabel").innerHTML
-        document.getElementById("copyname").value = name
-    }
     function copyEntry() {
         fetch("{% url 'main:copy_entry' %}", {
             method: "POST",
-            body: new FormData(document.querySelector('#form-4'))
+            body: new FormData(document.querySelector('#form'))
         })
 
-        document.getElementById("form-4").reset()
+        document.getElementById("form").reset()
         return false
     }
     document.getElementById("button_copy").onclick = copyEntry
 
 
-        </script>    {% endblock content %}
+        </script>   
+
+    {% endblock content %} 
 
