@@ -173,11 +173,13 @@ def show_json_by_id(request, id):
 @login_required(login_url='/login')
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)
+    tags = Tag.objects.all()
     context = {"book_entries": data,
                'name':request.user.username,
                'owner': request.user.username,
                'not_owner': "false",
-               'is_owner':True
+               'is_owner':True,
+               'tags': tags
                }
     return render(request, "book_entry.html", context)
 
@@ -195,6 +197,11 @@ def show_book_entry_other(request, username):
                }
     return render(request, "book_entry.html", context)
 
+@login_required(login_url='/login')
+def show_users(request):
+    display_user = User.objects.all()
+    context = {'displayuser': display_user}
+    return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
 def show_book_entry_by_id(request, id):
@@ -216,6 +223,8 @@ def create_custom_entry(request):
     print(form_2.is_valid())
     if form.is_valid() and form_2.is_valid() and request.method == "POST":
         print("success")
+        list = request.POST.getlist('tag')
+        print(list)
         book_entry = form_2.save(commit=False)
         book_entry.user = request.user
         book_entry.last_read_date = datetime.datetime.now()
@@ -223,6 +232,8 @@ def create_custom_entry(request):
         custom_entry.entry = book_entry
         book_entry.save()
         custom_entry.save()
+        custom_entry.taggits.set(list, clear=True)
+        print(custom_entry.taggits)
         book = {
             "id" : book_entry.pk,
             "name": custom_entry.name,

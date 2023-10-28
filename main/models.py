@@ -65,6 +65,7 @@ class Custom_Entry(models.Model):
     author = models.CharField(max_length = 30, null=True, blank= True)
     imagelink = models.CharField(max_length=300, null=True, blank= True)
     description = models.TextField(null=True, blank= True)
+    taggits = TaggableManager(blank = True)
 
     def __str__(self):
         return '%s' % (self.name)
