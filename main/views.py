@@ -8,6 +8,7 @@ from main.serializers import Book_EntrySerializer, BookSerializer, CustomSeriali
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from django.core import serializers
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages  
@@ -49,7 +50,6 @@ def adding_tag():
     for book in Book.objects.all():
         list = tag_parser(book.tags)
         book.taggits.set(list, clear=True)
-        print(book.name)
 
 def show_catalog(request):
     p = Paginator(Book.objects.all(), 30)
@@ -120,7 +120,6 @@ def get_books(request):
     return HttpResponse(input, content_type="application/json")
 
 def get_entry_by_id(request, id):
-    print("success")
     data = Book_Entry.objects.get(pk = id)
     input = Book_EntrySerializer(data).data
     entry_content = JSONRenderer().render(input).decode('utf-8')
@@ -138,6 +137,19 @@ def get_entry_by_id(request, id):
     "data": content_json}
     return JsonResponse(response_data)
 
+def edit_entry(request, id):
+    entry = Book_Entry.objects.get(pk = id)
+
+    form = Book_EntryForm(request.POST or None, instance=entry)
+
+    if form.is_valid() and request.method == "POST":
+        entry = form.save(commit= False)
+        entry.last_read_date = datetime.datetime.now()
+        entry.save()
+        return HttpResponse(b"EDITED", status=201)
+
+    return HttpResponseNotFound()
+
 def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
@@ -146,7 +158,24 @@ def show_json_by_id(request, id):
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)
     context = {"book_entries": data,
-               'name':request.user.username
+               'name':request.user.username,
+               'owner': request.user.username,
+               'not_owner': "false",
+               'is_owner':True
+               }
+    return render(request, "book_entry.html", context)
+
+@login_required(login_url='/login')
+def show_book_entry_other(request, username):
+    user = User.objects.get(username = username)
+    if user == request.user:
+        return show_book_entry(request)
+    data = Book_Entry.objects.filter(user = user)
+    context = {"book_entries": data,
+               'name':request.user.username,
+               'owner': username,
+               'not_owner': "true",
+               'is_owner':False
                }
     return render(request, "book_entry.html", context)
 
@@ -167,7 +196,10 @@ def show_book_entry_by_id(request, id):
 def create_custom_entry(request):
     form = Custom_EntryForm(request.POST or None)
     form_2 = Book_EntryForm(request.POST or None)
+    print(form.is_valid())
+    print(form_2.is_valid())
     if form.is_valid() and form_2.is_valid() and request.method == "POST":
+        print("success")
         book_entry = form_2.save(commit=False)
         book_entry.user = request.user
         book_entry.last_read_date = datetime.datetime.now()
@@ -175,18 +207,19 @@ def create_custom_entry(request):
         custom_entry.entry = book_entry
         book_entry.save()
         custom_entry.save()
-        return HttpResponseRedirect(reverse('main:show_main'))
+        book = {
+            "id" : book_entry.pk,
+            "name": custom_entry.name,
+            "type": custom_entry.type,
+            "LCR" : book_entry.last_chapter_read
+            }
+        return JsonResponse(book)
 
-    context = {
-        'name' : request.user.username,
-        'form': form,
-        'form_2': form_2}
-    return render(request, "create_custom_entry.html", context)
+    return HttpResponseNotFound()
 
 @login_required(login_url='/login')
 def create_catalog_entry(request):
     if request.method == 'POST':
-        print("success")
         name = request.POST.get("name")
         status = request.POST.get("status")
         last_chapter_read = request.POST.get("last_chapter_read")
@@ -205,4 +238,12 @@ def create_catalog_entry(request):
 
     return HttpResponseNotFound()
 
+
+@csrf_exempt
+def delete_entry(request, id):
+    if request.method == 'POST':
+        item = Book_Entry.objects.get(pk = id)
+        item.delete()
+        return HttpResponse(b"DELETED", status = 201)
+    return HttpResponseNotFound()
 

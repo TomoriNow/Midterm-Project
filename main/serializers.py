@@ -17,7 +17,7 @@ class Book_EntrySerializer(serializers.ModelSerializer):
         
     class Meta:
         model = Book_Entry
-        fields = ['status', 'last_chapter_read', 'catalog_entry', 'custom_entry', 'review', 'rating']
+        fields = ['status', 'last_chapter_read', 'catalog_entry', 'last_read_date', 'custom_entry', 'review', 'rating', 'pk']
 
 class CustomSerializer(serializers.ModelSerializer):
     class Meta:

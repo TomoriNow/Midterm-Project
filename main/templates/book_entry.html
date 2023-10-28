@@ -2,12 +2,17 @@
 {% load entrytags %}
 {% block content %}
 {%include 'navbar.html'%}
+<h1>{{owner}}'s List</h1>
+{% if is_owner%}
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEntryModal">Add Custom Entry</button>
+{% endif %}
 <table class="table table-striped table-hover" style = "width: 100%">
+    <tbody id = "entryTable">
     <th> Name </th> 
     <th> Type </th>
     <th> Last Chapter Read </th>
     {% for entry in book_entries %}
-    <tr>
+    <tr id ="row_{{entry.id}}">
         {% get_book entry as book %}
         <td>
             <button class="btn btn-link" onclick ="showEntry({{entry.pk}})" data-bs-toggle="modal" data-bs-target="#entryModal"  role="button">{{book.name}}</button>
@@ -15,13 +20,17 @@
         <td>
             {{book.type}}
         </td>
-        <td>
+        <td id = "lcr_{{entry.id}}">
             {{ entry.last_chapter_read }}
         </td>
     {% endfor %}
+    </tbody>
 </table>
+<a href ="{% url 'main:show_main' %}"
+<button type="button" class="btn btn-success">Add From Catalog</button>
+</a>
 <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="form" onsubmit="return false;">
                 {% csrf_token %}
@@ -30,7 +39,82 @@
             </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" >Add Entry</button>
+                {% if is_owner%}
+                    <div id = "DeleteSpace"></div>
+                    <button type="button" class="btn btn-primary" id="button_edit" data-bs-dismiss="modal" >Edit Entry</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!--Add Entry Modal-->
+<div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addEntryModalLabel">Add New Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-2" onsubmit="return false;">
+                    {% csrf_token %}
+                    <h3>Book Details:</h3>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="col-form-label">Author:</label>
+                        <input type="text" class="form-control" id="author" name="author"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="type" class="col-form-label">Type:</label>
+                        <select class="form-control" id="type" name="type">
+                            <option value="Manga">Manga</option>
+                            <option value="Manhwa">Manhwa</option>
+                            <option value="Novel">Novel</option>
+                            <option value="Light Novel">Light Novel</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagelink" class="col-form-label">Link for Image:</label>
+                        <input type="text" class="form-control" id="imagelink" name="imagelink"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                    <small>*Note that Book details can not be changed</small>
+                    <h3>Entry Details:</h3>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="status" class="col-form-label">Status:</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="P">Plan to Read</option>
+                            <option value="O">On Hold</option>
+                            <option value="D">Dropped</option>
+                            <option value="F">Finished</option>
+                            <option value="R">Reading</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                        <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="review" class="col-form-label">Review:</label>
+                        <textarea class="form-control" id="review" name="review"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rating" class="col-form-label">Rating:</label>
+                        <input type="number" class="form-control" id="rating" name="rating"></input>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Entry</button>
             </div>
         </div>
     </div>
@@ -44,14 +128,32 @@
         document.getElementById("bookView").innerHTML = ""
         const entry = await getEntry(pk)
         const data = JSON.parse(entry.data)
+        
         let htmlString = `<div class="modal-header">
             <h1 class="modal-title fs-5" id="entryModalLabel">${data.name}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id = "modal_body" value = "${data.pk}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg">
+                        <img src="${data.imagelink}">
+                        <p>${data.description}</p>
+                    </div>
+                <div class="col-lg">
                     <div class="mb-3">
+                        <label for="author" class="col-label">Author:</label>
+                        <p id ="author" name = "author">${data.author}</p>
+                        <label for="type" class="col-label">Type:</label>
+                        <p id ="type" name = "type">${data.type}</p>
+                        <label for="last_read" class="col-label">Last Read:</label>
+                        <p id ="last_read" name = "last_read">${data.last_read_date}</p>
                         <label for="status" class="col-form-label">Status:</label>
-                        <select class="form-control" id="status" name="status" value = "${data.status}">
+                        <select class="form-control" id="status" name="status" value = "${data.status}"`
+                        if ({{not_owner}}) {
+                            htmlString += ` disabled`
+                        }
+                        htmlString +=`>
                             <option value="P">Plan to Read</option>
                             <option value="O">On Hold</option>
                             <option value="D">Dropped</option>
@@ -61,18 +163,87 @@
                     </div>
                     <div class="mb-3">
                         <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
-                        <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read" value = "${data.last_chapter_read}"></input>
+                        <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read" value = "${data.last_chapter_read}"`
+                        if ({{not_owner}}) {
+                            htmlString += ` readonly`
+                        }
+                        htmlString +=`></input>
                     </div>
                     <div class="mb-3">
                         <label for="review" class="col-form-label">Review:</label>
-                        <textarea class="form-control" id="review" name="review" >${data.review}</textarea>
+                        <textarea class="form-control" id="review" name="review" `
+                        if ({{not_owner}}) {
+                            htmlString += ` readonly`
+                        }
+                        htmlString +=`>${data.review}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="rating" class="col-form-label">Rating:</label>
-                        <input type="number" class="form-control" id="rating" name="rating" value = "${data.rating}"></input>
+                        <input type="number" class="form-control" id="rating" name="rating" value = "${data.rating}"`
+                        if ({{not_owner}}) {
+                            htmlString += ` readonly`
+                        }
+                        htmlString +=`></input>
                     </div>
-                </div>`
-        document.getElementById("bookView").innerHTML = htmlString
-            }
+                </div>
+            </div>
+        </div>
+    </div>`
+    document.getElementById("bookView").innerHTML = htmlString
+    document.getElementById("DeleteSpace").innerHTML = `<button type="button" class="btn btn-danger" id="button_delete" data-bs-dismiss="modal" onclick = "deleteEntry(${data.pk})">Delete Entry</button>`
+}
+    async function editTable(pk){
+        const lcr_val = document.getElementById("last_chapter_read").value
+        const lcr = "lcr_"+pk
+        document.getElementById(lcr).innerHTML = lcr_val
+    }
+
+    function editEntry() {
+        const pk = document.getElementById("modal_body").getAttribute("value")
+        const link = "/edit-entry/" + pk
+        fetch(link, {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(editTable(pk))
+    
+        document.getElementById("form").reset()
+        return false
+   }
+   document.getElementById("button_edit").onclick = editEntry
+
+   function saveEntry(){
+    fetch("{% url 'main:create_custom_entry' %}", {
+        method: "POST",
+        body: new FormData(document.querySelector('#form-2'))
+    }).then((response) => {return response.json();}).then(entry => {
+        htmlString = `
+        <tr id = "row_${entry.id}">
+        <td>
+            <button class="btn btn-link" onclick ="showEntry(${entry.id})" data-bs-toggle="modal" data-bs-target="#entryModal"  role="button">${entry.name}</button>
+        </td>
+        <td>
+            ${entry.type}
+        </td>
+        <td id = "lcr_${entry.id}">
+            ${entry.LCR}
+        </td>
+        </tr>
+        `
+        document.getElementById("entryTable").innerHTML += htmlString
+        document.getElementById("form-2").reset()
+    })
+}
+   document.getElementById("button_add").onclick = saveEntry
+
+   function deleteEntry(id){
+    fetch("/delete-entry/"+ id, {
+        method: "POST",
+    })
+
+    const row = "row_"+id
+    document.getElementById(row).remove()
+    document.getElementById("form").reset()
+    return false
+}
 </script>
 {% endblock content %} 
