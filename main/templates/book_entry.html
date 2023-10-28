@@ -60,7 +60,7 @@
 </div>
 <!--Add Entry Modal-->
 <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="addEntryModalLabel">Add New Item</h1>
@@ -69,57 +69,74 @@
             <div class="modal-body">
                 <form id="form-2" onsubmit="return false;">
                     {% csrf_token %}
-                    <h3>Book Details:</h3>
-                    <hr>
-                    <div class="mb-3">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="author" class="col-form-label">Author:</label>
-                        <input type="text" class="form-control" id="author" name="author"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="type" class="col-form-label">Type:</label>
-                        <select class="form-control" id="type" name="type">
-                            <option value="Manga">Manga</option>
-                            <option value="Manhwa">Manhwa</option>
-                            <option value="Novel">Novel</option>
-                            <option value="Light Novel">Light Novel</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="imagelink" class="col-form-label">Link for Image:</label>
-                        <input type="text" class="form-control" id="imagelink" name="imagelink"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
-                    </div>
-                    <small>*Note that Book details can not be changed</small>
-                    <h3>Entry Details:</h3>
-                    <hr>
-                    <div class="mb-3">
-                        <label for="status" class="col-form-label">Status:</label>
-                        <select class="form-control" id="status" name="status">
-                            <option value="P">Plan to Read</option>
-                            <option value="O">On Hold</option>
-                            <option value="D">Dropped</option>
-                            <option value="F">Finished</option>
-                            <option value="R">Reading</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
-                        <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="review" class="col-form-label">Review:</label>
-                        <textarea class="form-control" id="review" name="review"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="rating" class="col-form-label">Rating:</label>
-                        <input type="number" class="form-control" id="rating" name="rating"></input>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg">
+                                <h3>Book Details:</h3>
+                                <hr>
+                                <div class="mb-3">
+                                    <label for="name" class="col-form-label">Name:</label>
+                                    <input type="text" class="form-control" id="name" name="name"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="author" class="col-form-label">Author:</label>
+                                    <input type="text" class="form-control" id="author" name="author"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="type" class="col-form-label">Type:</label>
+                                    <select class="form-control" id="type" name="type">
+                                        <option value="Manga">Manga</option>
+                                        <option value="Manhwa">Manhwa</option>
+                                        <option value="Novel">Novel</option>
+                                        <option value="Light Novel">Light Novel</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="imagelink" class="col-form-label">Link for Image:</label>
+                                    <input type="text" class="form-control" id="imagelink" name="imagelink"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="col-form-label">Description:</label>
+                                    <textarea class="form-control" id="description" name="description"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tag" class="col-form-label">Tags:</label>
+                                    <div id = "tag_group"> 
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-light" id = "add_tag">Add Tag</button>
+                                    <button type="button" class="btn btn-danger" id = "remove_tag">Remove Tag</button>
+                                </div>
+                                <small>*Note that Book details can not be changed</small>
+                            </div>
+                            <div class="col-lg">
+                                <h3>Entry Details:</h3>
+                                <hr>
+                                <div class="mb-3">
+                                    <label for="status" class="col-form-label">Status:</label>
+                                    <select class="form-control" id="status" name="status">
+                                        <option value="P">Plan to Read</option>
+                                        <option value="O">On Hold</option>
+                                        <option value="D">Dropped</option>
+                                        <option value="F">Finished</option>
+                                        <option value="R">Reading</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="last_chapter_read" class="col-form-label">Last Chapter Read:</label>
+                                    <input type="number" class="form-control" id="last_chapter_read" name="last_chapter_read"></input>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="review" class="col-form-label">Review:</label>
+                                    <textarea class="form-control" id="review" name="review"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rating" class="col-form-label">Rating:</label>
+                                    <input type="number" class="form-control" id="rating" name="rating"></input>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -132,7 +149,7 @@
 </div>
 <script>
     async function getEntry(pk) {
-        const link = "get-entry-by-id/"+pk
+        const link = "/get-entry-by-id/"+pk
         return fetch(link).then((response) => {return response.json();})
     }
     async function showEntry(pk) {
@@ -196,6 +213,12 @@
                         }
                         htmlString +=`></input>
                     </div>
+                    <div class="mb-3">
+                        <label for="tags" class="col-form-label">Tags:</label>
+                        <div id = "tags">`
+                        data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
+                        htmlString +=`
+                    </div>
                 </div>
             </div>
         </div>
@@ -256,5 +279,24 @@
     document.getElementById("form").reset()
     return false
 }
+    
+    var count = 1
+    function addTag(){
+        const element = document.createElement("select");
+        const stuff = `{% for tag in tags %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
+        element.setAttribute("class", "form-control")
+        element.setAttribute("name", "tag")
+        element.innerHTML = stuff
+        document.getElementById("tag_group").appendChild(element);
+        count +=1;
+    }
+    document.getElementById("add_tag").onclick = addTag
+
+    function removeTag(){
+        document.getElementById("tag_group").lastElementChild.remove();
+    }
+    document.getElementById("remove_tag").onclick = removeTag
+
+
 </script>
 {% endblock content %} 
