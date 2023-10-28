@@ -6,11 +6,14 @@
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-    
+    @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet');    
     #welcomeText {
       font-family: 'Poppins', sans-serif;
     }
   </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 {% endblock meta %}
 {% block content %}
@@ -37,15 +40,16 @@
           </li>
         </ul>
         <ul class="navbar-nav mr-auto">
-          <div class="dropdown">
-            <button class="dropbtn">Dropdown</button>
-            <div class="dropdown-content">
-                {% for tags in tags %}
-                  {{ tags }}
-                {% endfor %}
-            </div>
-        </div>
-        </ul>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for tag in tags %}
+              <a class="dropdown-item" href="#"> {{ tag }}</a>
+              {% endfor %}
+          </div>
+      </div>
         <a href="{% url 'main:show_entry' %}">
           <button class="btn btn-outline-primary px-5 mx-2" aria-current="page" type="submit">Your Collection</button>
         </a>
@@ -64,4 +68,5 @@
       </div>
     </div>
   </nav>
+
 {% endblock content %}
