@@ -2,23 +2,23 @@
 {% block content %}
 {%include 'navbar.html'%}
 <body style=" background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
-    <div>
-    <table class="table table-bordered table-striped table-hover mt-5 text-center" style="width: 100%">
-        <tbody id="userTable">
-            <th>Username</th>
-            <th>Show Their Catalog</th>
-            {% for display in displayuser %}
-                <tr>
-                    <td><p>{{display.username}}</p></td>
-                    <td>
-                        <a href="{% url 'main:show_entry_other' username=display.username %}">
-                        <button type="button" class="btn btn-success">{{display.username}}'s Catalog</button>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="d-flex align-items-center justify-content-center">
+        <table class="table table-bordered table-striped table-hover mt-5 text-center" style="width: 80%;">
+            <tbody id="userTable">
+                <th>Username</th>
+                <th>Show Their Catalog</th>
+                {% for display in displayuser %}
+                    <tr>
+                        <td><p>{{display.username}}</p></td>
+                        <td>
+                            <a href="{% url 'main:show_entry_other' username=display.username %}">
+                            <button type="button" class="btn btn-success">{{display.username}}'s Catalog</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 
