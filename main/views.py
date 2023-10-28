@@ -120,9 +120,7 @@ def get_books(request):
     return HttpResponse(input, content_type="application/json")
 
 def get_books_by_tag(request, tag):
-    p = Paginator(Book.objects.filter(taggits__name = tag).order_by('pk'), 16)
-    page = request.GET.get('page')
-    book = p.get_page(page)
+    book = Book.objects.filter(taggits__name = tag).order_by('pk')
     input = JSONRenderer().render(BookSerializer(book, many=True).data)
     return HttpResponse(input, content_type="application/json")
 
