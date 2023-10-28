@@ -31,7 +31,7 @@
                                     <button onclick = "changeBook('{{book.name}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">Add</button>
                                 </div>
                                 <div class="col me-2">
-                                    <button onclick = "getDescription('{{book.description|linebreaks}}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
+                                    <button onclick = "getDescription({{book.pk}})" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -103,8 +103,7 @@
                 <h1 class="modal-title fs-5" id="descriptionModalLabel">Description</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p id="descriptionForm"></p>
+            <div id="descriptionForm" class="modal-body">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -147,13 +146,16 @@ function addEntry() {
 }
 document.getElementById("button_add").onclick = addEntry
 
-async function getBooks(bookID) {
-    return fetch("{% url 'main:get_book_json' %}").then((res) => res.json())
+async function getBooks(pk) {
+    const link = "get-books-by-id/"+pk
+    return fetch(link).then((response) => {return response.json();})
 }
 
-async function getDescription(bookDescription) {
+async function getDescription(pk) {
     document.getElementById("descriptionForm").innerHTML = ""
-    let htmlString = bookDescription.replace(/(\r\n|\n|\r)/gm,'')
+    const description = await getBooks(pk)
+    const data = JSON.parse(description.data)
+    let htmlString = `<p>${data.description}</p>`
     document.getElementById("descriptionForm").innerHTML = htmlString
 }
 
