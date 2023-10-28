@@ -142,3 +142,46 @@
         visibility: visible;
         opacity: 1;
     }
+    /* Dropdown Button */
+  .dropbtn {
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        min-width: 160px;
+        z-index: 1;
+        border: 1px solid #ccc;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: #333;
+        padding: 12px 16px;
+        display: block;
+        text-decoration: none;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Divider */
+    .divider {
+        border-top: 1px solid #ccc;
+        margin: 8px 0;
+    }

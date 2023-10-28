@@ -1,20 +1,50 @@
 {% extends 'base.html' %}
 {% block meta %}
-{% endblock meta %}
+{% load static %}
 
+<head>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    
+    #welcomeText {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+{% endblock meta %}
 {% block content %}
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #00CC99;"> 
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ECECEC;"> 
     <div class="container-fluid">
       {% load static %}
-      <a class="navbar-brand" href="{% url 'main:show_main' %}"><img src="{% static 'logos.png' %}" alt="Logo" width="160" height="70" class="rounded border border-info"></a>
+      <a class="navbar-brand" href="{% url 'main:show_main' %}"><img src="{% static 'logos.png' %}" alt="Logo" width="200" height="70" 
+        style="width: 100%;
+        height: 65px;
+        border-radius:5%;
+        object-fit: cover;
+        box-shadow: 0px 0px 3px #5f5f5f,
+            0px 0px 0px 5px #ecf0f3,
+            8px 8px 15px #a7aaa7,
+            -8px -8px 15px #fff;"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li>
-            <h3 class="pt-2">Welcome, {{name}}</h3>
+            <h4 class="pt-2" id="welcomeText">Welcome, {{name}}</h4>
           </li>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+          <div class="dropdown">
+            <button class="dropbtn">Dropdown</button>
+            <div class="dropdown-content">
+                {% for tags in tags %}
+                  {{ tags }}
+                {% endfor %}
+            </div>
+        </div>
         </ul>
         <a href="{% url 'main:show_entry' %}">
           <button class="btn btn-outline-primary px-5 mx-2" aria-current="page" type="submit">Your Collection</button>
