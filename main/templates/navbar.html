@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 {% block meta %}
 {% load static %}
+
 <head>
-  <title>Register</title>
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    
+    #welcomeText {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
 </head>
-
 {% endblock meta %}
-
 {% block content %}
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ECECEC;"> 
@@ -28,7 +33,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li>
-            <h3 class="pt-2">Welcome, {{name}}</h3>
+            <h4 class="pt-2" id="welcomeText">Welcome, {{name}}</h4>
           </li>
         </ul>
         <ul class="navbar-nav mr-auto">
