@@ -24,5 +24,7 @@ urlpatterns = [
     path('entry/<str:username>', show_book_entry_other , name='show_entry_other'),
     path('delete-entry/<int:id>', delete_entry, name = "delete_entry"),
     path('show-other-users/', show_users, name="show_other_users"),
-    path('delete-user/<str:username>', delete_user, name='delete_user')
+    path('delete-user/<str:username>', delete_user, name='delete_user'),
+    path('create-tag/', create_tag, name='create_tag'),
+    path('copy-entry/', copy_entry, name='copy_entry'),
 ]
