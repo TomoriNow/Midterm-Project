@@ -47,6 +47,7 @@ class Book_Entry(models.Model):
     last_read_date = models.DateField()
     review = models.TextField(null=True, blank= True)
     rating = models.IntegerField(default=0, validators=[MaxValueValidator(10), MinValueValidator(0)],null=True, blank= True)
+    notes = models.TextField(null=True, blank=True)
 
 class Catalog_Entry(models.Model):
     entry = models.OneToOneField(
