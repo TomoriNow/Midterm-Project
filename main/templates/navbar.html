@@ -88,6 +88,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_addTag" data-bs-dismiss="modal" >Add Tag</button>
             </div>
         </div>
     </div>
@@ -102,6 +103,8 @@
       document.getElementById("tagForm").reset()
       return false
     }
+    document.getElementById("button_addTag").onclick = addTag
+    
 </script>
   
 {% endblock content %}
