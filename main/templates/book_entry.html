@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load entrytags %}
 {% block content %}
+{% load static %}
     {% include 'navbar.html' %}
     <body style="background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1)); height:100%;">
         <br>
@@ -22,7 +23,7 @@
                             by {{book.author}}
                         </td>
         
-                        <td style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                        <td  id = "status_{{entry.id}}"style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                         {% if entry.status == "P" %}
                             Plan to Read
                         {% elif entry.status == "O" %}
@@ -212,7 +213,6 @@
             document.getElementById("bookView").innerHTML = "";
             const entry = await getEntry(pk);
             const data = JSON.parse(entry.data);
-    
             let htmlString = `
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="entryModalLabel">${data.name}</h1>
@@ -239,11 +239,11 @@
                                     htmlString += ` disabled`
                                 }
                                 htmlString +=`>
-                                    <option value="P">Plan to Read</option>
-                                    <option value="O">On Hold</option>
-                                    <option value="D">Dropped</option>
-                                    <option value="F">Finished</option>
-                                    <option value="R">Reading</option>
+                                    <option value="P" ${data.status === 'P' ? 'selected' : ''}>Plan to Read</option>
+                                    <option value="O" ${data.status === 'O' ? 'selected' : ''} >On Hold</option>
+                                    <option value="D" ${data.status === 'D' ? 'selected' : ''}>Dropped</option>
+                                    <option value="F" ${data.status === 'F' ? 'selected' : ''}>Finished</option>
+                                    <option value="R" ${data.status === 'R' ? 'selected' : ''}>Reading</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -292,9 +292,10 @@
         }
     
         async function editTable(pk) {
-            const status_val = document.getElementById("status").value;
+            const status_selector = document.getElementById("status");
+            const index = status_selector.selectedIndex
             const status = "status_" + pk;
-            document.getElementById(status).innerHTML = status_val;
+            document.getElementById(status).innerHTML = status_selector[index].textContent;
         }
     
         function editEntry() {
@@ -309,27 +310,46 @@
             return false;
         }
         document.getElementById("button_edit").onclick = editEntry;
-    
+        
         function saveEntry() {
             fetch("{% url 'main:create_custom_entry' %}", {
                 method: "POST",
                 body: new FormData(document.querySelector('#form-2'))
-            }).then((response) => {
+            })
+            .then((response) => {
                 return response.json();
-            }).then(entry => {
+            })
+            .then(entry => {
+                // Check if entry.imagelink is a valid URL
+        
                 htmlString = `
                 <tr id="row_${entry.id}">
-                <td>
-                    <button class="btn btn-link" onclick="showEntry(${entry.id})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">${entry.name}</button>
-                </td>
-                <td>
-                    ${entry.type}
-                </td>
-                <td id="status_${entry.id}">
+                    <td style="background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1));">
+                        <img src="${entry.imagelink}" style="max-width: 100px; vertical-align: center; margin-right: 10px; text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.25)">
+
+                        <span style="font-size: 32px; width: 140px; height: 40px; text-shadow: 7px 7px 6px rgba(0,0,0,0.6);; top: 339px; left: 178px; color: white; max-width:75px;
+                        ">
+                            ${ entry.name }
+                        </span>
+                        
+                        by ${entry.author}
+                    </td>
+    
+                    <td id = "status_${entry.id}" style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                     ${entry.status}
-                </td>
+                    </td>           
+    
+                    <td style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                        ${entry.rating}
+                    </td>
+                    
+    
+                    <td style="text-align: center; max-width: 40px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                        <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="showEntry(${ entry.id })" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">EDIT</button>
+                    </td> 
                 </tr>
                 `;
+        
                 document.getElementById("entryTable").innerHTML += htmlString;
                 document.getElementById("form-2").reset();
             });

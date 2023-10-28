@@ -1,4 +1,4 @@
-import datetime, json
+import datetime, json, requests
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound, JsonResponse
 from django.urls import reverse
@@ -235,6 +235,14 @@ def create_custom_entry(request):
         custom_entry.entry = book_entry
         book_entry.save()
         custom_entry.save()
+        if custom_entry.imagelink:
+            extension = custom_entry.imagelink[-4:]
+            extension1 = custom_entry.imagelink[-5:]
+            if extension != ".jpg" and extension != ".gif" and extension != ".png" and extension1 != ".jpeg":
+                custom_entry.imagelink = "/static/logos.png"
+        else:
+            custom_entry.imagelink = "/static/logos.png"
+        custom_entry.save()
         custom_entry.taggits.set(list, clear=True)
         print(custom_entry.taggits)
         if book_entry.status == "P":
@@ -247,11 +255,18 @@ def create_custom_entry(request):
             status = "Finished"
         else:
             status = "Reading"
+        if book_entry.rating == None:
+            rating = '-'
+        else:
+            rating = "" + str(book_entry.rating) + "/10"
         book = {
             "id" : book_entry.pk,
             "name": custom_entry.name,
             "type": custom_entry.type,
-            "status" : status
+            "status" : status,
+            "imagelink" : custom_entry.imagelink,
+            "author" : custom_entry.author,
+            "rating" : rating
             }
         return JsonResponse(book)
 
@@ -265,6 +280,10 @@ def create_catalog_entry(request):
         last_chapter_read = request.POST.get("last_chapter_read")
         review = request.POST.get("review")
         rating = request.POST.get("rating")
+        if rating == '':
+            rating = None
+        if last_chapter_read == '':
+            last_chapter_read = None
         notes = request.POST.get("notes")
         last_read_date = datetime.datetime.now()
         user = request.user
@@ -317,6 +336,8 @@ def delete_user(request, username):
     username.delete()
     return redirect('user_display.html')
 
+def dummy(request, wow):
+    return HttpResponseNotFound()
 
 @csrf_exempt
 def delete_entry(request, id):
@@ -326,3 +347,9 @@ def delete_entry(request, id):
         return HttpResponse(b"DELETED", status = 201)
     return HttpResponseNotFound()
 
+def is_url_image(image_url):
+   image_formats = ("image/png", "image/jpeg", "image/jpg")
+   r = requests.head(image_url)
+   if r.headers["content-type"] in image_formats:
+      return True
+   return False
