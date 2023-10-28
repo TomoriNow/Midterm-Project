@@ -119,6 +119,14 @@ def get_books(request):
     input = JSONRenderer().render(BookSerializer(data, many=True).data)
     return HttpResponse(input, content_type="application/json")
 
+def get_books_by_tag(request, tag):
+    p = Paginator(Book.objects.filter(taggits__name = tag).order_by('pk'), 16)
+    page = request.GET.get('page')
+    book = p.get_page(page)
+    input = JSONRenderer().render(BookSerializer(book, many=True).data)
+    return HttpResponse(input, content_type="application/json")
+
+
 def get_entry_by_id(request, id):
     data = Book_Entry.objects.get(pk = id)
     input = Book_EntrySerializer(data).data
