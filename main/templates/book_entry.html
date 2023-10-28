@@ -6,7 +6,7 @@
         <br>
         <h1 class="text-white mx-3" style="text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.25)">{{ owner }}'s Collection</h1>
         <br>    
-        <table class="table table-striped table-bordered table-hover" style="width: 100%; border:transparent;">
+        <table class="table table-striped table-bordered table-hover" style="width: 100%; border:transparent;   border-collapse: separate; border-spacing: 0 15px;">
             <tbody id="entryTable">
                 {% for entry in book_entries %}
                     <tr id="row_{{ entry.id }}">
@@ -36,9 +36,14 @@
                         {% endif %}
                         </td>           
         
-                        <td style="text-align: center;max-width: 10px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
-                        {{entry.rating}}
+                        <td style="text-align: center; max-width: 10px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                            {% if entry.rating == None %}
+                                -
+                            {% else %}
+                                {{ entry.rating }}/10
+                            {% endif %}
                         </td>
+                        
         
                         <td style="text-align: center; max-width: 40px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                             <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="showEntry({{ entry.pk }})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">EDIT</button>
