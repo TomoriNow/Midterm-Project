@@ -448,6 +448,7 @@
                 return response.json();
             })
             .then(entry => {
+                author = entry.author == null ? "None" : entry.author;
                 htmlString = `
                 <tr id="row_${entry.id}">
                     <td style="background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1));">
@@ -458,7 +459,7 @@
                             ${ entry.name }
                         </span>
                         
-                        by ${entry.author}
+                        by ${author}
                     </td>`
                     
                     if (!({{not_owner}})) { htmlString +=`
