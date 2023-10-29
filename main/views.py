@@ -178,11 +178,6 @@ def edit_entry(request, id):
     if form.is_valid() and request.method == "POST":
         entry = form.save(commit= False)
         entry.last_read_date = datetime.datetime.now()
-        if entry.rating:
-            if entry.rating >10:
-                entry.rating = 10
-            elif entry.rating <0:
-                entry.rating = 0
         entry.save()
         return HttpResponse(b"EDITED", status=201)
 
@@ -239,11 +234,6 @@ def create_custom_entry(request):
         book_entry = form_2.save(commit=False)
         book_entry.user = request.user
         book_entry.last_read_date = datetime.datetime.now()
-        if book_entry.rating:
-            if book_entry.rating >10:
-                book_entry.rating = 10
-            elif book_entry.rating <0:
-                book_entry.rating = 0
         custom_entry = form.save(commit=False)
         custom_entry.entry = book_entry
         book_entry.save()
