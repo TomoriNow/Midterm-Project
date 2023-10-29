@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {%include 'navbar.html'%}
-{% if user.is_staff and user.is_superuser %}
+{% if user.is_staff or user.is_superuser %}
     <body style=" background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
         <div class="d-flex align-items-center justify-content-center">
             <table class="table table-bordered table-striped table-hover mt-5 text-center" style="width: 80%;">
@@ -18,7 +18,20 @@
                                 </a>
                             </td>
                             <td>
-                                {% if display.is_staff or display.is_superuser%}
+                                {% if user.is_superuser and not display.is_superuser %}
+                                <a href="{% url 'main:delete_user' username=display.username %}">
+                                    <button type="button" class="btn btn-success" style="background-color:red">Delete User</button>
+                                </a>
+                                {% if display.is_staff %}
+                                <a href="{% url 'main:revoke_admin' username=display.username %}">
+                                    <button type="button" class="btn btn-primary">Revoke Admin</button>
+                                </a>
+                                {% else %}
+                                <a href="{% url 'main:make_admin' username=display.username %}">
+                                    <button type="button" class="btn btn-primary" >Make Admin</button>
+                                </a>
+                                {% endif %}
+                                {% elif display.is_staff or display.is_superuser%}
                                 {% else %}
                                 <a href="{% url 'main:delete_user' username=display.username %}">
                                     <button type="button" class="btn btn-success" style="background-color:red">Delete User</button>

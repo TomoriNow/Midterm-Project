@@ -76,6 +76,10 @@ def register(request):
             form.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
+        elif User.objects.filter(username = request.POST.get('username')).exists():
+            messages.error(request, 'Username already in use')
+        else:
+            messages.error(request, 'Invalid Password')
     context = {'form':form}
     return render(request, 'register.html', context)
 
@@ -335,7 +339,21 @@ def copy_entry(request):
 def delete_user(request, username):
     username = User.objects.filter(username=username)
     username.delete()
-    return redirect('user_display.html')
+    return HttpResponseRedirect(reverse('main:show_other_users'))
+
+@login_required(login_url='/login')
+def make_admin(request, username):
+    username = User.objects.get(username=username)
+    username.is_staff = True
+    username.save()
+    return HttpResponseRedirect(reverse('main:show_other_users'))
+
+@login_required(login_url='/login')
+def revoke_admin(request, username):
+    username = User.objects.get(username=username)
+    username.is_staff = False
+    username.save()
+    return HttpResponseRedirect(reverse('main:show_other_users'))
 
 def dummy(request, wow):
     return HttpResponseNotFound()
