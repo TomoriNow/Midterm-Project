@@ -83,3 +83,7 @@ class BookPost(models.Model):
     author = models.CharField(max_length = 30, null=True, blank= True)
     description = models.TextField(null=True, blank=True)
     taggits = TaggableManager(blank=True)
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete= models.CASCADE)
+    favourite = models.ForeignKey(Book_Entry, on_delete=models.SET_NULL, null=True, blank=True)

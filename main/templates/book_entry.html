@@ -485,7 +485,14 @@
         document.getElementById("form-4").reset()
         return false
     }
+    
+    function setFavourite(id) {
+        fetch("/make-favourite/" + id, {
+            method: "POST"
+        });
 
+        return false;
+    }
     async function favouriteEntry(pk) {
             const entry = await getEntry(pk);
             const data = JSON.parse(entry.data);
@@ -513,6 +520,8 @@
                         </div>
                     </div>`;
             document.getElementById("favouriteView").innerHTML = htmlString;
+
+            setFavourite(pk)
 
     }
 

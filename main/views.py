@@ -2,7 +2,7 @@ import datetime, json, requests
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound, JsonResponse
 from django.urls import reverse
-from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post, BookPost
+from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post, BookPost, Profile
 from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer
 from rest_framework.generics import ListAPIView
@@ -62,7 +62,9 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            person = form.save()
+            profile = Profile(user = person)
+            profile.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
         elif User.objects.filter(username = request.POST.get('username')).exists():
@@ -424,3 +426,13 @@ def accept_tag(request, id):
 def get_posts_json(request):
     item = Post.objects.all()
     return HttpResponse(serializers.serialize('json', item, use_natural_foreign_keys=True))
+
+@login_required(login_url='/login')
+@csrf_exempt
+def make_favourite(request, id):
+    if request.method == "POST":
+        profile = Profile.objects.get_or_create(user = request.user)
+        profile.favourite = Book_Entry.id
+        profile.save()
+        return HttpResponse(b"DELETED", status = 201)
+    return HttpResponseNotFound()
