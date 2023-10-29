@@ -17,6 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from taggit.models import Tag
 
+types = ["All","Manga","Manhwa","Light Novel","Novel"]
 @login_required(login_url='/login')
 def show_main(request):
     p = Paginator(Book.objects.all().order_by('pk'), 16)
@@ -27,6 +28,7 @@ def show_main(request):
     tags = Tag.objects.all()
 
     context = {
+        'types': types,
         'name': request.user.username,
         'class': 'PBP KKI',
         'book': book,
@@ -45,7 +47,7 @@ def search_by_title(request):
         page = request.GET.get('page')
         currPage = p.get_page(page)
 
-        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'currPage':currPage})
+        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'types': types,'currPage':currPage})
     else:
         return render(request, 'catalogue.html', {'name': request.user.username, 'tags':tags})
 
@@ -53,21 +55,6 @@ def adding_tag():
     for book in Book.objects.all():
         list = tag_parser(book.tags)
         book.taggits.set(list, clear=True)
-
-def show_catalog(request):
-    p = Paginator(Book.objects.all(), 30)
-    page = request.GET.get('page')
-    book_entries = p.get_page(page)
-    tags = Tag.objects.all()
-
-    context = {
-        'name': request.user.username,
-        'class': 'PBP KKI',
-        'book_entries': book_entries,
-        'tags':tags
-    }
-
-    return render(request, 'catalogue.html', context)
 
 def register(request):
     form = UserCreationForm()
@@ -133,6 +120,7 @@ def get_books_by_tag(request, tag):
     books = Book.objects.filter(taggits__name=tag).order_by('pk')
     tags = Tag.objects.all()
     context = {
+        'types': types,
         'tags': tags,
         'book': books,
         'name': request.user.username
@@ -140,6 +128,19 @@ def get_books_by_tag(request, tag):
 
     return render(request, 'catalogue.html', context)
 
+def get_books_by_type(request, type):
+    if type == "All":
+        return show_main(request)
+    books = Book.objects.filter(type = type).order_by('pk')
+    tags = Tag.objects.all()
+    context = {
+        'types': types,
+        'tags': tags,
+        'book': books,
+        'name': request.user.username
+    }
+
+    return render(request, 'catalogue.html', context)
 
 def get_entry_by_id(request, id):
     data = Book_Entry.objects.get(pk = id)
@@ -186,7 +187,6 @@ def show_book_entry(request):
                'owner': request.user.username,
                'not_owner': "false",
                'is_owner':True,
-               'tags': tags,
                'user': request.user
                }
     return render(request, "book_entry.html", context)
@@ -210,7 +210,7 @@ def show_users(request):
     display_user = User.objects.all()
     tags = Tag.objects.all()
     posts = Post.objects.all()
-    context = {'displayuser': display_user, 'name': request.user.username, 'tags':tags, 'user':request.user, 'posts': posts}
+    context = {'displayuser': display_user, 'name': request.user.username, 'user':request.user, 'posts': posts}
     return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
