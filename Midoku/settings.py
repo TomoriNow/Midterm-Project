@@ -130,5 +130,5 @@ TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_TAGS_FROM_STRING = 'main.views.tag_parser'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'app', 'static')
+    os.path.join(BASE_DIR, 'main', 'static')
 ]
