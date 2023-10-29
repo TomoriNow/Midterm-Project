@@ -466,22 +466,6 @@
             document.getElementById("tag_group").lastElementChild.remove();
         }
         document.getElementById("remove_tag").onclick = removeTag;
-    var count = 1
-    function addTag(){
-        const element = document.createElement("select");
-        const stuff = `{% for tag in tags %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
-        element.setAttribute("class", "form-control")
-        element.setAttribute("name", "tag")
-        element.innerHTML = stuff
-        document.getElementById("tag_group").appendChild(element);
-        count +=1;
-    }
-    document.getElementById("add_tag").onclick = addTag
-
-    function removeTag(){
-        document.getElementById("tag_group").lastElementChild.remove();
-    }
-    document.getElementById("remove_tag").onclick = removeTag
 
     function showCopy() {
         const pk = document.getElementById("modal_body").getAttribute("value")
