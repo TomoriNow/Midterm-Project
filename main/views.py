@@ -234,12 +234,8 @@ def show_users(request):
 def create_custom_entry(request):
     form = Custom_EntryForm(request.POST or None)
     form_2 = Book_EntryForm(request.POST or None)
-    print(form.is_valid())
-    print(form_2.is_valid())
     if form.is_valid() and form_2.is_valid() and request.method == "POST":
-        print("success")
         list = request.POST.getlist('tag')
-        print(list)
         book_entry = form_2.save(commit=False)
         book_entry.user = request.user
         book_entry.last_read_date = datetime.datetime.now()
@@ -261,7 +257,6 @@ def create_custom_entry(request):
             custom_entry.imagelink = "/static/logos.png"
         custom_entry.save()
         custom_entry.taggits.set(list, clear=True)
-        print(custom_entry.taggits)
         if book_entry.status == "P":
             status = "Plan to Read"
         elif book_entry.status == "O":
@@ -329,19 +324,15 @@ def copy_entry(request):
         og_book_entry = Book_Entry.objects.get(pk = id)
         new_entry = Book_Entry(status=status, last_chapter_read=last_chapter_read, review=review, rating=rating, last_read_date=last_read_date,user=user, notes = notes)
         new_entry.save()
-        print(og_book_entry)
-        print(new_entry)
         if hasattr(og_book_entry, "custom_entry"):
             book = og_book_entry.custom_entry
             book.pk = None
             book.entry = new_entry
             book.save()
-            print(book)
         else:
             book = og_book_entry.catalog_entry.book
             catalog_entry = Catalog_Entry(entry = new_entry, book = book)
             catalog_entry.save()
-            print(catalog_entry)
 
         return HttpResponse(b"CREATED", status=201)
 
@@ -483,7 +474,6 @@ def make_favourite(request, id):
     if request.method == "POST":
         profile = Profile.objects.get_or_create(user = request.user)
         profile = profile[0]
-        print(profile)
         profile.favourite = Book_Entry.objects.get(pk=id)
         profile.save()
         return HttpResponse(b"DELETED", status = 201)
