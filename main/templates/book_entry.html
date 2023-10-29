@@ -20,7 +20,45 @@
             <div class="collapse" id="toggleFavoriteBooks">
               <div class="p-4">
                 <h5 class="text-white h4">Favorite Book:</h5>
-                <span class="text-muted" id="favouriteView">Book goes here</span>
+                <span class="text-muted" id="favouriteView">
+                    {% if request.user.profile %}
+                    {% if request.user.profile.favourite%}
+                    {% with data=request.user.profile.favourite%}
+                    {% get_book data as favourite %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg">
+                                <img src="{{favourite.imagelink}}">
+                                <p>{{favourite.description}}</p>
+                            </div>
+                            <div class="col-lg">
+                                <div class="mb-3">
+                                    <label for="show_author" class="col-label">Author:</label>
+                                    <p id ="show_author" name = "show_author">{{favourite.author}}</p>
+                                    <label for="show_type" class="col-label">Type:</label>
+                                    <p id ="show_type" name = "show_type">{{favourite.type}}</p>
+                                    <label for="show_last_read" class="col-label">Last Read:</label>
+                                    <p id ="show_last_read" name = "show_last_read">{{data.last_read_date}}</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="show_tags" class="col-form-label">Tags:</label>
+                                    <div id = "show_tags">
+                                        {% for tag in favourite.taggits.all %}
+                                            {{ tag }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                    {% else %}
+                    Book goes here
+                    {% endif %}
+                    {%else %}
+                    Book goes here
+                    {% endif %}
+                </span>
               </div>
             </div>
         </div>
@@ -301,6 +339,7 @@
                                 <img src="${data.imagelink}">
                                 <p>${data.description}</p>
                             </div>
+                        </div>
                         <div class="col-lg">
                             <div class="mb-3">
                                 <label for="show_author" class="col-label">Author:</label>
@@ -354,12 +393,13 @@
                                 }
                                 htmlString +=`></input>
                             </div>
-                    <div class="mb-3">
-                        <label for="show_tags" class="col-form-label">Tags:</label>
-                        <div id = "show_tags">`
-                        data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
-                        htmlString +=`
-                    </div>
+                            <div class="mb-3">
+                                <label for="show_tags" class="col-form-label">Tags:</label>
+                                <div id = "show_tags">`
+                                    data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
+                                    htmlString +=`
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>`;
@@ -510,20 +550,23 @@
                                 <img src="${data.imagelink}">
                                 <p>${data.description}</p>
                             </div>
-                        <div class="col-lg">
-                            <div class="mb-3">
-                                <label for="show_author" class="col-label">Author:</label>
-                                <p id ="show_author" name = "show_author">${data.author}</p>
-                                <label for="show_type" class="col-label">Type:</label>
-                                <p id ="show_type" name = "show_type">${data.type}</p>
-                                <label for="show_last_read" class="col-label">Last Read:</label>
-                                <p id ="show_last_read" name = "show_last_read">${data.last_read_date}</p>
-                    <div class="mb-3">
-                        <label for="show_tags" class="col-form-label">Tags:</label>
-                        <div id = "show_tags">`
-                        data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
-                        htmlString +=`
-                    </div>
+                            <div class="col-lg">
+                                <div class="mb-3">
+                                    <label for="show_author" class="col-label">Author:</label>
+                                    <p id ="show_author" name = "show_author">${data.author}</p>
+                                    <label for="show_type" class="col-label">Type:</label>
+                                    <p id ="show_type" name = "show_type">${data.type}</p>
+                                    <label for="show_last_read" class="col-label">Last Read:</label>
+                                    <p id ="show_last_read" name = "show_last_read">${data.last_read_date}</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="show_tags" class="col-form-label">Tags:</label>
+                                        <div id = "show_tags">`
+                                            data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
+                                            htmlString +=`
+                                        </div>
+                                </div>
+                            </div>
                         </div>
                     </div>`;
             document.getElementById("favouriteView").innerHTML = htmlString;

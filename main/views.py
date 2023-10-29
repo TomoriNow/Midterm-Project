@@ -207,7 +207,8 @@ def show_book_entry_other(request, username):
                'name':request.user.username,
                'owner': username,
                'not_owner': "true",
-               'is_owner':False
+               'is_owner':False,
+               'user': request.user
                }
     return render(request, "book_entry.html", context)
 
@@ -467,7 +468,9 @@ def get_book_posts_json(request, id):
 def make_favourite(request, id):
     if request.method == "POST":
         profile = Profile.objects.get_or_create(user = request.user)
-        profile.favourite = Book_Entry.id
+        profile = profile[0]
+        print(profile)
+        profile.favourite = Book_Entry.objects.get(pk=id)
         profile.save()
         return HttpResponse(b"DELETED", status = 201)
     return HttpResponseNotFound()
