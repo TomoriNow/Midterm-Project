@@ -49,7 +49,7 @@ def search_by_title(request):
             page = request.GET.get('page')
             currPage = p.get_page(page)
 
-            return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'currPage':currPage})
+            return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'currPage':currPage, 'types':types})
 
 def adding_tag():
     for book in Book.objects.all():
