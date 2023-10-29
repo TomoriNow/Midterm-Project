@@ -214,18 +214,6 @@ def show_users(request):
     return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
-def show_book_entry_by_id(request, id):
-    data = Book_Entry.objects.select_related("catalog_entry").select_related("custom_entry").get(pk = id)
-    context = {"entry": data}
-    if hasattr(data, "catalog_entry"):
-        book = data.catalog_entry.book
-        context["book"] = book
-    else:
-        context["book"] = data.custom_entry
-    
-    return render(request, "book_entry_id.html", context)
-
-@login_required(login_url='/login')
 def create_custom_entry(request):
     form = Custom_EntryForm(request.POST or None)
     form_2 = Book_EntryForm(request.POST or None)

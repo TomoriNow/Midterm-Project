@@ -20,7 +20,7 @@
             <div class="collapse" id="toggleFavoriteBooks">
               <div class="p-4">
                 <h5 class="text-white h4">Favorite Book:</h5>
-                <span class="text-muted">Book goes here</span>
+                <span class="text-muted" id="favouriteView">Book goes here</span>
               </div>
             </div>
         </div>
@@ -40,7 +40,11 @@
                             
                             by {{book.author}}
                         </td>
-        
+                        
+                        <td style="text-align: center; max-width: 40px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                            <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="favouriteEntry({{ entry.pk }})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">FAVOURITE</button>
+                        </td>
+
                         <td  id = "status_{{entry.id}}"style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                         {% if entry.status == "P" %}
                             Plan to Read
@@ -55,7 +59,7 @@
                         {% endif %}
                         </td>           
         
-                        <td style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                        <td id = "rating_{{entry.pk}}" style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                             {% if entry.rating == None %}
                                 -
                             {% else %}
@@ -362,10 +366,20 @@
         }
     
         async function editTable(pk) {
-            const status_selector = document.getElementById("status");
-            const index = status_selector.selectedIndex
+            let rating_value = document.getElementById("show_rating").value;
+            if (rating_value == ""){ rating_value = "-"}
+            else { rating_value = ""+rating_value+"/10"}
+            const rating = "rating_" + pk;
+            document.getElementById(rating).innerHTML = rating_value;
+
+            let status_value = document.getElementById("show_status").value
+            if (status_value == "D"){ status_value = "Dropped"}
+            else if (status_value == "P"){ status_value = "Plan to Read"}
+            else if (status_value == "O"){ status_value = "On Hold"}
+            else if (status_value == "F"){ status_value = "Finished"}
+            else { status_value = "Reading"}
             const status = "status_" + pk;
-            document.getElementById(status).innerHTML = status_selector[index].textContent;
+            document.getElementById(status).innerHTML = status_value;
         }
     
         function editEntry() {
@@ -407,7 +421,7 @@
                     ${entry.status}
                     </td>           
     
-                    <td style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                    <td id = "rating_${entry.id}" style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                         ${entry.rating}
                     </td>
                     
@@ -452,22 +466,6 @@
             document.getElementById("tag_group").lastElementChild.remove();
         }
         document.getElementById("remove_tag").onclick = removeTag;
-    var count = 1
-    function addTag(){
-        const element = document.createElement("select");
-        const stuff = `{% for tag in tags %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
-        element.setAttribute("class", "form-control")
-        element.setAttribute("name", "tag")
-        element.innerHTML = stuff
-        document.getElementById("tag_group").appendChild(element);
-        count +=1;
-    }
-    document.getElementById("add_tag").onclick = addTag
-
-    function removeTag(){
-        document.getElementById("tag_group").lastElementChild.remove();
-    }
-    document.getElementById("remove_tag").onclick = removeTag
 
     function showCopy() {
         const pk = document.getElementById("modal_body").getAttribute("value")
@@ -486,6 +484,36 @@
 
         document.getElementById("form-4").reset()
         return false
+    }
+
+    async function favouriteEntry(pk) {
+            const entry = await getEntry(pk);
+            const data = JSON.parse(entry.data);
+            let htmlString = `
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg">
+                                <img src="${data.imagelink}">
+                                <p>${data.description}</p>
+                            </div>
+                        <div class="col-lg">
+                            <div class="mb-3">
+                                <label for="show_author" class="col-label">Author:</label>
+                                <p id ="show_author" name = "show_author">${data.author}</p>
+                                <label for="show_type" class="col-label">Type:</label>
+                                <p id ="show_type" name = "show_type">${data.type}</p>
+                                <label for="show_last_read" class="col-label">Last Read:</label>
+                                <p id ="show_last_read" name = "show_last_read">${data.last_read_date}</p>
+                    <div class="mb-3">
+                        <label for="show_tags" class="col-form-label">Tags:</label>
+                        <div id = "show_tags">`
+                        data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
+                        htmlString +=`
+                    </div>
+                        </div>
+                    </div>`;
+            document.getElementById("favouriteView").innerHTML = htmlString;
+
     }
 
 
