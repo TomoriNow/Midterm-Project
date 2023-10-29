@@ -120,12 +120,14 @@ def get_books(request):
     return HttpResponse(input, content_type="application/json")
 
 def get_books_by_tag(request, tag):
-    books = Book.objects.filter(taggits__name=tag).order_by('pk')
+    p = Paginator(Book.objects.filter(taggits__name=tag).order_by('pk'), 16)
+    page = request.GET.get('page')
+    book = p.get_page(page)
     tags = Tag.objects.all()
     context = {
         'types': types,
         'tags': tags,
-        'book': books,
+        'book': book,
         'name': request.user.username,
         'taggits' :tags
     }
@@ -135,12 +137,14 @@ def get_books_by_tag(request, tag):
 def get_books_by_type(request, type):
     if type == "All":
         return show_main(request)
-    books = Book.objects.filter(type = type).order_by('pk')
+    p = Paginator(Book.objects.filter(type = type).order_by('pk'), 16)
+    page = request.GET.get('page')
+    book = p.get_page(page)
     tags = Tag.objects.all()
     context = {
         'types': types,
         'tags': tags,
-        'book': books,
+        'book': book,
         'name': request.user.username,
         'taggits' :tags
     }
