@@ -33,7 +33,8 @@
           </li>
         </ul>
         <ul class="navbar-nav mr-auto">
-        <div class="dropdown">
+          {% if tags %}
+        <div class="dropdown my-2 mx-2">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Filter by tags
           </button>
@@ -43,6 +44,19 @@
               {% endfor %}
           </div>
         </div>
+        {% endif %}
+        {% if types %}
+        <div class="dropdown my-2 mx-2">
+          <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownTypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Filter by type
+          </button>
+          <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownTypeList">
+            {% for type in types %}
+              <a class="dropdown-item" href="/get-books-type/{{type}}"> {{ type }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
         <div class="dropdown my-2 mx-2">
           <button class="btn btn-info dropdown-toggle" type="button" id="dropdownCollection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Collection
