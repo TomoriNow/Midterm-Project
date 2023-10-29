@@ -98,7 +98,7 @@
     function addTag() {
       fetch("{% url 'main:create_tag' %}", {
         method:"POST",
-        body: new FormData(document.querySelector('#form'))
+        body: new FormData(document.querySelector('#tagForm'))
       })
       document.getElementById("tagForm").reset()
       return false
