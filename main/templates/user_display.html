@@ -18,9 +18,12 @@
                                 </a>
                             </td>
                             <td>
+                                {% if display.is_staff or display.is_superuser%}
+                                {% else %}
                                 <a href="{% url 'main:delete_user' username=display.username %}">
                                     <button type="button" class="btn btn-success" style="background-color:red">Delete User</button>
                                 </a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -31,24 +34,18 @@
         <div class="d-flex align-items-center justify-content-center">
             <table class="table table-bordered table-striped table-hover mt-5 text-center" style="width: 80%;">
                 <tbody id="postsTable">
-                    <th>Username</th>
+                    <th>User</th>
                     <th>Posts</th>
                     <th>Accept/Reject</th>
-                    {% for display in displayuser %}
+                    {% for post in posts %}
                         <tr>
-                            <td><p>{{display.username}}</p></td>
+                            <td><p>{{post.user.username}}</p></td>
                             <td>
-                                <a href="#">
-                                    Post Goes Here
-                                </a>
+                                {{post.tag}}
                             </td>
                             <td>
-                                <a href="#">
-                                    <button type="button" class="btn btn-success">Accept</button>
-                                </a>
-                                <a href="#">
-                                    <button type="button" class="btn btn-danger">Reject</button>
-                                </a>
+                                <button type="button" class="btn btn-success" onclick = "acceptTag({{post.pk}})">Accept</button>
+                                <button type="button" class="btn btn-danger" onclick="rejectTag({{post.pk}})">Reject</button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -78,17 +75,45 @@
         </div>
     </body>
 {% endif %}
+<script>
+    async function getPosts() {
+        return fetch("{% url 'main:get_posts_json' %}").then((res) => res.json())
+    }
+    async function refreshItems() {
+        document.getElementById("postsTable").innerHTML = ""
+        const posts = await getPosts()
+        let htmlString = `
+        <th>User</th>
+        <th>Posts</th>
+        <th>Accept/Reject</th>`
+        posts.forEach((post) => {
+            htmlString += `\n<tr>
+                <td><p>${post.fields.user}</p></td>
+                <td>
+                    ${post.fields.tag}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success" onclick = "acceptTag(${post.pk})">Accept</button>
+                    <button type="button" class="btn btn-danger" onclick="rejectTag(${post.pk})">Reject</button>
+                </td>
+            </tr>` 
+        })
+        document.getElementById("postsTable").innerHTML = htmlString
+    }
+    function rejectTag(id){
+        fetch("/reject-tag/"+ id, {
+            method: "POST",
+        }).then(refreshItems)
 
+        return false
+    }
+    function acceptTag(id){
+        alert("called")
+        fetch("/accept-tag/"+ id, {
+            method: "POST",
+        }).then(refreshItems)
 
-
-
-
-
-
-
-
-
-
-
-
+        return false
+    }
+</script>
 {% endblock content %}

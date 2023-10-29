@@ -203,7 +203,8 @@ def show_book_entry_other(request, username):
 def show_users(request):
     display_user = User.objects.all()
     tags = Tag.objects.all()
-    context = {'displayuser': display_user, 'name': request.user.username, 'tags':tags}
+    posts = Post.objects.all()
+    context = {'displayuser': display_user, 'name': request.user.username, 'tags':tags, 'user':request.user, 'posts': posts}
     return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
@@ -348,7 +349,7 @@ def delete_entry(request, id):
     return HttpResponseNotFound()
 
 @login_required(login_url='/login')
-def create_tag(request):
+def create_post(request):
     if request.method == "POST":
         tag = request.POST.get("tag")
         user = request.user
@@ -358,3 +359,28 @@ def create_tag(request):
         return HttpResponse(b"CREATED", status=201)
     
     return HttpResponseNotFound()
+
+@login_required(login_url='/login')
+@csrf_exempt
+def reject_tag(request, id):
+    if request.method == "POST":
+        tag = Post.objects.get(pk = id)
+        tag.delete()
+        return HttpResponse(b"DELETED", status = 201)
+    return HttpResponseNotFound()
+
+@login_required(login_url='/login')
+@csrf_exempt
+def accept_tag(request, id):
+    if request.method == "POST":
+        post = Post.objects.get(pk = id)
+        tag = Tag(name = post.tag)
+        tag.save()
+        post.delete()
+        return HttpResponse(b"DELETED", status = 201)
+    return HttpResponseNotFound()
+
+@login_required(login_url='/login')
+def get_posts_json(request):
+    item = Post.objects.all()
+    return HttpResponse(serializers.serialize('json', item, use_natural_foreign_keys=True))
