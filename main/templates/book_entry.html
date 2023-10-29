@@ -55,7 +55,7 @@
                         {% endif %}
                         </td>           
         
-                        <td style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                        <td id = "rating_{{entry.pk}}" style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                             {% if entry.rating == None %}
                                 -
                             {% else %}
@@ -362,10 +362,20 @@
         }
     
         async function editTable(pk) {
-            const status_selector = document.getElementById("status");
-            const index = status_selector.selectedIndex
+            let rating_value = document.getElementById("show_rating").value;
+            if (rating_value == ""){ rating_value = "-"}
+            else { rating_value = ""+rating_value+"/10"}
+            const rating = "rating_" + pk;
+            document.getElementById(rating).innerHTML = rating_value;
+
+            let status_value = document.getElementById("show_status").value
+            if (status_value == "D"){ status_value = "Dropped"}
+            else if (status_value == "P"){ status_value = "Plan to Read"}
+            else if (status_value == "O"){ status_value = "On Hold"}
+            else if (status_value == "F"){ status_value = "Finished"}
+            else { status_value = "Reading"}
             const status = "status_" + pk;
-            document.getElementById(status).innerHTML = status_selector[index].textContent;
+            document.getElementById(status).innerHTML = status_value;
         }
     
         function editEntry() {
@@ -407,7 +417,7 @@
                     ${entry.status}
                     </td>           
     
-                    <td style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                    <td id = "rating_${entry.id}" style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                         ${entry.rating}
                     </td>
                     
