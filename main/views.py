@@ -181,13 +181,14 @@ def show_json_by_id(request, id):
 @login_required(login_url='/login')
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)
-    tags = Tag.objects.all()
+    taggits = Tag.objects.all()
     context = {"book_entries": data,
                'name':request.user.username,
                'owner': request.user.username,
                'not_owner': "false",
                'is_owner':True,
-               'user': request.user
+               'user': request.user,
+               'taggits': taggits
                }
     return render(request, "book_entry.html", context)
 
