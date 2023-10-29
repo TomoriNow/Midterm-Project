@@ -339,7 +339,6 @@
                                 <img src="${data.imagelink}">
                                 <p>${data.description}</p>
                             </div>
-                        </div>
                         <div class="col-lg">
                             <div class="mb-3">
                                 <label for="show_author" class="col-label">Author:</label>
@@ -393,13 +392,12 @@
                                 }
                                 htmlString +=`></input>
                             </div>
-                            <div class="mb-3">
-                                <label for="show_tags" class="col-form-label">Tags:</label>
-                                <div id = "show_tags">`
-                                    data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
-                                    htmlString +=`
-                                </div>
-                            </div>
+                    <div class="mb-3">
+                        <label for="show_tags" class="col-form-label">Tags:</label>
+                        <div id = "show_tags">`
+                        data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
+                        htmlString +=`
+                    </div>
                         </div>
                     </div>
                 </div>`;
