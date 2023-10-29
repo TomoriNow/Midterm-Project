@@ -74,3 +74,12 @@ class Custom_Entry(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tag = models.CharField(max_length=50)
+
+class BookPost(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    imagelink = models.CharField(max_length=300, null=True, blank= True)
+    type = models.CharField(max_length=15,choices=TYPE_CHOICES, default=MANGA)
+    author = models.CharField(max_length = 30, null=True, blank= True)
+    description = models.TextField(null=True, blank=True)
+    taggits = TaggableManager(blank=True)

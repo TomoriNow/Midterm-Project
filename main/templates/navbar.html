@@ -66,6 +66,7 @@
             <li><a class="dropdown-item" href="{% url 'main:show_entry' %}">Your Collection</a></li>
             <li><a class="dropdown-item" href="{% url 'main:show_other_users' %}">Other Users</a></li>
             <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#tagModal">Post Tag Suggestion</a></li>
+            <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#bookModal">Post Book Suggestion</a></li>
           </ul>
         </div>
         <form class="d-flex my-2" method="GET" action="{% url 'main:search-title' %}">
@@ -81,8 +82,7 @@
       </div>
     </div>
   </nav>
-  
-  
+
   <!--Add Tag Modal-->
   <div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -108,6 +108,62 @@
     </div>
   </div>
 
+  <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="bookModalLabel">Post Book Suggestion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="bookForm" onsubmit="return false;">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="bookName" class="col-form-label">Name<span style = 'color:red'>(required*)</span>:</label>
+                  <input type="text" class="form-control" id="bookName" name="name"></input>
+                </div>
+                <div class="mb-3">
+                    <label for="bookAuthor" class="col-form-label">Author:</label>
+                    <input type="text" class="form-control" id="bookAuthor" name="author"></input>
+                </div>
+                <div class="mb-3">
+                    <label for="bookType" class="col-form-label">Type:</label>
+                    <select class="form-control" id="bookType" name="type">
+                        <option value="Manga">Manga</option>
+                        <option value="Manhwa">Manhwa</option>
+                        <option value="Novel">Novel</option>
+                        <option value="Light Novel">Light Novel</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="bookImageLink" class="col-form-label">Link for Image:</label>
+                    <input type="text" class="form-control" id="bookImageLink" name="imagelink"></input>
+                </div>
+                <div class="mb-3">
+                    <label for="bookDescription" class="col-form-label">Description:</label>
+                    <textarea class="form-control" id="bookDescription" name="description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="book_tag" class="col-form-label">Tags:</label>
+                    <div id = "book_tag_group"> 
+                    </div>
+                </div>
+                <div class="mb-3">
+                  <button type="button" class="btn btn-light" id = "book_add_tag">Add Tag</button>
+                  <button type="button" class="btn btn-danger" id = "book_remove_tag">Remove Tag</button>
+                </div>
+                <small>*Note that Book details cannot be changed</small>
+              </div>
+              </form>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_addBook" data-bs-dismiss="modal" >Post Suggestion</button>
+            </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
 <script>
   function refreshItems() {
 
@@ -121,6 +177,33 @@
     return false
     }
     document.getElementById("button_addTag").onclick = addPost
+
+  var count = 1
+  function bookAddTag(){
+      const element = document.createElement("select");
+      const stuff = `{% for tag in taggits %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
+      element.setAttribute("class", "form-control")
+      element.setAttribute("name", "book_tag")
+      element.innerHTML = stuff
+      document.getElementById("book_tag_group").appendChild(element);
+      count +=1;
+  }
+  document.getElementById("book_add_tag").onclick = bookAddTag
+
+  function bookRemoveTag(){
+      document.getElementById("book_tag_group").lastElementChild.remove();
+  }
+  document.getElementById("book_remove_tag").onclick = bookRemoveTag
+
+  function addBookPost() {
+    fetch("{% url 'main:create_book_post' %}", {
+      method:"POST",
+      body: new FormData(document.querySelector('#bookForm'))
+    }).then(refreshItems)
+    document.getElementById("bookForm").reset()
+    return false
+    }
+    document.getElementById("button_addBook").onclick = addBookPost
     
 </script>
   

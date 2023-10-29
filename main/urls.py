@@ -1,5 +1,5 @@
 from django.urls import path
-from main.views import show_main, register, login_user, logout_user, show_json, show_json_by_id, search_by_title, show_book_entry, create_custom_entry, create_catalog_entry, BookListAPIView, get_entry_by_id, edit_entry, show_book_entry_other
+from main.views import show_main, register, login_user, logout_user, show_json, show_json_by_id, search_by_title, show_book_entry, create_custom_entry, create_catalog_entry, BookListAPIView, get_entry_by_id, edit_entry, show_book_entry_other, create_book_post
 from main.views import get_books_by_id, delete_entry, get_books, get_books_by_tag, show_users, delete_user, copy_entry, get_posts_json, reject_tag, create_post, accept_tag, make_admin, revoke_admin, get_books_by_type
 app_name = 'main'
 
@@ -32,4 +32,6 @@ urlpatterns = [
     path('get-posts/', get_posts_json, name='get_posts_json'),
     path('reject-tag/<int:id>', reject_tag, name='reject_tag'),
     path('accept-tag/<int:id>', accept_tag, name='accept_tag'),
+    path('create-book-post/', create_book_post, name='create_book_post')
+
 ]
