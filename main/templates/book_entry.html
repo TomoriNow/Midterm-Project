@@ -12,19 +12,18 @@
         <br>
         
         <div class="pos-f-t">
-            <nav class="navbar justify-content-start">
-                <h1 class="text-white mx-3" style="text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.25)">{{ owner }}'s Collection</h1>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#toggleFavoriteBooks" aria-controls="toggleFavoriteBooks" aria-expanded="false">
-                    <span class="navbar-toggler-icon"></span>
+            <nav class="navbar">
+                <h1 class="text-white mx-3 justify-content-start" style="text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.25)">{{ owner }}'s Collection</h1>
+                <button class="navbar-toggler border border-light mx-2" type="button" data-toggle="collapse" data-target="#toggleFavoriteBooks" aria-controls="toggleFavoriteBooks" aria-expanded="false">
+                    <p class="text-white my-2" style="text-shadow: 4px 8px 4px rgba(0, 0, 0, 0.25)">Click here for {{owner}}'s favorite book!</p>
                 </button>
             </nav>
             <div class="collapse" id="toggleFavoriteBooks">
               <div class="p-4">
-                <h5 class="text-white h4">Collapsed content</h5>
-                <span class="text-muted">Toggleable via the navbar brand.</span>
+                <h5 class="text-white h4">Favorite Book:</h5>
+                <span class="text-muted">Book goes here</span>
               </div>
             </div>
-            
         </div>
         <br>    
         <table class="table table-striped table-bordered table-hover" style="width: 100%; border:transparent;   border-collapse: separate; border-spacing: 0 15px;">
