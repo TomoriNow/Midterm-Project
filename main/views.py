@@ -33,6 +33,7 @@ def show_main(request):
         'class': 'PBP KKI',
         'book': book,
         'tags': tags,
+        'taggits' :tags
     }
     return render(request, 'catalogue.html', context)
 
@@ -49,7 +50,7 @@ def search_by_title(request):
             page = request.GET.get('page')
             currPage = p.get_page(page)
 
-            return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'currPage':currPage, 'types':types})
+            return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'currPage':currPage, 'types':types, 'taggits' :tags})
 
 def adding_tag():
     for book in Book.objects.all():
@@ -123,7 +124,8 @@ def get_books_by_tag(request, tag):
         'types': types,
         'tags': tags,
         'book': books,
-        'name': request.user.username
+        'name': request.user.username,
+        'taggits' :tags
     }
 
     return render(request, 'catalogue.html', context)
@@ -137,7 +139,8 @@ def get_books_by_type(request, type):
         'types': types,
         'tags': tags,
         'book': books,
-        'name': request.user.username
+        'name': request.user.username,
+        'taggits' :tags
     }
 
     return render(request, 'catalogue.html', context)
@@ -211,7 +214,7 @@ def show_users(request):
     display_user = User.objects.all()
     tags = Tag.objects.all()
     posts = Post.objects.all()
-    context = {'displayuser': display_user, 'name': request.user.username, 'user':request.user, 'posts': posts}
+    context = {'displayuser': display_user, 'name': request.user.username, 'user':request.user, 'posts': posts, 'taggits' :tags}
     return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
