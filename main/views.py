@@ -187,7 +187,8 @@ def show_book_entry(request):
                'owner': request.user.username,
                'not_owner': "false",
                'is_owner':True,
-               'user': request.user
+               'user': request.user,
+               'taggits': tags
                }
     return render(request, "book_entry.html", context)
 

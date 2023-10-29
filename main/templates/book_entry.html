@@ -393,7 +393,7 @@
             document.getElementById("form").reset();
             return false;
         }
-        document.getElementById("button_edit").onclick = editEntry;
+        document.getElementById("button_edit").addEventListener("click", addTag);
         
         function saveEntry() {
             fetch("{% url 'main:create_custom_entry' %}", {
@@ -453,7 +453,7 @@
     
         function addTag() {
             const element = document.createElement("select");
-            const stuff = `{% for tag in tags %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
+            const stuff = `{% for tag in taggits %} <option value="{{tag}}">{{tag}}</option> {% endfor %}`;
             element.setAttribute("class", "form-control");
             element.setAttribute("name", "tag");
             element.innerHTML = stuff;
