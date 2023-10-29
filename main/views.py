@@ -38,18 +38,18 @@ def show_main(request):
 
 @login_required(login_url='/login')
 def search_by_title(request):
-    if request.method == 'POST':
-        searched = request.POST['searched']
-        books = Book.objects.filter(name__contains = searched)
-        book = Book.objects.filter(name__contains = searched).exists()
-        tags = Tag.objects.all()
-        p = Paginator(books.order_by('pk'), 16)
-        page = request.GET.get('page')
-        currPage = p.get_page(page)
+        searched = request.GET.get('searched')
+        if searched == None:
+            return render(request, 'catalogue.html', {'searched': searched})
+        else:
+            books = Book.objects.filter(name__contains = searched)
+            book = Book.objects.filter(name__contains = searched).exists()
+            tags = Tag.objects.all()
+            p = Paginator(books.order_by('pk'), 16)
+            page = request.GET.get('page')
+            currPage = p.get_page(page)
 
-        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'types': types,'currPage':currPage})
-    else:
-        return render(request, 'catalogue.html', {'name': request.user.username, 'tags':tags})
+            return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'currPage':currPage})
 
 def adding_tag():
     for book in Book.objects.all():

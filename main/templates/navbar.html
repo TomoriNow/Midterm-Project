@@ -68,8 +68,7 @@
             <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#tagModal">Post Tag Suggestion</a></li>
           </ul>
         </div>
-        <form class="d-flex my-2" method="POST" action="{% url 'main:search-title' %}">
-          {% csrf_token %}
+        <form class="d-flex my-2" method="GET" action="{% url 'main:search-title' %}">
           <input class="form-control" type="search" placeholder="Search Titles" aria-label="Search" name="searched" value="{{ searched }}"/>
           <button class="btn btn-outline-dark mx-2" type="submit">Search</button>
         </form>
