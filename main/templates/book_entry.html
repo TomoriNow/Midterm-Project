@@ -393,7 +393,7 @@
             document.getElementById("form").reset();
             return false;
         }
-        document.getElementById("button_edit").addEventListener("click", addTag);
+        document.getElementById("button_edit").onclick = editEntry;
         
         function saveEntry() {
             fetch("{% url 'main:create_custom_entry' %}", {

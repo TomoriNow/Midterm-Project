@@ -66,7 +66,6 @@
             <li><a class="dropdown-item" href="{% url 'main:show_entry' %}">Your Collection</a></li>
             <li><a class="dropdown-item" href="{% url 'main:show_other_users' %}">Other Users</a></li>
             <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#tagModal">Post Tag Suggestion</a></li>
-            <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#bookModal">Post Book Suggestion</a></li>
           </ul>
         </div>
         <form class="d-flex my-2" method="GET" action="{% url 'main:search-title' %}">
@@ -104,58 +103,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="button_addTag" data-bs-dismiss="modal" >Post Suggestion</button>
-            </div>
-        </div>
-    </div>
-  </div>
-  
-  <!--Add Book Suggestion Modal-->
-  <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="bookModalLabel">Post Book Suggestion</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form id="bookForm" onsubmit="return false;">
-                {% csrf_token %}
-                <div class="mb-3">
-                  <label for="name" class="col-form-label">Name<span style = 'color:red'>(required*)</span>:</label>
-                  <input type="text" class="form-control" id="name" name="name"></input>
-                </div>
-                <div class="mb-3">
-                    <label for="author" class="col-form-label">Author:</label>
-                    <input type="text" class="form-control" id="author" name="author"></input>
-                </div>
-                <div class="mb-3">
-                    <label for="type" class="col-form-label">Type:</label>
-                    <select class="form-control" id="type" name="type">
-                        <option value="Manga">Manga</option>
-                        <option value="Manhwa">Manhwa</option>
-                        <option value="Novel">Novel</option>
-                        <option value="Light Novel">Light Novel</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="imagelink" class="col-form-label">Link for Image:</label>
-                    <input type="text" class="form-control" id="imagelink" name="imagelink"></input>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="col-form-label">Description:</label>
-                    <textarea class="form-control" id="description" name="description"></textarea>
-                </div>
-                <div class="mb-3">
-                  <button type="button" class="btn btn-light" id = "add_tag">Add Tag</button>
-                  <button type="button" class="btn btn-danger" id = "remove_tag">Remove Tag</button>
-                </div>
-                <small>*Note that Book details cannot be changed</small>
-              </div>
-              </form>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="button_addBook" data-bs-dismiss="modal" >Post Suggestion</button>
-            </div>
             </div>
         </div>
     </div>

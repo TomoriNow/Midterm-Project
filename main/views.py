@@ -2,7 +2,7 @@ import datetime, json, requests
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound, JsonResponse
 from django.urls import reverse
-from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post, BookPost
+from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post
 from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer
 from rest_framework.generics import ListAPIView
@@ -368,34 +368,6 @@ def create_post(request):
         return HttpResponse(b"CREATED", status=201)
     
     return HttpResponseNotFound()
-
-@login_required(login_url='/login')
-def create_book_post(request):
-    if request.method == "POST":
-        user = request.user
-        name = request.POST.get("name")
-        imagelink = request.POST.get("imagelink")
-        type = request.POST.get("type")
-        author = request.POST.get("author")
-        description = request.POST.get("description")
-        
-        if imagelink:
-            extension = imagelink[-4:]
-            extension1 = imagelink[-5:]
-            if extension != ".jpg" and extension != ".gif" and extension != ".png" and extension1 != ".jpeg":
-                imagelink = "/static/logos.png"
-        else:
-            imagelink = "/static/logos.png"
-        
-        new_book = BookPost(user=user, name=name, imagelink = imagelink, type = type, author = author, description = description)
-        new_book.save()
-        list = request.POST.getlist('tag')
-        new_book.taggits.set(list, clear=True)
-        
-        return HttpResponse(b"CREATED", status=201)
-    
-    return HttpResponseNotFound()
-        
 
 @login_required(login_url='/login')
 @csrf_exempt
