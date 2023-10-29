@@ -303,7 +303,7 @@
                                             <textarea class="form-control" id="review" name="review"></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="rating" class="col-form-label">Rating:</label>
+                                            <label for="rating" class="col-form-label">Rating<span style = 'color:red'>(out of 10*)</span>:</label>
                                             <input type="number" class="form-control" id="rating" name="rating"></input>
                             </div>
                         </div>
@@ -411,10 +411,9 @@
     
         async function editTable(pk) {
             let rating_value = document.getElementById("show_rating").value;
-            if (rating_value == ""){ rating_value = "-"}
-            else { rating_value = ""+rating_value+"/10"}
             const rating = "rating_" + pk;
-            document.getElementById(rating).innerHTML = rating_value;
+            if (rating_value == ""){ rating_value = "-";document.getElementById(rating).innerHTML = rating_value;}
+            else { if (rating_value >= 0 && rating_value <= 10) {rating_value = ""+rating_value+"/10"; document.getElementById(rating).innerHTML = rating_value;} }
 
             let status_value = document.getElementById("show_status").value
             if (status_value == "D"){ status_value = "Dropped"}
