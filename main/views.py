@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
 from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post, BookPost
 from main.forms import Book_EntryForm, Custom_EntryForm
-from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer
+from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer, BookPostSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from django.core import serializers
@@ -213,8 +213,9 @@ def show_book_entry_other(request, username):
 def show_users(request):
     display_user = User.objects.all()
     tags = Tag.objects.all()
+    bookPosts = BookPost.objects.all()
     posts = Post.objects.all()
-    context = {'displayuser': display_user, 'name': request.user.username, 'user':request.user, 'posts': posts, 'taggits' :tags}
+    context = {'displayuser': display_user, 'name': request.user.username, 'user':request.user, 'posts': posts, 'taggits' :tags, 'bookPosts': bookPosts}
     return render(request, "user_display.html", context)
 
 @login_required(login_url='/login')
@@ -392,7 +393,7 @@ def create_book_post(request):
         
         new_book = BookPost(user=user, name=name, imagelink = imagelink, type = type, author = author, description = description)
         new_book.save()
-        list = request.POST.getlist('tag')
+        list = request.POST.getlist('book_tag')
         new_book.taggits.set(list, clear=True)
         
         return HttpResponse(b"CREATED", status=201)
@@ -421,6 +422,40 @@ def accept_tag(request, id):
     return HttpResponseNotFound()
 
 @login_required(login_url='/login')
+@csrf_exempt
+def reject_book(request, id):
+    if request.method == "POST":
+        book = BookPost.objects.get(pk = id)
+        book.delete()
+        return HttpResponse(b"DELETED", status = 201)
+    return HttpResponseNotFound()
+
+@login_required(login_url='/login')
+@csrf_exempt
+def accept_book(request, id):
+    if request.method == "POST":
+        book = BookPost.objects.get(pk = id)
+        real_book = Book(name = book.name, imagelink = book.imagelink, type = book.type, author = book.author, description = book.description)
+        real_book.save()
+        real_book.taggits.set(book.taggits.all(), clear = True) 
+        
+        book.delete()
+        return HttpResponse(b"DELETED", status = 201)
+    return HttpResponseNotFound()
+
+@login_required(login_url='/login')
 def get_posts_json(request):
     item = Post.objects.all()
     return HttpResponse(serializers.serialize('json', item, use_natural_foreign_keys=True))
+
+@login_required(login_url='/login')
+def get_bookposts_json(request):
+    item = BookPost.objects.all()
+    return HttpResponse(serializers.serialize('json', item, use_natural_foreign_keys=True))
+
+@login_required(login_url='/login')
+def get_book_posts_json(request, id):
+    item = BookPost.objects.get(pk = id)
+    input = BookPostSerializer(item).data
+    serialize_data = JSONRenderer().render(input).decode("utf-8")
+    return JsonResponse({"result": "Success", "data": serialize_data})

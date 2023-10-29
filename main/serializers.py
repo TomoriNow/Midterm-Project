@@ -24,4 +24,11 @@ class CustomSerializer(TaggitSerializer, serializers.ModelSerializer):
     class Meta:
         model = Custom_Entry
         fields = "__all__"
+        
+class BookPostSerializer(TaggitSerializer, serializers.ModelSerializer):
+    taggits = TagListSerializerField()
+
+    class Meta:
+        model = Book
+        fields = "__all__"
 

@@ -168,6 +168,10 @@
   function refreshItems() {
 
   }
+
+  function refreshBooks() {
+
+  }
   function addPost() {
     fetch("{% url 'main:create_post' %}", {
       method:"POST",
@@ -199,7 +203,7 @@
     fetch("{% url 'main:create_book_post' %}", {
       method:"POST",
       body: new FormData(document.querySelector('#bookForm'))
-    }).then(refreshItems)
+    }).then(refreshBooks)
     document.getElementById("bookForm").reset()
     return false
     }

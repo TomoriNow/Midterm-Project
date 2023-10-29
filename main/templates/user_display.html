@@ -65,7 +65,45 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="d-flex align-items-center justify-content-center">
+            <table class="table table-bordered table-striped table-hover mt-5 text-center" style="width: 80%;">
+                <tbody id="bookPostsTable">
+                    <th>User</th>
+                    <th>Book Posts</th>
+                    <th>Accept/Reject</th>
+                    {% for bookPost in bookPosts %}
+                        <tr>
+                            <td><p>{{bookPost.user.username}}</p></td>
+                            <td>
+                                <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="showBookPosts({{ bookPost.pk }})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">{{bookPost.name}}</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success" onclick = "acceptBook({{bookPost.pk}})">Accept</button>
+                                <button type="button" class="btn btn-danger" onclick="rejectBook({{bookPost.pk}})">Reject</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="entryModal" tabindex="-1" aria-labelledby="entryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div id="bookView"></div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
+
+
 {% else %}
     <body style=" background: linear-gradient(to right, rgba(0,186,140,1), rgba(139,233,255,1));">
         <div class="d-flex align-items-center justify-content-center">
@@ -113,6 +151,8 @@
         })
         document.getElementById("postsTable").innerHTML = htmlString
     }
+
+
     function rejectTag(id){
         fetch("/reject-tag/"+ id, {
             method: "POST",
@@ -121,12 +161,93 @@
         return false
     }
     function acceptTag(id){
-        alert("called")
         fetch("/accept-tag/"+ id, {
             method: "POST",
         }).then(refreshItems)
 
         return false
     }
+
+    function acceptBook(id){
+        fetch("/accept-book/"+ id, {
+            method: "POST",
+        }).then(refreshBooks)
+
+        return false
+    }
+
+    function rejectBook(id){
+        fetch("/reject-book/"+ id, {
+            method: "POST",
+        }).then(refreshBooks)
+
+        return false
+    }
+
+    async function getBookPosts(pk) {
+        return fetch("/get-book-post/"+ pk ).then((res) => res.json())
+    }
+
+    async function getBookPosts1() {
+        return fetch("/get-bookpost/").then((res) => res.json())
+    }
+
+    async function refreshBooks() {
+        document.getElementById("bookPostsTable").innerHTML = ""
+        const bookPosts = await getBookPosts1()
+        let htmlString = `
+        <th>User</th>
+        <th>Posts</th>
+        <th>Accept/Reject</th>`
+        bookPosts.forEach((bookPost) => {
+            htmlString += `\n<tr>
+                <td><p>${bookPost.fields.user}</p></td>
+                <td>
+                    <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="showBookPosts(${bookPost.pk})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">${bookPost.fields.name}</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success" onclick = "acceptBook(${bookPost.pk})">Accept</button>
+                    <button type="button" class="btn btn-danger" onclick="rejectBook(${bookPost.pk})">Reject</button>
+                </td>
+            </tr>` 
+        })
+        document.getElementById("bookPostsTable").innerHTML = htmlString
+    }
+
+    async function showBookPosts(pk) {
+        document.getElementById("bookView").innerHTML = "";
+        const bookPost = await getBookPosts(pk);
+        const data = JSON.parse(bookPost.data)
+        let htmlString = `
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="entryModalLabel">${data.name}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal_body" value="${data.pk}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg">
+                            <img src="${data.imagelink}">
+                            <p>${data.description}</p>
+                        </div>
+                    <div class="col-lg">
+                        <div class="mb-3">
+                            <label for="show_author" class="col-label">Author:</label>
+                            <p id ="show_author" name = "show_author">${data.author}</p>
+                            <label for="show_type" class="col-label">Type:</label>
+                            <p id ="show_type" name = "show_type">${data.type}</p>
+                        </div>
+                    <div class="mb-3">
+                        <label for="show_tags" class="col-form-label">Tags:</label>
+                        <div id = "show_tags">`
+                        data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
+                        htmlString +=`
+                    </div>
+                        </div>
+                    </div>
+                </div>`;
+        document.getElementById("bookView").innerHTML = htmlString;
+    }
+
 </script>
 {% endblock content %}
