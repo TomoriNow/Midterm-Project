@@ -33,14 +33,14 @@
           </li>
         </ul>
         <ul class="navbar-nav mr-auto">
-        <div class="dropdown my-2 mx-2">
-          <button class="btn btn-info dropdown-toggle" type="button" id="dropdownTagList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Tag List
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Filter by tags
           </button>
           <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownTagList">
             {% for tag in tags %}
-              <a class="dropdown-item" href="#"> {{ tag }}</a>
-            {% endfor %}
+              <a class="dropdown-item" href="/get-books/{{tag}}"> {{ tag }}</a>
+              {% endfor %}
           </div>
         </div>
         <div class="dropdown my-2 mx-2">

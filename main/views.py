@@ -32,7 +32,6 @@ def show_main(request):
         'book': book,
         'tags': tags,
     }
-    nums = "a" * book.paginator.num_pages
     return render(request, 'catalogue.html', context)
 
 @login_required(login_url='/login')
@@ -42,9 +41,11 @@ def search_by_title(request):
         books = Book.objects.filter(name__contains = searched)
         book = Book.objects.filter(name__contains = searched).exists()
         tags = Tag.objects.all()
+        p = Paginator(books.order_by('pk'), 16)
+        page = request.GET.get('page')
+        currPage = p.get_page(page)
 
-
-        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags})
+        return render(request, 'search_title.html',{'searched': searched, 'books': books, 'book': book, 'name': request.user.username, "tags": tags,'currPage':currPage})
     else:
         return render(request, 'catalogue.html', {'name': request.user.username, 'tags':tags})
 
@@ -133,7 +134,8 @@ def get_books_by_tag(request, tag):
     tags = Tag.objects.all()
     context = {
         'tags': tags,
-        'books': books
+        'book': books,
+        'name': request.user.username
     }
 
     return render(request, 'catalogue.html', context)
