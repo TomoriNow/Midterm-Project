@@ -20,7 +20,7 @@
             <div class="collapse" id="toggleFavoriteBooks">
               <div class="p-4">
                 <h5 class="text-white h4">Favorite Book:</h5>
-                <span class="text-muted">Book goes here</span>
+                <span class="text-muted" id="favouriteView">Book goes here</span>
               </div>
             </div>
         </div>
@@ -40,7 +40,11 @@
                             
                             by {{book.author}}
                         </td>
-        
+                        
+                        <td style="text-align: center; max-width: 40px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                            <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="favouriteEntry({{ entry.pk }})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">FAVOURITE</button>
+                        </td>
+
                         <td  id = "status_{{entry.id}}"style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                         {% if entry.status == "P" %}
                             Plan to Read
@@ -486,6 +490,36 @@
 
         document.getElementById("form-4").reset()
         return false
+    }
+
+    async function favouriteEntry(pk) {
+            const entry = await getEntry(pk);
+            const data = JSON.parse(entry.data);
+            let htmlString = `
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg">
+                                <img src="${data.imagelink}">
+                                <p>${data.description}</p>
+                            </div>
+                        <div class="col-lg">
+                            <div class="mb-3">
+                                <label for="show_author" class="col-label">Author:</label>
+                                <p id ="show_author" name = "show_author">${data.author}</p>
+                                <label for="show_type" class="col-label">Type:</label>
+                                <p id ="show_type" name = "show_type">${data.type}</p>
+                                <label for="show_last_read" class="col-label">Last Read:</label>
+                                <p id ="show_last_read" name = "show_last_read">${data.last_read_date}</p>
+                    <div class="mb-3">
+                        <label for="show_tags" class="col-form-label">Tags:</label>
+                        <div id = "show_tags">`
+                        data.taggits.forEach((tag) => {htmlString+= `<span>${tag} </span>` }) 
+                        htmlString +=`
+                    </div>
+                        </div>
+                    </div>`;
+            document.getElementById("favouriteView").innerHTML = htmlString;
+
     }
 
 
