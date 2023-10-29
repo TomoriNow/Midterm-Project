@@ -41,9 +41,11 @@
                             by {{book.author}}
                         </td>
                         
+                        {% if is_owner %}
                         <td style="text-align: center; max-width: 80px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
-                            <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="favouriteEntry({{ entry.pk }})" data-bs-toggle="modal" data-bs-target="#entryModal" role="button">FAVOURITE</button>
+                            <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="favouriteEntry({{ entry.pk }})"  role="button">FAVOURITE</button>
                         </td>
+                        {% endif %}
 
                         <td  id = "status_{{entry.id}}"style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                         {% if entry.status == "P" %}
@@ -415,9 +417,14 @@
                         </span>
                         
                         by ${entry.author}
-                    </td>
+                    </td>`
+                    
+                    if (!({{not_owner}})) { htmlString +=`
+                    <td style="text-align: center; max-width: 80px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                        <button class="btn" style="background-color: #FF4FCE; color: white;" onclick="favouriteEntry(${entry.id})" role="button">FAVOURITE</button>
+                    </td>`}
     
-                    <td id = "status_${entry.id}" style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
+                    htmlString += `<td id = "status_${entry.id}" style="text-align: center; max-width: 50px; background: linear-gradient(to bottom, rgba(0,186,140,1), rgba(139,233,255,1)); vertical-align: middle;">
                     ${entry.status}
                     </td>           
     
