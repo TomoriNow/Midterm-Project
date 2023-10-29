@@ -413,7 +413,7 @@
             let rating_value = document.getElementById("show_rating").value;
             const rating = "rating_" + pk;
             if (rating_value == ""){ rating_value = "-";document.getElementById(rating).innerHTML = rating_value;}
-            else { if (rating_value >= 0 && rating_value <= 10) {rating_value = ""+rating_value+"/10"; document.getElementById(rating).innerHTML = rating_value;} }
+            else { if (rating_value >= 0 && rating_value <= 10 && rating_value % 1 == 0) {rating_value = ""+rating_value+"/10"; document.getElementById(rating).innerHTML = rating_value;} }
 
             let status_value = document.getElementById("show_status").value
             if (status_value == "D"){ status_value = "Dropped"}
