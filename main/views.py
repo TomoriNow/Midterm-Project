@@ -7,6 +7,8 @@ from main.forms import Book_EntryForm, Custom_EntryForm
 from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer, BookPostSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.core import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -187,6 +189,12 @@ def show_json_by_id(request, id):
     data = Book_Entry.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+class Book_EntryList(APIView):
+    def get(self, request):
+        book_entries = Book_Entry.objects.all()
+        serializer = Book_EntrySerializer(book_entries, many=True)
+        return Response(serializer.data)
+    
 @login_required(login_url='/login')
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)

@@ -11,19 +11,26 @@ class BookSerializer(TaggitSerializer, serializers.ModelSerializer):
         model = Book
         fields = "__all__"
 
-class Book_EntrySerializer(serializers.ModelSerializer):
-    catalog_entry = serializers.StringRelatedField()
-    custom_entry = serializers.StringRelatedField()
-        
-    class Meta:
-        model = Book_Entry
-        fields = ['status', 'last_chapter_read', 'catalog_entry', 'last_read_date', 'custom_entry', 'review', 'rating', 'pk', 'notes']
-
 class CustomSerializer(TaggitSerializer, serializers.ModelSerializer):
     taggits = TagListSerializerField()
     class Meta:
         model = Custom_Entry
         fields = "__all__"
+
+class Catalog_EntrySerializer(serializers.ModelSerializer):
+    book = BookSerializer()
+
+    class Meta:
+        model = Catalog_Entry
+        fields = ['book', ]
+
+class Book_EntrySerializer(serializers.ModelSerializer):
+    catalog_entry = Catalog_EntrySerializer(read_only=True)
+    custom_entry = CustomSerializer(read_only=True)
+        
+    class Meta:
+        model = Book_Entry
+        fields = ['status', 'last_chapter_read', 'catalog_entry', 'last_read_date', 'custom_entry', 'review', 'rating', 'pk', 'notes']
         
 class BookPostSerializer(TaggitSerializer, serializers.ModelSerializer):
     taggits = TagListSerializerField()
