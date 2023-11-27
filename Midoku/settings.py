@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'taggit',
     'rest_framework',
     'corsheaders',
+    'authentication',
+
 ]
 
 MIDDLEWARE = [
