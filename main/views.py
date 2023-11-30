@@ -199,6 +199,12 @@ def fetch_tags(request):
     data = Tag.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type = "application/json")
     
+class Book_Catalog(APIView):
+    def get(self, request):
+        catalog_books = Book.objects.all()
+        serializer = BookSerializer(catalog_books, many=True)
+        return Response(serializer.data)
+    
 @login_required(login_url='/login')
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)
