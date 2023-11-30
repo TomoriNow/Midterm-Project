@@ -194,6 +194,10 @@ class Book_EntryList(APIView):
         book_entries = Book_Entry.objects.all()
         serializer = Book_EntrySerializer(book_entries, many=True)
         return Response(serializer.data)
+
+def fetch_tags(request):
+    data = Tag.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type = "application/json")
     
 @login_required(login_url='/login')
 def show_book_entry(request):
@@ -476,3 +480,56 @@ def make_favourite(request, id):
         profile.save()
         return HttpResponse(b"DELETED", status = 201)
     return HttpResponseNotFound()
+
+@csrf_exempt
+def create_custom_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+        print(data["name"])
+        print(data["author"])
+        print(data["type"])
+        print(data["imagelink"])
+        print(data["description"])
+        print(data["taggits"])
+        print(data["status"])
+        print(data["lastChapterRead"])
+        print(data["notes"])
+        print(data["review"])
+        print(data["rating"])
+        imagelink = data["imagelink"]
+        if imagelink:
+            extension = imagelink[-4:]
+            extension1 = imagelink[-5:]
+            if extension != ".jpg" and extension != ".gif" and extension != ".png" and extension1 != ".jpeg":
+                imagelink = "/static/logos.png"
+        else:
+            imagelink = "/static/logos.png"
+        print(imagelink)
+        new_entry = Book_Entry.objects.create(
+            user = request.user,
+            status = data["status"],
+            last_chapter_read = data["lastChapterRead"],
+            last_read_date = datetime.datetime.now(),
+            review = data["review"],
+            notes = data["notes"],
+            rating = data["rating"],
+        )
+        new_entry.save()
+        new_book = Custom_Entry.objects.create(
+            entry = new_entry,
+            name = data["name"],
+            author = data["author"],
+            type = data["type"],
+            imagelink = imagelink,
+            description = data["description"],
+        )
+
+        new_book.save()
+        new_book.taggits.set(list, clear=True)
+        print(new_book)
+        print(new_entry)
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
