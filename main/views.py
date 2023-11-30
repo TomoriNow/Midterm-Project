@@ -195,6 +195,12 @@ class Book_EntryList(APIView):
         serializer = Book_EntrySerializer(book_entries, many=True)
         return Response(serializer.data)
     
+class Book_Catalog(APIView):
+    def get(self, request):
+        catalog_books = Book.objects.all()
+        serializer = BookSerializer(catalog_books, many=True)
+        return Response(serializer.data)
+    
 @login_required(login_url='/login')
 def show_book_entry(request):
     data = Book_Entry.objects.filter(user = request.user)
