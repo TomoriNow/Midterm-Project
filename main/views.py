@@ -191,11 +191,12 @@ def show_json_by_id(request, id):
 
 class Book_EntryList(APIView):
     def get(self, request):
-        book_entries = Book_Entry.objects.all()
+        book_entries = Book_Entry.objects.filter(user = request.user)
         serializer = Book_EntrySerializer(book_entries, many=True)
         return Response(serializer.data)
 
 def fetch_tags(request):
+    print(request.user)
     data = Tag.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type = "application/json")
     
@@ -504,6 +505,7 @@ def create_custom_flutter(request):
         print(data["review"])
         print(data["rating"])
         imagelink = data["imagelink"]
+        list = data["taggits"]
         if imagelink:
             extension = imagelink[-4:]
             extension1 = imagelink[-5:]
@@ -534,6 +536,40 @@ def create_custom_flutter(request):
         new_book.save()
         new_book.taggits.set(list, clear=True)
         print(new_book)
+        print(new_entry)
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+    
+@csrf_exempt
+def create_catalog_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+        print(data["id"])
+        print(data["status"])
+        print(data["lastChapterRead"])
+        print(data["notes"])
+        print(data["review"])
+        print(data["rating"])
+        new_entry = Book_Entry.objects.create(
+            user = request.user,
+            status = data["status"],
+            last_chapter_read = data["lastChapterRead"],
+            last_read_date = datetime.datetime.now(),
+            review = data["review"],
+            notes = data["notes"],
+            rating = data["rating"],
+        )
+        new_entry.save()
+        new_catalog_entry = Catalog_Entry.objects.create(
+            entry = new_entry,
+            book = Book.objects.get(id = data["id"])
+        )
+
+        new_catalog_entry.save()
+        print(new_catalog_entry)
         print(new_entry)
 
         return JsonResponse({"status": "success"}, status=200)
