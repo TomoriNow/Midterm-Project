@@ -634,24 +634,36 @@ class Book_EntryList_Flutter(APIView):
         serializer = Book_EntrySerializer(book_entries, many=True)
         return Response(serializer.data, status=200)
 
-class Make_Admin_Flutter(APIView):
-    def post(self, request, username):
-        username = User.objects.get(user = username)
+@csrf_exempt
+def delete_user_flutter(request, username):
+    if request.method == 'POST':
+        username = User.objects.get(username=username)
+        username.delete()
+        return JsonResponse({"status": "success"}, status=200) 
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def make_admin_flutter(request, username):
+    if request.method == 'POST':
+        username = User.objects.get(username = username)
         username.is_staff = True
         username.save()
-        return JsonResponse({"status": "success"}, status=200)         
+        return JsonResponse({"status": "success"}, status=200) 
+    else:
+        return JsonResponse({"status": "error"}, status=401)
 
-class Revoke_Admin_Flutter(APIView):
-    def post(self, request, username):
+
+@csrf_exempt
+def revoke_admin_flutter(request, username):
+    if request.method == 'POST':
         username = User.objects.get(username=username)
         username.is_staff = False
         username.save()
-        return JsonResponse({"status": "success"}, status=200)    
+        return JsonResponse({"status": "success"}, status=200)  
+    else:
+        return JsonResponse({"status": "error"}, status=401)
 
-class Delete_User_Flutter(APIView):
-    def post(self, request, username):
-        username = User.objects.get(username=username)
-        username.delete()
-        return JsonResponse({"status": "success"}, status=200)     
+    
 
 
