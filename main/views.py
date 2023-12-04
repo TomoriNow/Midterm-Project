@@ -600,3 +600,31 @@ def edit_entry_flutter(request):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+
+class Other_Users(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer_user = json.loads(serializers.serialize("json", users))
+        return Response(serializer_user)
+
+@login_required(login_url='/login')
+def show_book_entry_other_flutter(request, username):
+    user = User.objects.get(username=username)
+    if user == request.user:
+        return show_book_entry(request)
+    
+    serializer_user = json.loads(serializers.serialize("json", user)).data
+    data = Book_Entry.objects.filter(user=user)
+    serializer = Book_EntrySerializer(data, many=True)
+    book_entries = serializer.data
+    
+    context = {
+        "book_entries": book_entries,
+        "name": request.user.username,
+        "owner": serializer_user,
+        "not_owner": "true",
+        "is_owner": False,
+        "user": request.user
+    }
+    
+    return JsonResponse(context, status=200)
