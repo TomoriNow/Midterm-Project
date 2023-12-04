@@ -1,4 +1,5 @@
 from django.urls import path, include
+from main.views import *
 from main.views import show_main, register, login_user, logout_user, show_json, show_json_by_id, search_by_title, show_book_entry, create_custom_entry, create_catalog_entry, BookListAPIView, get_entry_by_id, edit_entry, show_book_entry_other, create_book_post
 from main.views import get_books_by_id, delete_entry, get_books, get_books_by_tag, show_users, delete_user, copy_entry, get_posts_json, reject_tag, create_post, accept_tag, make_admin, revoke_admin, get_books_by_type, make_favourite, accept_book, reject_book, get_book_posts_json, get_bookposts_json, Book_EntryList
 from main.views import Book_Catalog
@@ -47,5 +48,7 @@ urlpatterns = [
     path('flutter-catalog/', BookListAPIView.as_view(), name='book-catalog'),
     path('other-users/', Other_Users.as_view(), name='other-users'),
     path('entry_flutter/<str:username>', show_book_entry_other_flutter , name='show_entry_other_flutter'),
-    
+    path('make_admin_flutter/<str:username>', make_admin_flutter, name='make-admin-flutter'),
+    path('revoke_admin_flutter/<str:username>', revoke_admin_flutter, name='revoke-admin-flutter'),
+    path('delete_user_flutter/<str:username>', delete_user_flutter, name='delete-user-admin')
 ]
