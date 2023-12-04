@@ -3,7 +3,7 @@ from main.views import *
 from main.views import show_main, register, login_user, logout_user, show_json, show_json_by_id, search_by_title, show_book_entry, create_custom_entry, create_catalog_entry, BookListAPIView, get_entry_by_id, edit_entry, show_book_entry_other, create_book_post
 from main.views import get_books_by_id, delete_entry, get_books, get_books_by_tag, show_users, delete_user, copy_entry, get_posts_json, reject_tag, create_post, accept_tag, make_admin, revoke_admin, get_books_by_type, make_favourite, accept_book, reject_book, get_book_posts_json, get_bookposts_json, Book_EntryList
 from main.views import Book_Catalog
-from main.views import fetch_tags, create_custom_flutter, create_catalog_flutter, Other_Users,  edit_entry_flutter
+from main.views import fetch_tags, create_custom_flutter, create_catalog_flutter, Other_Users,  edit_entry_flutter, delete_entry_flutter
 app_name = 'main'
 
 urlpatterns = [
@@ -46,6 +46,7 @@ urlpatterns = [
     path('create-custom-flutter/', create_custom_flutter, name = 'create_custom_flutter'),
     path('create-catalog-flutter/', create_catalog_flutter, name = 'create_catalog_flutter'),
     path('edit-entry-flutter/', edit_entry_flutter, name = 'edit_entry_flutter'),
+    path('delete-entry-flutter/', delete_entry_flutter, name = 'delete_entry_flutter'),
     path('flutter-catalog/', BookListAPIView.as_view(), name='book-catalog'),
     path('other-users/', Other_Users.as_view(), name='other-users'),
     path('entry_flutter/<str:username>/', Book_EntryList_Flutter.as_view() , name='show_entry_other_flutter'),
