@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+import json
 
 @csrf_exempt
 def login(request):
@@ -50,35 +52,20 @@ def logout(request):
     
 @csrf_exempt
 def register(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    form = UserCreationForm()
     
-    # Check if the username is already taken
-    if User.objects.filter(username=username).exists():
-        return JsonResponse({
-            "status": False,
-            "message": "Username is already taken."
-        }, status=400)
-    
-    # Check if username and password are provided
-    if not username or not password:
-        return JsonResponse({
-            "status": False,
-            "message": "Username and password are required for registration."
-        }, status=400)
-
-    
-    
-    try:
-        user = User.objects.create_user(username=username, password=password)
-        user.save()
-        return JsonResponse({
-            "username": username,
-            "status": True,
-            "message": "Registered successfully!"
-        }, status=200)
-    except:
-        return JsonResponse({
-        "status": False,
-        "message": "Register failed, please try again."
-        }, status=401)
+    if request.method == "POST":
+        data = json.loads(request.body)
+        form = UserCreationForm(data)
+        
+        if form.is_valid():
+            form.save()
+            return JsonResponse({
+                "status": True,
+                "message": "Registration is successful!"
+            }, status = 200)
+        else:
+            return JsonResponse({
+                "status": False,
+                "message": "Registration failed, Invalid username or password."
+            }, status=401)
