@@ -601,6 +601,20 @@ def edit_entry_flutter(request):
     else:
         return JsonResponse({"status": "error"}, status=401)
 
+@csrf_exempt
+def delete_entry_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+        print(data["id"])
+        entry = Book_Entry.objects.get(id = data["id"])
+        entry.delete()
+        print(entry)
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
 class Other_Users(APIView):
     def get(self, request):
         users = User.objects.all()
