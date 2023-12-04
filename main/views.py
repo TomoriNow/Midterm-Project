@@ -18,6 +18,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from taggit.models import Tag
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 types = ["All","Manga","Manhwa","Light Novel","Novel"]
 @login_required(login_url='/login')
@@ -607,50 +609,40 @@ class Other_Users(APIView):
         serializer_user = json.loads(serializers.serialize("json", users))
         return Response(serializer_user)
 
-@login_required(login_url='/login')
-def show_book_entry_other_flutter(request, username):
-    user = User.objects.get(username=username)
-    if user == request.user:
-        return show_book_entry(request)
-    
-    serializer_user = json.loads(serializers.serialize("json", user)).data
-    data = Book_Entry.objects.filter(user=user)
-    serializer = Book_EntrySerializer(data, many=True)
-    book_entries = serializer.data
-    
-    context = {
-        "book_entries": book_entries,
-        "name": request.user.username,
-        "owner": serializer_user,
-        "not_owner": "true",
-        "is_owner": False,
-        "user": request.user
-    }
-    
-    return JsonResponse(context, status=200)
+        book_entries = Book_Entry.objects.filter(user = request.user)
+        serializer = Book_EntrySerializer(book_entries, many=True)
+        return Response(serializer.data)
+
+class Book_EntryList_Flutter(APIView):
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        book_entries = Book_Entry.objects.filter(user = user)
+        serializer = Book_EntrySerializer(book_entries, many=True)
+        return Response(serializer.data, status=200)
+
 
 @csrf_exempt
-def make_admin_flutter(request, username):
+def make_admin_flutter(request):
     if request.method == 'POST':
-        username = User.objects.get(username=username)
+        username = User.objects.get(user = request.user.username)
         username.is_staff = True
         username.save()
         return JsonResponse({"status": "success"}, status=200) 
     else:
         return JsonResponse({"status": "error"}, status=401)
 @csrf_exempt
-def revoke_admin_flutter(request, username):
+def revoke_admin_flutter(request):
     if request.method == 'POST':
-        username = User.objects.get(username=username)
+        username = User.objects.get(username=request.user.username)
         username.is_staff = False
         username.save()
         return JsonResponse({"status": "success"}, status=200) 
     else:
         return JsonResponse({"status": "error"}, status=401)
 @csrf_exempt
-def delete_user_flutter(request, username):
+def delete_user_flutter(request):
     if request.method == 'POST':
-        username = User.objects.filter(username=username)
+        username = User.objects.get(username=request.user.username)
         username.delete()
         return JsonResponse({"status": "success"}, status=200) 
     else:
