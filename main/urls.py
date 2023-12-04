@@ -49,7 +49,7 @@ urlpatterns = [
     path('flutter-catalog/', BookListAPIView.as_view(), name='book-catalog'),
     path('other-users/', Other_Users.as_view(), name='other-users'),
     path('entry_flutter/<str:username>/', Book_EntryList_Flutter.as_view() , name='show_entry_other_flutter'),
-    path('make_admin_flutter/', make_admin_flutter, name='make-admin-flutter'),
-    path('revoke_admin_flutter/', revoke_admin_flutter, name='revoke-admin-flutter'),
-    path('delete_user_flutter/', delete_user_flutter, name='delete-user-admin')
+    path('make_admin_flutter/<str:username>', make_admin_flutter, name='make-admin-flutter'),
+    path('revoke_admin_flutter/<str:username>', revoke_admin_flutter, name='revoke-admin-flutter'),
+    path('delete_user_flutter/<str:username>', delete_user_flutter, name='delete-user-admin')
 ]

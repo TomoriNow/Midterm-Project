@@ -622,27 +622,27 @@ class Book_EntryList_Flutter(APIView):
 
 
 @csrf_exempt
-def make_admin_flutter(request):
+def make_admin_flutter(request, username):
     if request.method == 'POST':
-        username = User.objects.get(user = request.user.username)
+        username = User.objects.get(user = username)
         username.is_staff = True
         username.save()
         return JsonResponse({"status": "success"}, status=200) 
     else:
         return JsonResponse({"status": "error"}, status=401)
 @csrf_exempt
-def revoke_admin_flutter(request):
+def revoke_admin_flutter(request, username):
     if request.method == 'POST':
-        username = User.objects.get(username=request.user.username)
+        username = User.objects.get(username=username)
         username.is_staff = False
         username.save()
         return JsonResponse({"status": "success"}, status=200) 
     else:
         return JsonResponse({"status": "error"}, status=401)
 @csrf_exempt
-def delete_user_flutter(request):
+def delete_user_flutter(request, username):
     if request.method == 'POST':
-        username = User.objects.get(username=request.user.username)
+        username = User.objects.get(username=username)
         username.delete()
         return JsonResponse({"status": "success"}, status=200) 
     else:
