@@ -576,6 +576,30 @@ def create_catalog_flutter(request):
     else:
         return JsonResponse({"status": "error"}, status=401)
 
+@csrf_exempt
+def edit_entry_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+        print(data["id"])
+        print(data["status"])
+        print(data["lastChapterRead"])
+        print(data["notes"])
+        print(data["review"])
+        print(data["rating"])
+        entry = Book_Entry.objects.get(id = data["id"])
+        entry.status = data["status"]
+        entry.last_chapter_read = int(data["lastChapterRead"])
+        entry.last_read_date = datetime.datetime.now()
+        entry.review = data["review"]
+        entry.notes = data["notes"]
+        entry.rating = int(data["rating"])
+        entry.save()
+        print(entry)
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
 
 class Other_Users(APIView):
     def get(self, request):
