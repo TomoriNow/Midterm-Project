@@ -621,11 +621,7 @@ class Other_Users(APIView):
     def get(self, request):
         users = User.objects.all()
         serializer_user = json.loads(serializers.serialize("json", users))
-        return Response(serializer_user)
-
-        book_entries = Book_Entry.objects.filter(user = request.user)
-        serializer = Book_EntrySerializer(book_entries, many=True)
-        return Response(serializer.data)
+        return Response(serializer_user, status=200)
 
 class Book_EntryList_Flutter(APIView):
     def get(self, request, username):
