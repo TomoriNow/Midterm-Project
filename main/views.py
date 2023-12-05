@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
 from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post, BookPost, Profile
 from main.forms import Book_EntryForm, Custom_EntryForm
-from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer, BookPostSerializer
+from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer, BookPostSerializer, UserSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -629,6 +629,17 @@ class Book_EntryList_Flutter(APIView):
         book_entries = Book_Entry.objects.filter(user = user)
         serializer = Book_EntrySerializer(book_entries, many=True)
         return Response(serializer.data, status=200)
+
+class CurrentUser(APIView):
+    def get(self, request):
+        if request.user.is_authenticated:
+            # Serialize the current user using the custom serializer
+            user = request.user
+            serialized_current_user = UserSerializer(user).data
+            
+            return Response(serialized_current_user, status=200)
+        else:
+            return Response({"status": "error"}, status=401)
 
 @csrf_exempt
 def delete_user_flutter(request, username):
