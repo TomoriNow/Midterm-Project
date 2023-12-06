@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
 from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post, BookPost, Profile
 from main.forms import Book_EntryForm, Custom_EntryForm
-from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer, BookPostSerializer, UserSerializer
+from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer, BookPostSerializer, UserSerializer, PostSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -671,6 +671,15 @@ def revoke_admin_flutter(request, username):
     else:
         return JsonResponse({"status": "error"}, status=401)
 
-    
 
+class Bookpost_List(APIView):
+    def get(self, request):
+        book_post = BookPost.objects.all()
+        serializer = BookPostSerializer(book_post, many=True)
+        return Response(serializer.data, status=200)
 
+class Tagpost_List(APIView):
+    def get(self, request):
+        tag_post = Post.objects.all()
+        serializer = PostSerializer(tag_post, many=True)
+        return Response(serializer.data, status=200)
