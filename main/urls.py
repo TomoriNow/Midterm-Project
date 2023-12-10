@@ -59,4 +59,8 @@ urlpatterns = [
     path('create-bookpost-flutter/', create_bookpost_flutter, name = 'create_bookpost_flutter'),
     path('accept-book-flutter/<int:id>/', accept_book_flutter, name='accept_book_flutter' ),
     path('reject-book-flutter/<int:id>/', reject_book_flutter, name='reject_book_flutter' ),
+    path('accept-tag-flutter/<int:id>/', accept_tag_flutter, name='accept_tag_flutter'),
+    path('reject-tag-flutter/<int:id>/', reject_tag_flutter, name='reject_tag_flutter'),
+
+
 ]

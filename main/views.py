@@ -745,3 +745,23 @@ def accept_book_flutter(request, id):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+
+@login_required(login_url='/login')
+@csrf_exempt
+def reject_tag_flutter(request, id):
+    if request.method == "POST":
+        tag = Post.objects.get(pk=id)
+        tag.delete()
+        return HttpResponse(b"DELETED", status=201)
+    return HttpResponseNotFound()
+
+@login_required(login_url='/login')
+@csrf_exempt
+def accept_tag_flutter(request, id):
+    if request.method == "POST":
+        post = Post.objects.get(pk=id)
+        tag = Tag(name=post.tag)
+        tag.save()
+        post.delete()
+        return HttpResponse(b"DELETED", status=201)
+    return HttpResponseNotFound()
