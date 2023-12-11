@@ -684,3 +684,115 @@ class Tagpost_List(APIView):
         tag_post = Post.objects.all()
         serializer = PostSerializer(tag_post, many=True)
         return Response(serializer.data, status=200)
+    
+    
+@csrf_exempt
+def create_bookpost_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+        print(data["name"])
+        print(data["author"])
+        print(data["type"])
+        print(data["imagelink"])
+        print(data["description"])
+        print(data["taggits"])
+        imagelink = data["imagelink"]
+        list = data["taggits"]
+        if imagelink:
+            extension = imagelink[-4:]
+            extension1 = imagelink[-5:]
+            if extension != ".jpg" and extension != ".gif" and extension != ".png" and extension1 != ".jpeg":
+                imagelink = "/static/logos.png"
+        else:
+            imagelink = "/static/logos.png"
+        print(imagelink)
+        new_bookpost = BookPost.objects.create(
+            user = request.user,
+            name = data["name"],
+            author = data["author"],
+            type = data["type"],
+            imagelink = imagelink,
+            description = data["description"],
+        )
+
+        new_bookpost.save()
+        new_bookpost.taggits.set(list, clear=True)
+        print(new_bookpost)
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+    
+
+@csrf_exempt
+def create_tagpost_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        new_tagpost = Post.objects.create(
+            user=request.user,  # Assuming the user is authenticated
+            tag=data["tag"],
+            # Add any other fields you have in your TagPost model
+        )
+
+        new_tagpost.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def reject_book_flutter(request, id):
+    if request.method == "POST":
+        book = BookPost.objects.get(pk = id)
+        book.delete()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def accept_book_flutter(request, id):
+    if request.method == "POST":
+        book = BookPost.objects.get(pk = id)
+        real_book = Book(name = book.name, imagelink = book.imagelink, type = book.type, author = book.author, description = book.description)
+        real_book.save()
+        real_book.taggits.set(book.taggits.all(), clear = True) 
+        
+        book.delete()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def create_post_flutter(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user = request.user
+        new_tag = Post.objects.create(tag=data["tag"], user=user)
+        new_tag.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@login_required(login_url='/login')
+@csrf_exempt
+def reject_tag_flutter(request, id):
+    if request.method == "POST":
+        tag = Post.objects.get(pk=id)
+        tag.delete()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@login_required(login_url='/login')
+@csrf_exempt
+def accept_tag_flutter(request, id):
+    if request.method == "POST":
+        post = Post.objects.get(pk=id)
+        tag = Tag(name=post.tag)
+        tag.save()
+        post.delete()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
