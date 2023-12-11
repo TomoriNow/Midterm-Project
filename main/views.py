@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
 from main.models import Book_Entry, Book, Catalog_Entry, Custom_Entry, Post, BookPost, Profile
 from main.forms import Book_EntryForm, Custom_EntryForm
-from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer, BookPostSerializer, UserSerializer, PostSerializer
+from main.serializers import Book_EntrySerializer, BookSerializer, CustomSerializer, BookPostSerializer, UserSerializer, PostSerializer, ProfileSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -793,6 +793,37 @@ def accept_tag_flutter(request, id):
         tag = Tag(name=post.tag)
         tag.save()
         post.delete()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+class Profile_List(APIView):
+    def get(self, request):
+        profile = Profile.objects.all()
+        serializer = ProfileSerializer(profile, many=True)
+        return Response(serializer.data, status=200)
+
+
+class FavouriteGet_List(APIView):
+    def get(self, request, username):
+        print("enter")
+        user = User.objects.get(username=username)
+        profile = Profile.objects.get(user=user)
+        book = profile.favourite
+        serializer = Book_EntrySerializer(book)
+        print(book)
+        return Response(serializer.data, status=200)
+    
+@csrf_exempt
+def favourite_post_flutter(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data)
+        user = User.objects.get(username=data['username'])
+        profile = Profile.objects.get_or_create(user=user)
+        profile = profile[0]
+        profile.favourite = Book_Entry.objects.get(pk=data['id'])
+        profile.save()
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)

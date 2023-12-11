@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from main.models import Book_Entry, Book, Custom_Entry, Catalog_Entry, Post, BookPost
+from main.models import Book_Entry, Book, Custom_Entry, Catalog_Entry, Post, BookPost, Profile
 from taggit.serializers import (TagListSerializerField,
                                 TaggitSerializer)
 
@@ -48,4 +48,8 @@ class UserSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
+        fields = "__all__"
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
         fields = "__all__"

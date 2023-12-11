@@ -62,4 +62,7 @@ urlpatterns = [
     path('accept-tag-flutter/<int:id>/', accept_tag_flutter, name='accept_tag_flutter'),
     path('reject-tag-flutter/<int:id>/', reject_tag_flutter, name='reject_tag_flutter'),
     path('create-tagpost-flutter/', create_tagpost_flutter, name='create_tagpost_flutter'),
+    path('show-profile/', Profile_List.as_view(), name='show_profile'),
+    path('favourite-entry-flutter-post/', favourite_post_flutter, name='favourite_entry_flutter_post'),
+    path('favourite-entry-flutter-get/<str:username>/', FavouriteGet_List.as_view(), name='favourite_entry_flutter_get'),
 ]
