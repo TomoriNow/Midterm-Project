@@ -808,7 +808,8 @@ class FavouriteGet_List(APIView):
     def get(self, request, username):
         print("enter")
         user = User.objects.get(username=username)
-        profile = Profile.objects.get(user=user)
+        profile = Profile.objects.get_or_create(user=user)
+        profile = profile[0]
         book = profile.favourite
         serializer = Book_EntrySerializer(book)
         print(book)
