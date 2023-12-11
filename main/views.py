@@ -672,6 +672,7 @@ def revoke_admin_flutter(request, username):
         return JsonResponse({"status": "error"}, status=401)
 
 
+
 class Bookpost_List(APIView):
     def get(self, request):
         book_post = BookPost.objects.all()
