@@ -725,6 +725,23 @@ def create_bookpost_flutter(request):
     
 
 @csrf_exempt
+def create_tagpost_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        new_tagpost = Post.objects.create(
+            user=request.user,  # Assuming the user is authenticated
+            tag=data["tag"],
+            # Add any other fields you have in your TagPost model
+        )
+
+        new_tagpost.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
 def reject_book_flutter(request, id):
     if request.method == "POST":
         book = BookPost.objects.get(pk = id)
