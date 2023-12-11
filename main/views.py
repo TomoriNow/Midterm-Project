@@ -723,6 +723,7 @@ def create_bookpost_flutter(request):
     else:
         return JsonResponse({"status": "error"}, status=401)
     
+
 @csrf_exempt
 def create_tagpost_flutter(request):
     if request.method == 'POST':
