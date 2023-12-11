@@ -746,6 +746,17 @@ def accept_book_flutter(request, id):
     else:
         return JsonResponse({"status": "error"}, status=401)
 
+@csrf_exempt
+def create_post_flutter(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user = request.user
+        new_tag = Post.objects.create(tag=data["tag"], user=user)
+        new_tag.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
 @login_required(login_url='/login')
 @csrf_exempt
 def reject_tag_flutter(request, id):
