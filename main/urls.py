@@ -61,6 +61,8 @@ urlpatterns = [
     path('reject-book-flutter/<int:id>/', reject_book_flutter, name='reject_book_flutter' ),
     path('accept-tag-flutter/<int:id>/', accept_tag_flutter, name='accept_tag_flutter'),
     path('reject-tag-flutter/<int:id>/', reject_tag_flutter, name='reject_tag_flutter'),
+    path('create-tagpost-flutter/', create_tagpost_flutter, name='create_tagpost_flutter'),
+
 
 
 ]
